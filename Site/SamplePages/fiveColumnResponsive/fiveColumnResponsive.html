@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Responsive 5‑Column CSS Grid</title>
+  <style>
+    :root{
+      --gap: 1rem;
+      --pad: 1rem;
+      --bg: #0f172a;
+      --card: #0b1220;
+      --muted: #94a3b8;
+      --accent: #7c3aed;
+      --radius: 12px;
+      --max-width: 1200px; /* where 5 columns comfortably fit */
+    }
+
+    /* Basic page layout */
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #071226 0%, #041021 100%);
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.35;
+      padding:2rem;
+      box-sizing:border-box;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--max-width);
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      margin-bottom:1rem;
+    }
+
+    h1{font-size:1.25rem;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:0.95rem}
+
+    /* The grid itself */
+    .grid{
+      display:grid;
+      gap:var(--gap);
+      /* default for large screens: 5 equal columns */
+      grid-template-columns:repeat(5, 1fr);
+      /* make all rows equal height for a neat card grid */
+      grid-auto-rows: 1fr; /* equal height rows */
+    }
+
+    /* Card style */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      border-radius:var(--radius);
+      padding:var(--pad);
+      box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+      display:flex;
+      flex-direction:column;
+      gap:0.75rem;
+      min-height:120px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.03);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(3,8,30,0.6)}
+
+    .thumb{
+      width:100%;
+      aspect-ratio:16/9;
+      border-radius:8px;
+      background:linear-gradient(90deg, rgba(124,58,237,0.12), rgba(7,89,153,0.06));
+      display:block;
+      flex-shrink:0;
+      object-fit:cover;
+    }
+
+    .title{font-weight:600;font-size:0.98rem;margin:0}
+    .meta{color:var(--muted);font-size:0.85rem}
+    .body{flex:1;color:#dbeafe;font-size:0.92rem}
+
+    /* Make certain items span multiple columns on wide screens (example) */
+    .span-2{grid-column:span 2}
+
+    /* Responsive breakpoints: reduce columns as viewport shrinks */
+    @media (max-width:1200px){
+      .grid{grid-template-columns:repeat(4, 1fr)}
+    }
+    @media (max-width:992px){
+      .grid{grid-template-columns:repeat(3, 1fr)}
+    }
+    @media (max-width:720px){
+      .grid{grid-template-columns:repeat(2, 1fr)}
+    }
+    @media (max-width:420px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    /* Utility examples */
+    .controls{display:flex;gap:0.5rem;align-items:center}
+    .btn{background:var(--accent);border:none;color:white;padding:0.45rem 0.7rem;border-radius:8px;font-weight:600;cursor:pointer}
+    .muted{color:var(--muted);font-size:0.9rem}
+
+    /* Accessibility focus styles */
+    .card:focus{outline:3px solid rgba(124,58,237,0.25)}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Responsive 5‑Column CSS Grid</h1>
+        <p class="lead">Grid keeps five columns on wide screens and gracefully collapses down to 1 on small screens.</p>
+      </div>
+      <div class="controls">
+        <span class="muted">Example controls</span>
+        <button class="btn" onclick="alert('This is a static demo')">Action</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid" role="list">
+        <!-- Example cards (you can duplicate/remove as needed) -->
+        <article class="card" role="listitem" tabindex="0">
+          <div class="thumb" aria-hidden="true"></div>
+          <h2 class="title">Card 1</h2>
+          <div class="meta">Meta • Tag</div>
+          <div class="body">Short description to show how content wraps and how equal-height rows behave with the grid-auto-rows set.</div>
+        </article>
+
+        <article class="card" role="listitem" tabindex="0">
+          <div class="thumb" aria-hidden="true"></div>
+          <h2 class="title">Card 2</h2>
+          <div class="meta">Meta • Tag</div>
+          <div class="body">Another example card. Resize the viewport to watch the grid collapse from five columns down to one.</div>
+        </article>
+
+        <article class="card span-2" role="listitem" tabindex="0">
+          <div class="thumb" aria-hidden="true"></div>
+          <h2 class="title">Featured (spans 2)</h2>
+          <div class="meta">Featured • Highlight</div>
+          <div class="body">This card demonstrates how you can make certain items span multiple columns while keeping the overall grid responsive.</div>
+        </article>
+
+        <article class="card" role="listitem" tabindex="0">
+          <div class="thumb" aria-hidden="true"></div>
+          <h2 class="title">Card 4</h2>
+          <div class="meta">Meta</div>
+          <div class="body">Content</div>
+        </article>
+
+        <article class="card" role="listitem" tabindex="0">
+          <div class="thumb" aria-hidden="true"></div>
+          <h2 class="title">Card 5</h2>
+          <div class="meta">Meta</div>
+          <div class="body">Content</div>
+        </article>
+
+        <article class="card" role="listitem" tabindex="0">
+          <div class="thumb" aria-hidden="true"></div>
+          <h2 class="title">Card 6</h2>
+          <div class="meta">Meta</div>
+          <div class="body">Content</div>
+        </article>
+
+        <article class="card" role="listitem" tabindex="0">
+          <div class="thumb" aria-hidden="true"></div>
+          <h2 class="title">Card 7</h2>
+          <div class="meta">Meta</div>
+          <div class="body">Content</div>
+        </article>
+
+        <article class="card" role="listitem" tabindex="0">
+          <div class="thumb" aria-hidden="true"></div>
+          <h2 class="title">Card 8</h2>
+          <div class="meta">Meta</div>
+          <div class="body">Content</div>
+        </article>
+
+      </section>
+    </main>
+
+  </div>
+</body>
+</html>

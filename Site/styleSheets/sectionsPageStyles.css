@@ -1,0 +1,267 @@
+/* -------------------------------------------------- */
+/* All Styles for Sections Page */
+/* --------------------------------------------------- */
+.mainContent {
+	display: block;
+	margin: 0 auto;
+	max-width: 1200px;
+    font-family:   'Open Sans', sans-serif;
+    color: darkgrey
+}
+.sectionsPageTitle {
+    color: var(--chosen-color);
+    font-size: 30px;
+    font-weight: 200;
+    text-align: center;
+    margin-top: 0px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    background-color: var(--chosen-color-lighter);
+}
+
+.sectionsPageTitle a {
+    font-family:  'Poppins', sans-serif;
+    color: var(--chosen-color);
+    text-decoration: none;
+}
+
+.form form label {
+    color: rgba(146, 146, 146, 1.00);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 2.1;
+}
+
+.mainContent figure.insertedImage,
+.mainContent figure.insertedImageCircular {
+    margin-top: 0px;
+    margin-bottom: 15px;
+    object-fit: cover;
+    float: left;
+    margin-right: 15px;
+    margin-left: 0px;
+}
+
+.mainContent figure.insertedImage img,
+.mainContent figure.insertedImageCircular img {
+    margin-top: 0px;
+    object-fit: cover;
+    display: block;
+}
+
+.mainContent figure.insertedImageCircular img {
+    border-radius: 50%;
+}
+
+.mainContent figure.insertedImage figcaption,
+.mainContent figure.insertedImageCircular figcaption {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--chosen-color);
+}
+
+/* Alternative: clear floats before new sections */
+.section1Content>h2,
+.section1Content>h3,
+.centredAccentText>h2,
+.centredAccentText>h3,
+.centredAccentText>h4,
+.centredAccentText>p {
+    clear: both;
+}
+
+.mainContent h1 {
+    font-family: 'Roboto', sans-serif;
+    color: var(--chosen-color);
+    font-size: 24px;
+    letter-spacing: 3px;
+    font-weight: 200;
+    line-height: 24px;
+    text-align: left;
+    margin-top: 40px;
+}
+
+.mainContent h1 a {
+    color: var(--chosen-color);
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.mainContent h1 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.mainContent h2 {
+    font-family: 'Roboto', sans-serif;
+    color: var(--chosen-color);
+    letter-spacing: 2px;
+    font-size: 24px;
+    font-weight: 300;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    padding: 0px 0px;
+    position: relative;
+    text-align: left;
+}
+
+.mainContent h2 a {
+    color: var(--chosen-color);
+    text-decoration: none;
+}
+
+.mainContent h2 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.mainContent h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: var(--chosen-color-Comp1);
+}
+
+.mainContent h4 {
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2px;
+    font-size: 18px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: var(--chosen-color-Comp1);
+}
+
+.mainContent h5 {
+    font-family: 'Roboto', sans-serif;;
+    letter-spacing: 2px;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: var(--chosen-color-Comp1);
+}
+
+.mainContent h6 {
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2px;
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: var(--chosen-color-Comp1);
+}
+
+.mainContent strong {
+    color: var(--chosen-color);
+}
+
+.mainContent p {
+    font-family: 'Open Sans', sans-serif;
+    clear: both;
+    color: rgb(169, 168, 168);
+    letter-spacing: 0.6px;
+    font-size: 16px;
+    margin: 5px 0px 15px 0px;
+    line-height: 1.4;
+}
+
+/* Table styles */
+.mainContent table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+}
+
+.mainContent table thead tr th, .mainContent table tr th{
+    background-color: var(--chosen-color-Comp1-lighter);
+    color: var(--chosen-color);
+    font-weight: 700;
+    padding: 12px 8px;
+    text-align: left;
+    /* border: 1px solid rgba(255, 255, 255, 0.3); */
+    border: 1px solid var(--chosen-color);
+}
+
+.mainContent table tbody tr td, .mainContent table tr td{
+    padding: 10px 8px;
+    text-align: left;
+    background-color: var(--chosen-color-Comp1-lighter);
+    border: 1px solid #ddd;
+    color: rgba(146, 146, 146, 1.00);
+}
+
+.mainContent table tbody tr:nth-child(even) td, .mainContent table tr:nth-child(even) td{
+    background-color: var(--chosen-color-Comp2-lighter);
+}
+
+.mainContent table tbody tr:hover td, .mainContent table tr:hover td {
+    background-color: rgba(240, 240, 240, 1.00);
+} 
+
+.mainContent a {
+    color: var(--chosen-color);
+    text-decoration: none;
+    text-decoration-thickness: 1.5px;
+    font-weight: 700;
+}
+.mainContent a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
+.mainContent ul {
+    text-indent: 0px;
+    margin-top: 4px;
+    margin-bottom: 15px;
+    padding-left: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: var(--chosen-color);
+    background-color: var(--chosen-color-Comp1-lighter);
+}
+.mainContent ol {
+    text-indent: 4px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    padding-left: 30px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: var(--chosen-color);
+    background-color: var(--chosen-color-Comp1-lighter);
+}
+.mainContent li {
+    font-size: 16px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    line-height: 1.4;
+    padding-left: 8px;
+}
+.mainContent hr {
+    font-size: 16px;
+    border: none;
+    height: 2px;
+    background-color: var(--chosen-color);
+    margin: 20px 0px;
+}
+.mainContent li::marker {
+    color: var(--chosen-color-Comp1);
+}
+
+/* .mainContent .section1 {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    margin-right: 40px;
+    margin-left: 40px;
+} */

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Grid with padded image</title>
+<style>
+  :root {
+    --card-width: 260px;
+    --gap: 16px;
+    --image-height: 160px;
+    --image-padding: 12px;  /* space between image and the card edge */
+  }
+
+  body {
+    font-family: system-ui;
+    padding: 24px;
+    background: #f4f6f8;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--card-width));
+    gap: var(--gap);
+    justify-content: center;
+  }
+
+  .card {
+    width: var(--card-width);
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(20,30,40,0.06);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Image wrapper adds space */
+  .image-wrapper {
+    padding: var(--image-padding);
+    padding-bottom: 0; /* optional: no padding under the image if you want tighter look */
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: var(--image-height);
+    object-fit: cover;
+    border-radius: 6px; /* slightly rounded image inside */
+    display: block;
+  }
+
+  .content {
+    padding: 12px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .title { font-weight: 700; font-size: 16px; color: #111827; }
+  .body { color: #374151; font-size: 14px; flex: 1; }
+  .meta { font-size: 12px; color: #6b7280; text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="grid">
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/400/300" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 1</div>
+      <div class="body">Image has padding around it.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/300/500" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 2</div>
+      <div class="body">Portrait image, same crop size.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+    <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/400/300" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 1</div>
+      <div class="body">Image has padding around it.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/300/500" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 2</div>
+      <div class="body">Portrait image, same crop size.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+    <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/400/300" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 1</div>
+      <div class="body">Image has padding around it.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/300/500" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 2</div>
+      <div class="body">Portrait image, same crop size.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/400/300" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 1</div>
+      <div class="body">Image has padding around it.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/300/500" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 2</div>
+      <div class="body">Portrait image, same crop size.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+    <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/400/300" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 1</div>
+      <div class="body">Image has padding around it.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/300/500" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 2</div>
+      <div class="body">Portrait image, same crop size.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+    <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/400/300" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 1</div>
+      <div class="body">Image has padding around it.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/300/500" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 2</div>
+      <div class="body">Portrait image, same crop size.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+    <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/400/300" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 1</div>
+      <div class="body">Image has padding around it.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="https://picsum.photos/300/500" alt="">
+    </div>
+    <div class="content">
+      <div class="title">Card 2</div>
+      <div class="body">Portrait image, same crop size.</div>
+      <div class="meta">Meta</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

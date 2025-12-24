@@ -1,0 +1,156 @@
+@charset "utf-8";
+
+:root {
+    --card-width: 200px;
+    --card-gap: 20px;
+    --image-height: 80px;
+    --image-padding: 6px;
+    --max-columns: 8;
+    --columns: 8;
+}
+
+/* Override body styles only for card grid container */
+.cardGrid {
+    max-width: calc((var(--card-width) * var(--max-columns)) + (var(--card-gap) * (var(--max-columns) - 1)));
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.cardGrid .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+    gap: var(--card-gap);
+    justify-content: center;
+}
+
+.cardGrid .card {
+  width: var(--card-width);
+  min-height: 80px;
+  padding: 6px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cardGrid .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(20, 30, 40, 0.12);
+}
+
+/* Image wrapper - default no background */
+.cardGrid .image-wrapper {
+    padding: var(--image-padding);
+    padding-bottom: 0;
+}
+
+/* Default image styling for menu cards - covers container */
+.cardGrid .image-wrapper img {
+    width: 100%;
+    height: var(--image-height);
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+
+/* Image library specific styling - shows complete image with grey background */
+/* Higher specificity to override default img styling */
+.cardGrid .card.imageLibraryCard .image-wrapper {
+    background-color: #888888;
+    padding: var(--image-padding);
+    padding-bottom: var(--image-padding);
+    border-radius: 6px;
+}
+
+.cardGrid .card.imageLibraryCard .image-wrapper img {
+    width: 100%;
+    height: var(--image-height);
+    object-fit: contain !important;
+    border-radius: 0;
+    display: block;
+}
+
+.cardGrid .content {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 10px;
+    padding-left: 10px;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.cardGrid .title {
+    font-family:  'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #111827;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cardGrid .title a {
+    color: #111827;
+    text-decoration: none;
+}
+
+.cardGrid .title a:hover {
+    color: rgba(146, 146, 146, 1.00);
+}
+
+.cardGrid .body {
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.cardGrid .meta {
+    font-size: 11px;
+    color: #6b7280;
+    text-align: right;
+    font-weight: 400;
+}
+
+/* Mobile responsive - reduce columns */
+@media only screen and (max-width: 1400px) {
+    .cardGrid .grid {
+        grid-template-columns: repeat(auto-fit, minmax(var(--card-width), var(--card-width)));
+        max-width: calc((var(--card-width) + var(--card-gap)) * 4 - var(--card-gap));
+    }
+}
+
+@media only screen and (max-width: 1120px) {
+    .cardGrid .grid {
+        grid-template-columns: repeat(auto-fit, minmax(var(--card-width), var(--card-width)));
+        max-width: calc((var(--card-width) + var(--card-gap)) * 3 - var(--card-gap));
+    }
+}
+
+@media only screen and (max-width: 840px) {
+    .cardGrid .grid {
+        grid-template-columns: repeat(auto-fit, minmax(var(--card-width), var(--card-width)));
+        max-width: calc((var(--card-width) + var(--card-gap)) * 2 - var(--card-gap));
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .cardGrid .grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 12px;
+    }
+
+    .cardGrid .card {
+        width: 100%;
+        max-width: 320px;
+        justify-self: center;
+    }
+
+    :root {
+        --card-gap: 12px;
+    }
+}

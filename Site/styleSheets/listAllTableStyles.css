@@ -1,0 +1,207 @@
+/* Filter Container Styles */
+.filterContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px auto;
+  max-width: 95%;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.filterLabel {
+  font-weight: 600;
+  color: #333;
+}
+
+.filterSelect {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.filterButton {
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.filterButton:hover {
+  background-color: #1565c0;
+}
+
+.clearFilterButton {
+  padding: 8px 16px;
+  background-color: #666;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.clearFilterButton:hover {
+  background-color: #555;
+}
+
+.addPageButton {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.addPageButton:hover {
+  background-color: #45a049;
+}
+
+/* List All Table Styles */
+.listAllTable {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding: 10px;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 0.8em;
+}
+
+.listAllTable table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0px auto;
+  background-color: white;
+}
+
+.listAllTable table thead tr th {
+  text-align: left;
+  font-family: sans-serif;
+  font-weight: bold;
+  padding: 8px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+.listAllTable table tbody tr td {
+  vertical-align: middle;
+  text-align: left;
+  font-size: 0.85em;
+  color: rgb(67, 65, 65);
+  font-family: "Open Sans", sans-serif;
+  height: 32px;
+  border-top: 1px solid #D3D3D3;
+  padding: 8px;
+}
+
+.listAllTable table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.listAllTable table tbody tr td.listAllTableCellCenter {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Edit button styling */
+.listAllTableEditButton {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 0.9em;
+  min-width: 90px;
+  text-align: center;
+}
+
+.listAllTableEditButton:hover {
+  background-color: #218838;
+}
+
+/* Page link styling */
+.listAllTablePageLink {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.listAllTablePageLink:hover {
+  text-decoration: underline;
+}
+
+/* Delete button and form styling */
+.listAllTableDeleteForm {
+  margin: 0;
+  text-align: left;
+}
+
+.listAllTableDeleteButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.listAllTableDeleteButton:hover {
+  background-color: #c82333;
+}
+
+.listAllTableProtected {
+  color: #999;
+  font-size: 0.9em;
+}
+
+/* Info/Note box styling */
+.listAllTableNote {
+    margin: 20px auto;
+  max-width: 95%;
+  padding: 10px;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 5px;
+}
+
+.fullWidthEditTable table tbody tr td {
+  text-align: left;
+  font-size: 0.9em;
+  color: rgb(67, 65, 65);
+  font-family: "Open Sans", sans-serif;
+  vertical-align: top;
+  height: 32px;
+  border-top: 1px solid #D3D3D3;
+  padding: 8px;
+}
+
+.fullWidthEditTable table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.fullWidthEditTable table tbody tr td a {
+  color: #2A63AF;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.fullWidthEditTable table tbody tr td a:hover {
+  text-decoration: underline;
+  color: #1a4d8f;
+}

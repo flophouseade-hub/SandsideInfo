@@ -1,0 +1,32 @@
+# Database credentials - DO NOT COMMIT
+Site/phpCode/config.php
+
+# Uploaded files
+uploadedDocuments/*
+uploadedImages/*
+!uploadedDocuments/.gitkeep
+!uploadedImages/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE files
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+error_log
+
+# Temporary files
+tmp/
+temp/
+cache/
+
+.vscode/sftp.json
+Site/.vscode/sftp.json.old

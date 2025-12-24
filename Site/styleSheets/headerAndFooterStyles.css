@@ -1,0 +1,125 @@
+@charset "utf-8";
+body {
+	font-family:  'Poppins', sans-serif;
+	background-color: #FFFFFF;
+	margin: 0;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.pageLocalMenu1 {
+	display: block;
+	width: 100%;
+	height: auto;
+	font-family:  'Poppins', sans-serif;
+	color: white;
+	font-size: 11px;
+	font-weight: 400;
+	line-height: 2.1;
+	text-align: center;
+	margin-top: 0px;
+	padding: 2px;
+	background-color: #2A63AF;
+	border-color: #2A63AF;
+	border: 1px solid #2A63AF;
+}
+.pageLocalMenu1 a {
+	color: white;
+	text-decoration: none;
+}
+header {
+	width: 100%;
+	height: auto;
+	background-color: #2A63AF;
+	border-bottom: 1px soliod #2A63AF;
+	margin: 0px;
+}
+a h4.logo {
+	color: white;
+	text-decoration-line: underline;
+	text-decoration-color: #2A63AF;
+	}
+a:hover h4.logo {
+	color: rgb(43, 57, 70);
+	text-decoration-line: underline;
+	text-decoration-color: #2A63AF;
+	}
+.logo {
+	color: #fff;
+	font-weight: bold;
+	margin-left: auto;
+	letter-spacing: 1px;
+	margin-right: auto;
+	text-align: center;
+	margin-bottom: 5px;
+	padding-top: 25px;
+	line-height: 1em;
+	font-size: 34px;
+	font-family:   'Poppins', sans-serif;
+	font-style: normal;
+}
+.motto {
+	color: #fff;
+	font-weight: normal;
+	margin-left: auto;
+	margin-top: -5px;
+	margin-bottom: 15px;
+	margin-right: auto;
+	text-align: center;
+	padding-top: 5px;
+	line-height: 2em;
+	font-size: 18px;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-style: normal;
+	letter-spacing: 3px
+}
+.loggedInAs {
+	color: #fff;
+	font-weight: bold;
+	margin-left: auto;
+	margin-top: -5px;
+	margin-right: auto;
+	margin-bottom: 0px;
+	text-align: center;
+	padding-top: 5px;
+	line-height: 2em;
+	font-size: 11px;
+	font-family: sans-serif;
+	font-style: normal;
+}
+.loggedInAs a {
+	color: #FFFFFF;
+	text-decoration-line: underline;
+	text-decoration-color: #FFFFFF;
+}
+.hero_header {
+	color: #FFFFFF;
+	text-align: center;
+	margin: 0;
+	letter-spacing: 4px;
+}
+.hero_header a{
+	color: #FFFFFF;
+	text-align: center;
+	margin: 0;
+	letter-spacing: 4px;
+	text-decoration-line: underline;
+	text-decoration-color: #B3B3B3;
+}
+footer {
+	background-color: #B3B3B3;
+	padding-top: 60px;
+	padding-bottom: 60PX;
+	clear: both;
+}
+.copyright {
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #717070;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-weight: lighter;
+	letter-spacing: 2px;
+	border-top-width: 2px;
+}
