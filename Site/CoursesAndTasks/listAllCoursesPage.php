@@ -54,7 +54,7 @@ if (!empty($deletionMessage)) {
 
 // Build the table content
 $tableContent = "
-<div class=\"fullWidthEditTable\">
+<div class=\"listAllTable\" style=\"max-width: 95%; margin: 20px auto;\">
 <table>
   <thead>
     <tr>
