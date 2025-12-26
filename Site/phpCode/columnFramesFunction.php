@@ -17,14 +17,16 @@ function printColumnFramesSection($sectionContent,  $errorMessage, $title, $sect
         print("<style>\n
   .$divClass {
     --chosen-color: $sectionColour;
-    --chosen-color-lighter: $colourCombo[lighter];
-    --chosen-color-Comp1: $colourCombo[splitComp1];
-    --chosen-color-Comp2: $colourCombo[splitComp2];
-    --chosen-color-Comp2-lighter: $colourCombo[splitComp2Lighter];
-    --chosen-color-Comp1-lighter: $colourCombo[splitComp1Lighter];
+    --chosen-color-lighter: {$colourCombo['lighter']};
+    --chosen-color-Comp1: {$colourCombo['splitComp1']};
+    --chosen-color-Comp2: {$colourCombo['splitComp2']};
+    --chosen-color-Comp2-lighter: {$colourCombo['splitComp2Lighter']};
+    --chosen-color-Comp1-lighter: {$colourCombo['splitComp1Lighter']};
   }
   </style>\n");
-
+    }
+    
+    // Always print structural CSS regardless of color settings
     print("<style>\n
     .$divClass .columnFramesCardGrid {
   display: grid;
@@ -132,9 +134,7 @@ font-size: 14px;
   max-width: 100%;
 }
 
-
   </style>\n");
-    }
 
     // Add CSS to hide title if SectionShowTitle is false
     if (!$sectionShowTitle) {

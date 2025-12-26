@@ -30,10 +30,10 @@ function insertPageHeader($pageID)
 <!-- General Styles for Header and Footer -->
 <link href=\"../styleSheets/headerAndFooterStyles.css\"rel=\"stylesheet\" type=\"text/css\">
 
-<!-- For Menus -->
+<!-- For Menus 
 <link href=\"../styleSheets/blockMenuStyles.css\"rel=\"stylesheet\" type=\"text/css\">
 
-<link href=\"../styleSheets/sectionsPageStyles.css\"rel=\"stylesheet\" type=\"text/css\">
+<link href=\"../styleSheets/sectionsPageStyles.css\"rel=\"stylesheet\" type=\"text/css\"> -->
 
 <!-- For Forms -->
 <link href=\"../styleSheets/formPageFormatting.css\"rel=\"stylesheet\" type=\"text/css\">
@@ -163,7 +163,6 @@ function insertPageLocalMenu($pageID)
   return;
 }
 
-
 function insertPageTitleAndClass($title, $titleClass, $pageID)
 {
   if (isset($_SESSION['pagesOnSite'][$pageID]['PageColour'])) {
@@ -197,6 +196,7 @@ function insertPageTitleAndClass($title, $titleClass, $pageID)
   }
   return;
 }
+
 
 function insertPageSectionOneColumnByRefID($refID, $showTitle = true)
 {
