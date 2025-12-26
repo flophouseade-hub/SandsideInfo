@@ -1,0 +1,2 @@
+[2025-12-26 18:39:14] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\PagesAndSections\listAllPagesPage.php:148 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
+[2025-12-26 18:39:14] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\PagesAndSections\listAllPagesPage.php:148 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
