@@ -284,10 +284,10 @@ function printRawAndBasicSection($sectionContent, $errorMessage, $title, $sectio
     .$divClass .sectionEditButton:hover {\n    
       background-color: rgba(25, 118, 210, 1);\n    
       opacity: 1;\n  }\n  
-    .$divClass .section1:hover .sectionEditButton {\n    
+    .$divClass:hover .sectionEditButton {\n    
       opacity: 1;\n  }\n  
-    .$divClass .section1 {\n    
-    p osition: relative;\n  }\n
+    .$divClass {\n    
+    position: relative;\n  }\n
     </style>\n";
 
 		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
