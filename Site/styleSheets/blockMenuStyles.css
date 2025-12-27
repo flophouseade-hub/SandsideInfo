@@ -8,6 +8,27 @@
   --max-columns: 5;
 }
 
+.blockMenuPageTitle {
+  font-family:  'Poppins', sans-serif;
+  color: white;
+  font-size: 30px;
+  font-weight: 100;
+  text-align: center;
+  margin-top: 0px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  padding-bottom: 20px;
+  background-color: darkgrey;
+}
+
+.blockMenuPageTitle a {
+  font-family:  'Poppins', sans-serif;
+  color: white;
+  text-decoration: none;
+}
+
 /* Container wrapper - centers the grid */
 .blockMenuContainer {
   max-width: calc((var(--card-width) * var(--max-columns)) + (var(--card-gap) * (var(--max-columns) - 1)));
@@ -99,6 +120,12 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   word-wrap: break-word;
+  background-color: #6b7280;
+  min-height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px;
+  border-radius: 6px;
 }
 
 .blockMenuBlock .title a {
@@ -112,12 +139,23 @@
 
 .blockMenuBlock .body {
   color: #374151;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.5;
   word-wrap: break-word;
+  background-color: antiquewhite;
+  padding: 8px;
+  border-radius: 6px;
+  height: 60px;
+  overflow: hidden;
 }
 
 .blockMenuBlock .meta {
+  font-size: 11px;
+  color: #6b7280;
+  text-align: right;
+  font-weight: 400;
+}
+.blockMenuBlock .meta a{
   font-size: 11px;
   color: #6b7280;
   text-align: right;
@@ -173,23 +211,3 @@
   }
 }
 
-.blockMenuPageTitle {
-  font-family:  'Poppins', sans-serif;
-  color: white;
-  font-size: 30px;
-  font-weight: 100;
-  text-align: center;
-  margin-top: 0px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 0px;
-  padding-top: 15px;
-  padding-bottom: 20px;
-  background-color: darkgrey;
-}
-
-.blockMenuPageTitle a {
-  font-family:  'Poppins', sans-serif;
-  color: white;
-  text-decoration: none;
-}

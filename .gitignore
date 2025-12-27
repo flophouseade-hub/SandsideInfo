@@ -13,6 +13,7 @@ Thumbs.db
 *.swp
 *.swo
 *~
+*.txt
 
 # IDE files
 .idea/
@@ -29,4 +30,16 @@ temp/
 cache/
 
 .vscode/sftp.json
-Site/.vscode/sftp.json.old
+.vscode/*
+
+Site/images/*
+
+.prettierrc
+package-lock.json
+node_modules/*
+!node_modules/.gitkeep
+package.json
+Site.code-workspace
+
+Site/error_log.txt
+Site/images/Two Kids v9 Rounded Rainbow 2.jpg

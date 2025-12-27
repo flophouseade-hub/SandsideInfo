@@ -241,9 +241,16 @@ function insertMenuChoiceCard($linkID)
     $imageForBlock = "../uploadedImages/Question Marks Pretty.jpg";
   }
 
+  // Get colour variations for the block
+  $pageColours = generateColorVariations($linkColour);
+  $backgoundColour = $pageColours['splitComp1Lighter'];
+  $backgoundColour2 = $pageColours['lighter'];
+
+
   // If the user is an editor or admin let them see the page ID
   if (isset($_SESSION['currentUserLogOnStatus']) && ($_SESSION['currentUserLogOnStatus'] == 'pageEditor' || $_SESSION['currentUserLogOnStatus'] == 'fullAdmin')) {
-    $pageIDInclude = " <span class=\"meta\">ID: $linkID</span>";
+    $editLink = "../PagesAndSections/editPageDetailsPage.php?editPageID=$linkID";
+    $pageIDInclude = " <span class=\"meta\"><a href=\"$editLink\">ID: $linkID</a></span>";
   } else {
     $pageIDInclude = "";
   }
@@ -256,10 +263,10 @@ function insertMenuChoiceCard($linkID)
         </a>
       </div>
       <div class=\"content\">
-        <div class=\"title\">
-          <a href=\"$linkPageLink\">$linkName</a>
+        <div class=\"title\" style=\"background-color: $backgoundColour; color: $linkColour;\">
+          <a href=\"$linkPageLink\" style=\"color: $linkColour;\">$linkName</a>
         </div>
-        <div class=\"body\">$linkDescription</div>
+        <div class=\"body\" style=\"background-color: $backgoundColour2;\">$linkDescription</div>
         $pageIDInclude
       </div>
     </div>

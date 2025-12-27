@@ -226,6 +226,7 @@ $sectionStyleOptionArray = array(
     "CentredSideAccent" => "The content is centered on the page with coloured accents on the sides",
     "AlternateBoxes" => "Content boxes alternate left and right across the page",
     "BoxesAndShadows" => "Headings and content are in boxes with shadows and coloured accents",
+    "RawAndBasic" => "Only the most basic styling is applied (for admin use only)",
 );
 
 // Get the page details for this page from the array:
