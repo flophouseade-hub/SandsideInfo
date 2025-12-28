@@ -33,13 +33,14 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
 
   .$divClass .headerBox h2, .$divClass .headerBox h1 {
     font-family: Roboto, sans-serif;
-    font-weight: 400;
-    font-size: 1.1em;
+    font-weight: 300;
+    font-size: 0.9em;
     margin-top: 6px;
     margin-bottom: 0;
   }
   .$divClass .headerBox h1 {
-    font-size: 1.3em;
+    font-size: 1.0em;
+    letter-spacing: 1px;
   }  
   .$divClass .headerBox h5, .$divClass .headerBox h6{
   font-size: 0.9em;
@@ -54,7 +55,7 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
 .$divClass .contentBox .insertedImage {
     max-width: 100%;
     height: auto;
-    margin: 15px 0;
+    margin: 0px 0px 15px 20px;
     padding: 12px;
     background: var(--chosen-color-lighter);
     border-radius: 8px;
@@ -63,9 +64,10 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
   
   .$divClass .boxesAndShadowsTitle {
     font-family: 'Roboto', sans-serif;
-    font-weight: 600;
-    font-size: 1.9em;
-    margin-bottom: 30px;
+    font-weight: 400;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+    margin-bottom: 0px;
     padding: 20px;
     padding-left: 26px;
     background-color: #f5f5f5;

@@ -256,4 +256,3 @@ function confirmDelete(taskID, taskName) {
 mysqli_close($connection);
 
 insertPageFooter($thisPageID);
-?>

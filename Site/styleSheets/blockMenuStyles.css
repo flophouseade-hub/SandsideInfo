@@ -1,213 +1,193 @@
 @charset "utf-8";
 
 :root {
-  --card-width: 260px;
-  --card-gap: 20px;
-  --image-height: 160px;
-  --image-padding: 12px;
-  --max-columns: 5;
-}
-
-.blockMenuPageTitle {
-  font-family:  'Poppins', sans-serif;
-  color: white;
-  font-size: 30px;
-  font-weight: 100;
-  text-align: center;
-  margin-top: 0px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 0px;
-  padding-top: 15px;
-  padding-bottom: 20px;
-  background-color: darkgrey;
-}
-
-.blockMenuPageTitle a {
-  font-family:  'Poppins', sans-serif;
-  color: white;
-  text-decoration: none;
+	--card-width: 260px;
+	--card-gap: 20px;
+	--image-height: 160px;
+	--image-padding: 12px;
+	--max-columns: 5;
 }
 
 /* Container wrapper - centers the grid */
 .blockMenuContainer {
-  max-width: calc((var(--card-width) * var(--max-columns)) + (var(--card-gap) * (var(--max-columns) - 1)));
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+	max-width: calc((var(--card-width) * var(--max-columns)) + (var(--card-gap) * (var(--max-columns) - 1)));
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 /* Grid layout - maximum 5 blocks across */
 .gridForBlockMenu {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
-  gap: var(--card-gap);
-  justify-content: center;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+	gap: var(--card-gap);
+	justify-content: center;
 }
 
 /* Individual block styling */
 .blockMenuBlock {
-  width: 260px;
-  min-height: 160px;
-  padding: 12px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+	width: 260px;
+	min-height: 160px;
+	padding: 12px;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+	box-sizing: border-box;
+	overflow: hidden;
+	transition:
+		transform 0.2s,
+		box-shadow 0.2s;
 }
 
 .blockMenuBlock:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(20, 30, 40, 0.12);
+	transform: translateY(-4px);
+	box-shadow: 0 8px 24px rgba(20, 30, 40, 0.12);
 }
 
 .blockMenuBlock a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  font-size: 16px;
-  width: 100%;
-  display: block;
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+	font-size: 16px;
+	width: 100%;
+	display: block;
 }
 
 .blockMenuBlock a:hover {
-  color: #000;
+	color: #000;
 }
 
 /* Image wrapper - default no background */
 .blockMenuBlock .image-wrapper {
-  width: 100%;
-  margin-bottom: 8px;
-  overflow: hidden;
-  border-radius: 6px;
+	width: 100%;
+	margin-bottom: 8px;
+	overflow: hidden;
+	border-radius: 6px;
 }
 
 /* Default image styling for menu blocks - covers container */
 .blockMenuBlock .image-wrapper img {
-  width: 100%;
-  height: var(--image-height);
-  object-fit: cover;
-  display: block;
+	width: 100%;
+	height: var(--image-height);
+	object-fit: cover;
+	display: block;
 }
 
 /* Image library specific styling - shows complete image with grey background */
 .blockMenuBlock.imageLibraryCard .image-wrapper {
-  background-color: #888888;
-  padding: 8px;
+	background-color: #888888;
+	padding: 8px;
 }
 
 .blockMenuBlock.imageLibraryCard .image-wrapper img {
-  width: 100%;
-  height: var(--image-height);
-  object-fit: contain !important;
+	width: 100%;
+	height: var(--image-height);
+	object-fit: contain !important;
 }
 
 .blockMenuBlock .content {
-  padding: 8px 0 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
+	padding: 8px 0 0 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 100%;
 }
 
 .blockMenuBlock .title {
-  font-family:  'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  color: #111827;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  word-wrap: break-word;
-  background-color: #6b7280;
-  min-height: 50px;
-  text-align: center;
-  vertical-align: middle;
-  padding: 8px;
-  border-radius: 6px;
+	font-family: "Poppins", sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+	color: #111827;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	word-wrap: break-word;
+	background-color: #6b7280;
+	min-height: 50px;
+	text-align: center;
+	vertical-align: middle;
+	padding: 8px;
+	border-radius: 6px;
 }
 
 .blockMenuBlock .title a {
-  color: #111827;
-  text-decoration: none;
+	color: #111827;
+	text-decoration: none;
 }
 
 .blockMenuBlock .title a:hover {
-  color: rgba(146, 146, 146, 1.00);
+	color: rgba(146, 146, 146, 1);
 }
 
 .blockMenuBlock .body {
-  color: #374151;
-  font-size: 12px;
-  line-height: 1.5;
-  word-wrap: break-word;
-  background-color: antiquewhite;
-  padding: 8px;
-  border-radius: 6px;
-  height: 60px;
-  overflow: hidden;
+	color: #374151;
+	font-size: 12px;
+	line-height: 1.5;
+	word-wrap: break-word;
+	background-color: antiquewhite;
+	padding: 8px;
+	border-radius: 6px;
+	height: 60px;
+	overflow: hidden;
 }
 
 .blockMenuBlock .meta {
-  font-size: 11px;
-  color: #6b7280;
-  text-align: right;
-  font-weight: 400;
+	font-size: 11px;
+	color: #6b7280;
+	text-align: right;
+	font-weight: 400;
 }
-.blockMenuBlock .meta a{
-  font-size: 11px;
-  color: #6b7280;
-  text-align: right;
-  font-weight: 400;
+.blockMenuBlock .meta a {
+	font-size: 11px;
+	color: #6b7280;
+	text-align: right;
+	font-weight: 400;
 }
 
 /* Mobile responsive - reduce columns */
 @media only screen and (max-width: 1400px) {
-  :root {
-    --max-columns: 4;
-  }
-  
-  .blockMenuContainer {
-    max-width: calc((var(--card-width) * 4) + (var(--card-gap) * 3));
-  }
+	:root {
+		--max-columns: 4;
+	}
+
+	.blockMenuContainer {
+		max-width: calc((var(--card-width) * 4) + (var(--card-gap) * 3));
+	}
 }
 
 @media only screen and (max-width: 1120px) {
-  :root {
-    --max-columns: 3;
-  }
-  
-  .blockMenuContainer {
-    max-width: calc((var(--card-width) * 3) + (var(--card-gap) * 2));
-  }
+	:root {
+		--max-columns: 3;
+	}
+
+	.blockMenuContainer {
+		max-width: calc((var(--card-width) * 3) + (var(--card-gap) * 2));
+	}
 }
 
 @media only screen and (max-width: 840px) {
-  :root {
-    --max-columns: 2;
-  }
-  
-  .blockMenuContainer {
-    max-width: calc((var(--card-width) * 2) + (var(--card-gap) * 1));
-  }
+	:root {
+		--max-columns: 2;
+	}
+
+	.blockMenuContainer {
+		max-width: calc((var(--card-width) * 2) + (var(--card-gap) * 1));
+	}
 }
 
 @media only screen and (max-width: 560px) {
-  .gridForBlockMenu {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+	.gridForBlockMenu {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
 
-  .blockMenuBlock {
-    width: 100%;
-    max-width: 320px;
-    justify-self: center;
-  }
-  
-  .blockMenuContainer {
-    max-width: 100%;
-    padding: 0 10px;
-  }
+	.blockMenuBlock {
+		width: 100%;
+		max-width: 320px;
+		justify-self: center;
+	}
+
+	.blockMenuContainer {
+		max-width: 100%;
+		padding: 0 10px;
+	}
 }
-
