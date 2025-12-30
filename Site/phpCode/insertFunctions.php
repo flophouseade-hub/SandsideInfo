@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 function insertPageHeader($pageID)
 {
 	//extract page details from session variables
@@ -269,7 +269,7 @@ function insertPageSectionOneColumnByRefID($refID, $showTitle = true)
 	$con = connectToDatabase();
 
 	// Get the section details from the database
-	$query = "SELECT * FROM SectionDB WHERE SectionID = '$refID' ";
+	$query = "SELECT * FROM section_tb WHERE SectionID = '$refID' ";
 	$result = mysqli_query($con, $query);
 	if (!$result) {
 		$errorMsg = urlencode("Database query failed for section $refID: " . mysqli_error($con));
@@ -300,8 +300,8 @@ function insertMenuChoiceCard($linkID)
 	$linkColour = $_SESSION["pagesOnSite"][$linkID]["PageColour"];
 
 	// Get the image for the block and put in a default if there is no image
-	if ($linkImageIDRef != 0 && isset($_SESSION["imageLibrary"][$linkImageIDRef])) {
-		$imageForBlock = $_SESSION["imageLibrary"][$linkImageIDRef]["ImageLink"];
+	if ($linkImageIDRef != 0 && isset($_SESSION["image_library_tb"][$linkImageIDRef])) {
+		$imageForBlock = $_SESSION["image_library_tb"][$linkImageIDRef]["ImageLink"];
 	} else {
 		$imageForBlock = "../uploadedImages/Question Marks Pretty.jpg";
 	}
@@ -341,15 +341,15 @@ function insertMenuChoiceCard($linkID)
 	return;
 }
 
-function insertImageLibraryCard($imageID)
+function insertimage_library_tbCard($imageID)
 {
-	$imageCaption = $_SESSION["imageLibrary"][$imageID]["ImageCaption"];
-	$imageDescription = $_SESSION["imageLibrary"][$imageID]["ImageDescription"];
-	$imageLink = $_SESSION["imageLibrary"][$imageID]["ImageLink"];
+	$imageCaption = $_SESSION["image_library_tb"][$imageID]["ImageCaption"];
+	$imageDescription = $_SESSION["image_library_tb"][$imageID]["ImageDescription"];
+	$imageLink = $_SESSION["image_library_tb"][$imageID]["ImageLink"];
 	$imageGroup =
-		isset($_SESSION["imageLibrary"][$imageID]["ImageGroup"]) &&
-		!empty($_SESSION["imageLibrary"][$imageID]["ImageGroup"])
-			? $_SESSION["imageLibrary"][$imageID]["ImageGroup"]
+		isset($_SESSION["image_library_tb"][$imageID]["ImageGroup"]) &&
+		!empty($_SESSION["image_library_tb"][$imageID]["ImageGroup"])
+			? $_SESSION["image_library_tb"][$imageID]["ImageGroup"]
 			: "Uncategorized";
 
 	// If the user is an editor or admin, show edit link and image ID
@@ -357,7 +357,7 @@ function insertImageLibraryCard($imageID)
 		isset($_SESSION["currentUserLogOnStatus"]) &&
 		($_SESSION["currentUserLogOnStatus"] == "pageEditor" || $_SESSION["currentUserLogOnStatus"] == "fullAdmin")
 	) {
-		$editLink = "../ImageLibraryPages/editImageDetails.php?editImageID=$imageID";
+		$editLink = "../image_library_tbPages/editImageDetails.php?editImageID=$imageID";
 		$imageIDInclude = "<span class=\"meta\">ID: $imageID | <a href=\"$editLink\" style=\"color: #6b7280;\">Edit</a></span>";
 		$titleLink = "<a href=\"$editLink\">$imageCaption</a>";
 	} else {

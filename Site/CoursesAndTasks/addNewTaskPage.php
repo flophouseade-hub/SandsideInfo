@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 66;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertNewTaskButton'])
     }
   }
   
-  // Validate Task Resource (optional - must be from ResourceLibrary if provided)
+  // Validate Task Resource (optional - must be from resource_library_tb if provided)
   if (!empty($inputTaskResource)) {
     if (!validatePositiveInteger($inputTaskResource)) {
       $feedbackMessage .= "<p class=\"formFeedbackError\">Invalid Resource ID selected.</p>";
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertNewTaskButton'])
     $connection = connectToDatabase();
     
     // Check if a task with the same name already exists
-    $checkNameQuery = "SELECT TaskID FROM TasksDB WHERE TaskName = ?";
+    $checkNameQuery = "SELECT TaskID FROM tasks_tb WHERE TaskName = ?";
     $stmt = $connection->prepare($checkNameQuery);
     $stmt->bind_param('s', $inputTaskName);
     $stmt->execute();
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertNewTaskButton'])
       $feedbackMessage .= "<p class=\"formFeedbackError\">A task with this name already exists. Please use a different name.</p>";
     } else {
       // Insert new task
-      $insertQuery = "INSERT INTO TasksDB (TaskName, TaskDescription, TaskResource, TaskGroup, TaskColour, TaskMadeBy, TaskMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      $insertQuery = "INSERT INTO tasks_tb (TaskName, TaskDescription, TaskResource, TaskGroup, TaskColour, TaskMadeBy, TaskMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
       $stmtInsert = $connection->prepare($insertQuery);
       $stmtInsert->bind_param("sssssss", $inputTaskName, $inputTaskDescription, $inputTaskResource, $inputTaskGroup, $inputTaskColour, $taskMadeBy, $taskMadeTime);
       
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertNewTaskButton'])
 
 // Fetch existing task groups from database for dropdown
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT TaskGroup FROM TasksDB WHERE TaskGroup IS NOT NULL AND TaskGroup != '' ORDER BY TaskGroup ASC";
+$groupQuery = "SELECT DISTINCT TaskGroup FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' ORDER BY TaskGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {
@@ -174,7 +174,7 @@ while ($groupRow = mysqli_fetch_assoc($groupResult)) {
 }
 
 // Fetch all tasks with their groups and colours for colour dropdown
-$colourQuery = "SELECT TaskName, TaskGroup, TaskColour FROM TasksDB WHERE TaskGroup IS NOT NULL AND TaskGroup != '' AND TaskColour IS NOT NULL AND TaskColour != '' ORDER BY TaskGroup, TaskName";
+$colourQuery = "SELECT TaskName, TaskGroup, TaskColour FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' AND TaskColour IS NOT NULL AND TaskColour != '' ORDER BY TaskGroup, TaskName";
 $colourResult = mysqli_query($connection, $colourQuery);
 
 if (!$colourResult) {
@@ -201,8 +201,8 @@ while ($colourRow = mysqli_fetch_assoc($colourResult)) {
     );
 }
 
-// Fetch all resources from ResourceLibrary
-$resourceQuery = "SELECT LinkedResourceID, LRName, LRGroup FROM ResourceLibrary ORDER BY LRGroup, LRName";
+// Fetch all resources from resource_library_tb
+$resourceQuery = "SELECT LinkedResourceID, LRName, LRGroup FROM resource_library_tb ORDER BY LRGroup, LRName";
 $resourceResult = mysqli_query($connection, $resourceQuery);
 
 if (!$resourceResult) {

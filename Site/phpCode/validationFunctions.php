@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 function validateURL($url)
 {
   $url = trim($url);
@@ -143,7 +143,7 @@ function validateSectionIDList($sectionIDString)
     }
 
     // Query the database to check if this section exists
-    $query = "SELECT SectionID FROM SectionDB WHERE SectionID = ?";
+    $query = "SELECT SectionID FROM section_tb WHERE SectionID = ?";
     $stmt = $connection->prepare($query);
     $stmt->bind_param("i", $sectionID);
     $stmt->execute();
@@ -205,7 +205,7 @@ function validatePageIDList($pageIDString)
     }
 
     // Query the database to check if this page exists
-    $query = "SELECT PageID FROM PagesOnSite WHERE PageID = ?";
+    $query = "SELECT PageID FROM pages_on_site_tb WHERE PageID = ?";
     $stmt = $connection->prepare($query);
     $stmt->bind_param("i", $pageID);
     $stmt->execute();
@@ -253,7 +253,7 @@ function validateImageID($imageID)
     return "Database connection failed - cannot validate Image ID.";
   }
 
-  $query = "SELECT ImageID FROM ImageLibrary WHERE ImageID = ?";
+  $query = "SELECT ImageID FROM image_library_tb WHERE ImageID = ?";
   $stmt = $connection->prepare($query);
 
   if (!$stmt) {

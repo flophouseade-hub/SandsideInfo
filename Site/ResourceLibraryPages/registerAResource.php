@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 43;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addResourceButton'])) 
     $uploadBy = $_SESSION['currentUserFirstName'] . " " . $_SESSION['currentUserLastName'];
     
     // LRLocal = 0 because resource is hosted externally, not on this server
-    $insertQuery = "INSERT INTO ResourceLibrary (LRName, LRDescription, LRType, LRLink, LRGroup, LRLocal, LRUploadedWhen, LRUploadedBy) VALUES (?, ?, ?, ?, ?, 0, NOW(), ?)";
+    $insertQuery = "INSERT INTO resource_library_tb (LRName, LRDescription, LRType, LRLink, LRGroup, LRLocal, LRUploadedWhen, LRUploadedBy) VALUES (?, ?, ?, ?, ?, 0, NOW(), ?)";
     $stmt = $connection->prepare($insertQuery);
     $stmt->bind_param("ssssss", 
       $inputResourceName,
@@ -144,7 +144,7 @@ if ($resourceAddedSuccess === true) {
     
     <div class=\"formButtonContainer\" style=\"margin-top: 20px;\">
       <a href=\"editAResourcePage.php?resourceID=$newResourceID\" class=\"formButtonPrimary\">Edit This Resource</a>
-      <a href=\"resourceLibraryPage.php\" class=\"formButtonSecondary\">View Resource Library</a>
+      <a href=\"resource_library_tbPage.php\" class=\"formButtonSecondary\">View Resource Library</a>
       <a href=\"registerAResource.php\" class=\"formButtonSecondary\">Add Another Resource</a>
     </div>
   ");
@@ -240,7 +240,7 @@ print("
             <button type=\"submit\" name=\"addResourceButton\" class=\"formButtonPrimary\">
                 Add Resource
             </button>
-            <a href=\"resourceLibraryPage.php\" class=\"formButtonSecondary\">
+            <a href=\"resource_library_tbPage.php\" class=\"formButtonSecondary\">
                 Resource Library
             </a>
         </div>

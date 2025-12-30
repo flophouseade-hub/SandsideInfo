@@ -1,131 +1,143 @@
-<?php
+﻿<?php
 $thisPageID = 2;
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // Get the data from the database
 $con = connectToDatabase();
 if (!$con) {
-    die("ERROR: Could not connect to database: " . mysqli_connect_error());
+	die("ERROR: Could not connect to database: " . mysqli_connect_error());
 }
 
 // Get the page details for this page from the array
-$pageName = $_SESSION['pagesOnSite'][$thisPageID]['PageName'] ?? "Class Lists";
-$pageDescription = $_SESSION['pagesOnSite'][$thisPageID]['PageDescription'] ?? "";
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "Class Lists";
+$pageDescription = $_SESSION["pagesOnSite"][$thisPageID]["PageDescription"] ?? "";
 
 insertPageHeader($thisPageID);
 insertPageLocalMenu($thisPageID);
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
-print("<link href=\"../styleSheets/classListStyles.css\"rel=\"stylesheet\" type=\"text/css\">");
+print "<link href=\"../styleSheets/classListStyles.css\"rel=\"stylesheet\" type=\"text/css\">";
 
-print("<div class=\"classBoxWrapper\">");
+print "<div class=\"classBoxWrapper\">";
 
 if (!empty($pageDescription)) {
-    print("<div class=\"classListDescription\">
+	print "<div class=\"classListDescription\">
             <p>$pageDescription</p>
-        </div>");
+        </div>";
 }
 
-print("<div class=\"classListContainer\">");
+print "<div class=\"classListContainer\">";
 
 // Get all classes ordered by classOrder
-$query = "SELECT * FROM classes WHERE 1 ORDER BY classOrder";
+$query = "SELECT * FROM classes_tb WHERE 1 ORDER BY classOrder";
 $resultClasses = mysqli_query($con, $query);
 
 while ($row = mysqli_fetch_assoc($resultClasses)) {
-    $classID = $row['ClassID'];
-    $colorCode = $row['colour'];
-    $className = htmlspecialchars($row['classname'], ENT_QUOTES, 'UTF-8');
+	$classID = $row["ClassID"];
+	$colorCode = $row["colour"];
+	$className = htmlspecialchars($row["classname"], ENT_QUOTES, "UTF-8");
 
-    // Get students for this class using prepared statement
-    $stmtStudents = $con->prepare("SELECT FirstName, LastName FROM Students WHERE ClassID = ? ORDER BY LastName, FirstName");
-    $stmtStudents->bind_param('i', $classID);
-    $stmtStudents->execute();
-    $resultStudents = $stmtStudents->get_result();
+	// Get students_tb for this class using prepared statement
+	$stmtstudents_tb = $con->prepare(
+		"SELECT FirstName, LastName FROM students_tb WHERE ClassID = ? ORDER BY LastName, FirstName",
+	);
+	$stmtstudents_tb->bind_param("i", $classID);
+	$stmtstudents_tb->execute();
+	$resultstudents_tb = $stmtstudents_tb->get_result();
 
-    $arrayStudents = array();
-    while ($rowStudent = $resultStudents->fetch_assoc()) {
-        $arrayStudents[] = array(
-            'FirstName' => $rowStudent['FirstName'],
-            'LastName' => $rowStudent['LastName']
-        );
-    }
-    $stmtStudents->close();
+	$arraystudents_tb = [];
+	while ($rowStudent = $resultstudents_tb->fetch_assoc()) {
+		$arraystudents_tb[] = [
+			"FirstName" => $rowStudent["FirstName"],
+			"LastName" => $rowStudent["LastName"],
+		];
+	}
+	$stmtstudents_tb->close();
 
-    // Get staff for this class using prepared statement
-    $stmtStaff = $con->prepare("SELECT FirstName, LastName, SchoolStatus FROM UsersDB WHERE AssociatedClassID = ? ORDER BY SchoolStatus DESC, LastName, FirstName");
-    $stmtStaff->bind_param('i', $classID);
-    $stmtStaff->execute();
-    $resultStaff = $stmtStaff->get_result();
+	// Get staff for this class using prepared statement
+	$stmtStaff = $con->prepare(
+		"SELECT FirstName, LastName, SchoolStatus FROM users_tb WHERE AssociatedClassID = ? ORDER BY SchoolStatus DESC, LastName, FirstName",
+	);
+	$stmtStaff->bind_param("i", $classID);
+	$stmtStaff->execute();
+	$resultStaff = $stmtStaff->get_result();
 
-    $arrayStaff = array();
-    while ($rowStaff = $resultStaff->fetch_assoc()) {
-        $arrayStaff[] = array(
-            'FirstName' => $rowStaff['FirstName'],
-            'LastName' => $rowStaff['LastName'],
-            'Status' => $rowStaff['SchoolStatus']
-        );
-    }
-    $stmtStaff->close();
+	$arrayStaff = [];
+	while ($rowStaff = $resultStaff->fetch_assoc()) {
+		$arrayStaff[] = [
+			"FirstName" => $rowStaff["FirstName"],
+			"LastName" => $rowStaff["LastName"],
+			"Status" => $rowStaff["SchoolStatus"],
+		];
+	}
+	$stmtStaff->close();
 
-    $noOfStudents = count($arrayStudents);
-    $noOfStaff = count($arrayStaff);
-    $noOfRows = max($noOfStudents, $noOfStaff);
+	$noOfstudents_tb = count($arraystudents_tb);
+	$noOfStaff = count($arrayStaff);
+	$noOfRows = max($noOfstudents_tb, $noOfStaff);
 
-    echo "<div class=\"classBox\">";
-    echo "<div class=\"classBoxHeader\">";
-    echo "<h3>$className <small>$noOfStudents</small></h3>";
-    
-    // Display teacher names under the class name
-    foreach ($arrayStaff as $staff) {
-        if ($staff['Status'] == "Teacher") {
-            $teacherName = htmlspecialchars($staff['FirstName'] . " " . $staff['LastName'], ENT_QUOTES, 'UTF-8');
-            echo "<p><strong>$teacherName</strong></p>";
-        }
-    }
-    
-    echo "</div>"; // Close classBoxHeader
-    echo "<div class=\"classBoxBody\">";
-    echo "<table bgcolor=\"" . htmlspecialchars($colorCode, ENT_QUOTES, 'UTF-8') . "\" border=\"1\">";
+	echo "<div class=\"classBox\"style=\"background-color: $colorCode\">";
+	echo "<div class=\"classBoxHeader\">";
+	echo "<h3>$className <small style=\"font-size: 12px; \">$noOfstudents_tb</small></h3>";
 
-    for ($rowNum = 0; $rowNum < $noOfRows; $rowNum++) {
-        echo '<tr>';
+	// Display teacher names under the class name
+	foreach ($arrayStaff as $staff) {
+		if ($staff["Status"] == "Teacher") {
+			$teacherName = htmlspecialchars($staff["FirstName"] . " " . $staff["LastName"], ENT_QUOTES, "UTF-8");
+			echo "<p><strong>$teacherName</strong></p>";
+		}
+	}
 
-        // Student column
-        if (isset($arrayStudents[$rowNum])) {
-            $studentName = htmlspecialchars($arrayStudents[$rowNum]['FirstName'] . " " . $arrayStudents[$rowNum]['LastName'], ENT_QUOTES, 'UTF-8');
-            echo "<td>$studentName</td>";
-        } else {
-            echo "<td>&nbsp;</td>";
-        }
+	echo "</div>"; // Close classBoxHeader
+	echo "<div class=\"classBoxBody\"  >";
+	echo "<table border=\"0\">";
 
-        // Staff column
-        if (isset($arrayStaff[$rowNum])) {
-            $staffName = htmlspecialchars($arrayStaff[$rowNum]['FirstName'] . " " . $arrayStaff[$rowNum]['LastName'], ENT_QUOTES, 'UTF-8');
-            $status = $arrayStaff[$rowNum]['Status'];
+	for ($rowNum = 0; $rowNum < $noOfRows; $rowNum++) {
+		echo "<tr>";
 
-            if ($status == "TA") {
-                echo "<td><em>$staffName</em></td>";
-            } else {
-                echo "<td>$staffName</td>";
-            }
-        } else {
-            echo "<td>&nbsp;</td>";
-        }
+		// Student column
+		if (isset($arraystudents_tb[$rowNum])) {
+			$studentName = htmlspecialchars(
+				$arraystudents_tb[$rowNum]["FirstName"] . " " . $arraystudents_tb[$rowNum]["LastName"],
+				ENT_QUOTES,
+				"UTF-8",
+			);
+			echo "<td>$studentName</td>";
+		} else {
+			echo "<td>&nbsp;</td>";
+		}
 
-        echo '</tr>';
-    }
+		// Staff column
+		if (isset($arrayStaff[$rowNum])) {
+			$staffName = htmlspecialchars(
+				$arrayStaff[$rowNum]["FirstName"] . " " . $arrayStaff[$rowNum]["LastName"],
+				ENT_QUOTES,
+				"UTF-8",
+			);
+			$status = $arrayStaff[$rowNum]["Status"];
 
-    echo "</table>";
-    echo "</div>"; // Close classBox
-    echo "</div>"; // Close classBoxBody
+			if ($status == "TA") {
+				echo "<td><em>$staffName</em></td>";
+			} else {
+				echo "<td>$staffName</td>";
+			}
+		} else {
+			echo "<td>&nbsp;</td>";
+		}
+
+		echo "</tr>";
+	}
+
+	echo "</table>";
+	echo "</div>"; // Close classBox
+	echo "</div>"; // Close classBoxBody
 }
 
 echo "</div>"; // Close gallery
 echo "</div>"; // Close classBoxWrapper
 
-print("<div style=\"margin-bottom: 30px;\"></div>"); // Add spacing at bottom
+print "<div style=\"margin-bottom: 30px;\"></div>"; // Add spacing at bottom
 
 echo "</div>"; // Close mainContent
 

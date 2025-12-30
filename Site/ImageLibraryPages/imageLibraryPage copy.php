@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 13;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -19,7 +19,7 @@ insertPageHeader($thisPageID);
 insertPageLocalMenu($thisPageID);
 
 // Add the fixed width cards CSS
-print('<link rel="stylesheet" href="../styleSheets/imageLibraryStyles.css">');
+print('<link rel="stylesheet" href="../styleSheets/image_library_tbStyles.css">');
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
@@ -27,8 +27,8 @@ insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 print("<div class=\"cardGrid\"><div class=\"grid\">");
 
 // Loop through all images in the session and display them as cards
-foreach ($_SESSION['imageLibrary'] as $imageID => $imageDetails) {
-	insertImageLibraryCard($imageID);
+foreach ($_SESSION['image_library_tb'] as $imageID => $imageDetails) {
+	insertimage_library_tbCard($imageID);
 }
 
 // Close the grid

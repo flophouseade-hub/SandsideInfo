@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 //list all the users with links to edit them in the editPageDetailsPage.php page
 
 // Start a seesion if one is not already started
@@ -34,7 +34,7 @@ $filterLogOnStatus = isset($_GET['filterLogOnStatus']) ? $_GET['filterLogOnStatu
 $filterSchoolStatus = isset($_GET['filterSchoolStatus']) ? $_GET['filterSchoolStatus'] : '';
 $filterClass = isset($_GET['filterClass']) ? (int)$_GET['filterClass'] : 0;
 
-// Get the user details from UsersDB table with class names
+// Get the user details from users_tb table with class names
 // Connect to the database
 $connection = getDatabaseConnection();
 if (!$connection) {
@@ -42,8 +42,8 @@ if (!$connection) {
 }
 
 // Get filter options
-$logOnStatuses = mysqli_query($connection, "SELECT DISTINCT LogOnStatus FROM UsersDB WHERE LogOnStatus IS NOT NULL AND LogOnStatus != '' ORDER BY LogOnStatus");
-$schoolStatuses = mysqli_query($connection, "SELECT DISTINCT SchoolStatus FROM UsersDB WHERE SchoolStatus IS NOT NULL AND SchoolStatus != '' ORDER BY SchoolStatus");
+$logOnStatuses = mysqli_query($connection, "SELECT DISTINCT LogOnStatus FROM users_tb WHERE LogOnStatus IS NOT NULL AND LogOnStatus != '' ORDER BY LogOnStatus");
+$schoolStatuses = mysqli_query($connection, "SELECT DISTINCT SchoolStatus FROM users_tb WHERE SchoolStatus IS NOT NULL AND SchoolStatus != '' ORDER BY SchoolStatus");
 $classes = mysqli_query($connection, "SELECT ClassID, classname FROM classes ORDER BY classOrder, classname");
 
 $logOnStatusOptions = array();
@@ -63,7 +63,7 @@ while ($row = mysqli_fetch_assoc($classes)) {
 
 // Query with JOIN to get class names
 $usersQuery = "SELECT u.*, c.classname, c.classOrder 
-               FROM UsersDB u 
+               FROM users_tb u 
                LEFT JOIN classes c ON u.AssociatedClassID = c.ClassID 
                WHERE 1=1";
 

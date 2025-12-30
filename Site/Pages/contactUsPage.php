@@ -1,11 +1,11 @@
 <?php
 $thisPageID = 37;
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // reCAPTCHA keys
-define('RECAPTCHA_SECRET_KEY', '6LcFIiEsAAAAANuCDXOoTmKwfmFSKl8jEbe-_MbE');
-define('RECAPTCHA_SITE_KEY', '6LcFIiEsAAAAAEYnXkjcCxiBlcEWOJFQk3TnoIqY');
+define("RECAPTCHA_SECRET_KEY", "6LcFIiEsAAAAANuCDXOoTmKwfmFSKl8jEbe-_MbE");
+define("RECAPTCHA_SITE_KEY", "6LcFIiEsAAAAAEYnXkjcCxiBlcEWOJFQk3TnoIqY");
 
 // -----------------------------------------------
 // Run this section if the form has been submitted
@@ -14,139 +14,141 @@ $inputError = false;
 $errorMessage = "";
 $successMessage = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['contactUsButton'])) {
-    // Get the form data
-    $firstName = $_POST['fvUserFirstName'] ?? '';
-    $email = $_POST['fvUserEmail'] ?? '';
-    $messageContent = $_POST['fvUserMessage'] ?? '';
-    $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contactUsButton"])) {
+	// Get the form data
+	$firstName = $_POST["fvUserFirstName"] ?? "";
+	$email = $_POST["fvUserEmail"] ?? "";
+	$messageContent = $_POST["fvUserMessage"] ?? "";
+	$recaptchaResponse = $_POST["g-recaptcha-response"] ?? "";
 
-    // Reset POST to prevent resubmission
-    $_POST = array();
+	// Reset POST to prevent resubmission
+	$_POST = [];
 
-    // Verify reCAPTCHA
-    if (empty($recaptchaResponse)) {
-        $errorMessage .= "Please complete the reCAPTCHA verification.<br/>";
-        $inputError = true;
-    } else {
-        // Verify with Google
-        $verifyURL = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = array(
-            'secret' => RECAPTCHA_SECRET_KEY,
-            'response' => $recaptchaResponse,
-            'remoteip' => $_SERVER['REMOTE_ADDR']
-        );
+	// Verify reCAPTCHA
+	if (empty($recaptchaResponse)) {
+		$errorMessage .= "Please complete the reCAPTCHA verification.<br/>";
+		$inputError = true;
+	} else {
+		// Verify with Google
+		$verifyURL = "https://www.google.com/recaptcha/api/siteverify";
+		$data = [
+			"secret" => RECAPTCHA_SECRET_KEY,
+			"response" => $recaptchaResponse,
+			"remoteip" => $_SERVER["REMOTE_ADDR"],
+		];
 
-        $options = array(
-            'http' => array(
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data)
-            )
-        );
+		$options = [
+			"http" => [
+				"header" => "Content-type: application/x-www-form-urlencoded\r\n",
+				"method" => "POST",
+				"content" => http_build_query($data),
+			],
+		];
 
-        $context  = stream_context_create($options);
-        $verify = file_get_contents($verifyURL, false, $context);
-        $captchaSuccess = json_decode($verify);
+		$context = stream_context_create($options);
+		$verify = file_get_contents($verifyURL, false, $context);
+		$captchaSuccess = json_decode($verify);
 
-        if ($captchaSuccess->success == false) {
-            $errorMessage .= "reCAPTCHA verification failed. Please try again.<br/>";
-            $inputError = true;
-        }
-    }
+		if ($captchaSuccess->success == false) {
+			$errorMessage .= "reCAPTCHA verification failed. Please try again.<br/>";
+			$inputError = true;
+		}
+	}
 
-    // Validate other inputs
-    if (strlen($firstName) <= 2) {
-        $errorMessage .= "First Name must be at least 3 characters long.<br/>";
-        $inputError = true;
-    }
+	// Validate other inputs
+	if (strlen($firstName) <= 2) {
+		$errorMessage .= "First Name must be at least 3 characters long.<br/>";
+		$inputError = true;
+	}
 
-    if (strlen($messageContent) <= 8) {
-        $errorMessage .= "Message must be at least 9 characters long.<br/>";
-        $inputError = true;
-    }
+	if (strlen($messageContent) <= 8) {
+		$errorMessage .= "Message must be at least 9 characters long.<br/>";
+		$inputError = true;
+	}
 
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-        $errorMessage .= "There is a problem with your email address.<br/>";
-        $inputError = true;
-    }
+	if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+		$errorMessage .= "There is a problem with your email address.<br/>";
+		$inputError = true;
+	}
 
-    // If no input errors, send the emails
-    if ($inputError === false) {
-        // Sanitize inputs for email
-        $firstName = htmlspecialchars($firstName, ENT_QUOTES, 'UTF-8');
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-        $messageContent = htmlspecialchars($messageContent, ENT_QUOTES, 'UTF-8');
+	// If no input errors, send the emails
+	if ($inputError === false) {
+		// Sanitize inputs for email
+		$firstName = htmlspecialchars($firstName, ENT_QUOTES, "UTF-8");
+		$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+		$messageContent = htmlspecialchars($messageContent, ENT_QUOTES, "UTF-8");
 
-        // Send email to the user
-        $to = $email;
-        $subject = "Message You Sent to Sandside Lodge Staff Site";
-        $message = "Hello $firstName,\n\n";
-        $message .= "This is confirmation that we have received your message. We will reply as soon as possible.\n\n";
-        $message .= "The message you sent was:\n\n";
-        $message .= "$messageContent\n\n";
-        $message .= "Best regards,\n\nSandside Lodge Staff Site";
-        $headers = "From: noreply@sandside.info";
-        
-        $userEmailSent = mail($to, $subject, $message, $headers);
+		// Send email to the user
+		$to = $email;
+		$subject = "Message You Sent to Sandside Lodge Staff Site";
+		$message = "Hello $firstName,\n\n";
+		$message .= "This is confirmation that we have received your message. We will reply as soon as possible.\n\n";
+		$message .= "The message you sent was:\n\n";
+		$message .= "$messageContent\n\n";
+		$message .= "Best regards,\n\nSandside Lodge Staff Site";
+		$headers = "From: noreply@sandside.info";
 
-        // Send email to site admin
-        $to = "ict@sandside.org.uk";
-        $subject = "Contact Us Message from Sandside Lodge Staff Site";
-        $message = "You have received a new message from the Contact Us form.\n\n";
-        $message .= "Name: $firstName\n";
-        $message .= "Email: $email\n\n";
-        $message .= "Message:\n$messageContent\n\n";
-        $message .= "Sent from IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
-        $headers = "From: noreply@sandside.info";
-        
-        $adminEmailSent = mail($to, $subject, $message, $headers);
+		$userEmailSent = mail($to, $subject, $message, $headers);
 
-        if ($userEmailSent && $adminEmailSent) {
-            $successMessage = "<p style='color: green; font-weight: bold;'>✓ Thank you, $firstName! Your message has been sent successfully.</p>";
-            // Clear form fields on success
-            $firstName = '';
-            $email = '';
-            $messageContent = '';
-        } else {
-            $errorMessage .= "There was a problem sending your message. Please try again or contact us directly.<br/>";
-            $inputError = true;
-        }
-    }
+		// Send email to site admin
+		$to = "ict@sandside.org.uk";
+		$subject = "Contact Us Message from Sandside Lodge Staff Site";
+		$message = "You have received a new message from the Contact Us form.\n\n";
+		$message .= "Name: $firstName\n";
+		$message .= "Email: $email\n\n";
+		$message .= "Message:\n$messageContent\n\n";
+		$message .= "Sent from IP: " . $_SERVER["REMOTE_ADDR"] . "\n";
+		$headers = "From: noreply@sandside.info";
+
+		$adminEmailSent = mail($to, $subject, $message, $headers);
+
+		if ($userEmailSent && $adminEmailSent) {
+			$successMessage = "<p style='color: green; font-weight: bold;'>✓ Thank you, $firstName! Your message has been sent successfully.</p>";
+			// Clear form fields on success
+			$firstName = "";
+			$email = "";
+			$messageContent = "";
+		} else {
+			$errorMessage .= "There was a problem sending your message. Please try again or contact us directly.<br/>";
+			$inputError = true;
+		}
+	}
 }
 
 // Preserve form values if there were errors
-$firstNameEntry = htmlspecialchars($firstName ?? '', ENT_QUOTES, 'UTF-8');
-$emailEntry = htmlspecialchars($email ?? '', ENT_QUOTES, 'UTF-8');
-$userMessageEntry = htmlspecialchars($messageContent ?? '', ENT_QUOTES, 'UTF-8');
+$firstNameEntry = htmlspecialchars($firstName ?? "", ENT_QUOTES, "UTF-8");
+$emailEntry = htmlspecialchars($email ?? "", ENT_QUOTES, "UTF-8");
+$userMessageEntry = htmlspecialchars($messageContent ?? "", ENT_QUOTES, "UTF-8");
 
 // Print out the page:
 insertPageHeader($pageID);
-insertPageLocalMenu($thisPageID); 
+insertPageLocalMenu($thisPageID);
 
 // Add the form formatting CSS
-print('<link rel="stylesheet" href="../css/formPageFormatting.css">');
+print '<link rel="stylesheet" href="../css/formPageFormatting.css">';
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
 // Display feedback messages
 if (!empty($successMessage)) {
-    print("<div style=\"max-width: 80%; margin: 20px auto;\">$successMessage</div>");
+	print "<div style=\"max-width: 80%; margin: 20px auto;\">$successMessage</div>";
 }
 
 if ($inputError === true && !empty($errorMessage)) {
-    print("<div style=\"max-width: 80%; margin: 20px auto;\">
+	print "<div style=\"max-width: 80%; margin: 20px auto;\">
         <p style='color: red; font-weight: bold;'>⚠ There were problems with your submission:</p>
         <p style='color: red;'>$errorMessage</p>
-    </div>");
+    </div>";
 }
 
 // Page description
-$pageDescription = $_SESSION['pagesOnSite'][$thisPageID]['PageDescription'] ?? "Fill in the form with your details and it will send your message. We're here to help and will respond as soon as possible.";
+$pageDescription =
+	$_SESSION["pagesOnSite"][$thisPageID]["PageDescription"] ??
+	"Fill in the form with your details and it will send your message. We're here to help and will respond as soon as possible.";
 
-print("<div style=\"max-width: 80%; margin: 0 auto; padding: 20px;\">");
+print "<div style=\"max-width: 900px; margin: 0 auto; padding: 20px;\">";
 
-print("
+print "
 <div style=\"padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 30px;\">
     <p style=\"color: #555; font-size: 15px; line-height: 1.6;\">$pageDescription</p>
 </div>
@@ -177,7 +179,9 @@ print("
         </div>
         
         <div style=\"margin-bottom: 20px;\">
-            <div class=\"g-recaptcha\" data-sitekey=\"" . RECAPTCHA_SITE_KEY . "\"></div>
+            <div class=\"g-recaptcha\" data-sitekey=\"" .
+	RECAPTCHA_SITE_KEY .
+	"\"></div>
         </div>
         
         <div style=\"text-align: center;\">
@@ -195,10 +199,10 @@ print("
     </p>
 </div>
 
-</div>");
+</div>";
 
 // Add reCAPTCHA script
-print("<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>");
+print "<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>";
 
 insertPageFooter($thisPageID);
 ?>

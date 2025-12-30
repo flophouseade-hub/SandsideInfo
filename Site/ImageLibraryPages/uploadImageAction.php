@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Enable error reporting for debugging
   error_reporting(E_ALL);
   ini_set('display_errors', 1);
@@ -63,7 +63,7 @@ if ($uploadOk == 0) {
         die("ERROR: Could not connect to the database: " . mysqli_connect_error());
     } 
 // Update the image details in the database
-    $updateQuery = "INSERT INTO ImageLibrary (ImageLink, ImageCaption, ImageDescription) VALUES( ?,?,?)";
+    $updateQuery = "INSERT INTO image_library_tb (ImageLink, ImageCaption, ImageDescription) VALUES( ?,?,?)";
     $stmt = $connection->prepare($updateQuery); 
     $stmt->bind_param("sss", $linkToNewImage, $newImageCaption, $newImageDescription); 
    
@@ -71,7 +71,7 @@ if ($uploadOk == 0) {
     if ($stmt->execute()) {
         $lastImage = $connection->insert_id;
         if (!$lastImage) {
-            $lastImage = count($_SESSION['imageLibrary']) + 1 ;
+            $lastImage = count($_SESSION['image_library_tb']) + 1 ;
         }
         // Success message
         //echo "<script>alert('Image details updated successfully.'); window.location.href = 'editImageDetails.php?imageID=$imageForThisPageID';</script>";

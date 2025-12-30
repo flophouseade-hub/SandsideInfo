@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 87; // You may want to create a new page entry
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -21,8 +21,8 @@ if (isset($_GET['deleteClassID']) && is_numeric($_GET['deleteClassID'])) {
     if (!$connection) {
         $feedbackMessage = "<p style='color: red;'>ERROR: Could not connect to database.</p>";
     } else {
-        // Check if class has students
-        $checkQuery = "SELECT COUNT(*) as count FROM Students WHERE ClassID = ?";
+        // Check if class has students_tb
+        $checkQuery = "SELECT COUNT(*) as count FROM students_tb WHERE ClassID = ?";
         $stmt = $connection->prepare($checkQuery);
         $stmt->bind_param("i", $classToDelete);
         $stmt->execute();
@@ -60,7 +60,7 @@ if (!$connection) {
 $query = "SELECT c.ClassID, c.classname, c.colour, c.classOrder, 
           COUNT(s.StudentID) as studentCount
           FROM classes c
-          LEFT JOIN Students s ON c.ClassID = s.ClassID
+          LEFT JOIN students_tb s ON c.ClassID = s.ClassID
           GROUP BY c.ClassID, c.classname, c.colour, c.classOrder
           ORDER BY c.classOrder, c.classname";
 
@@ -111,7 +111,7 @@ if (count($classes) > 0) {
     print("<th>Order</th>");
     print("<th>Class Name</th>");
     print("<th>Colour</th>");
-    print("<th>Students</th>");
+    print("<th>students_tb</th>");
     print("<th>Delete</th>");
     print("</tr>");
     print("</thead>");
@@ -164,7 +164,7 @@ if (count($classes) > 0) {
 print("<div class='listAllTableNote'>");
 print("<strong>Note:</strong>");
 print("<ul>");
-print("<li>Classes with students cannot be deleted. Move students to another class first.</li>");
+print("<li>Classes with students_tb cannot be deleted. Move students_tb to another class first.</li>");
 print("<li>The 'Order' determines the display sequence in lists and dropdowns.</li>");
 print("<li>Click 'Edit' to modify a class's details.</li>");
 print("</ul>");

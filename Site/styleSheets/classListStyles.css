@@ -1,62 +1,68 @@
 .classBoxWrapper {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 20px;
+	max-width: 1300px;
+	margin: 0 auto;
+	padding: 20px;
 }
 
 .classListDescription {
-    max-width: 1300px;
-    margin: 0 auto 15px auto;
+	max-width: 1300px;
+	margin: 0 auto 15px auto;
 }
 
 .classListContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 20px;
+	margin-top: 20px;
 }
 
 .classBoxHeader {
-    background-color: #f0f0f0;
-    border-radius: 4px;
-    margin-bottom: 0px;
-    padding: 0px 12px;
-    text-align: center;
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	margin-bottom: 0px;
+	padding: 0px 12px;
+	text-align: center;
+	min-height: 90px;
+}
+.classBoxHeader p {
+	margin: 0;
 }
 
 .classBox {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 0px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+	background-color: #ffffff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 0px;
+	transition:
+		transform 0.2s,
+		box-shadow 0.2s;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 }
 .classBoxBody {
-   padding: 6px;
+	padding: 6px;
 }
 .classBoxHeader h3 {
-    margin: 10px 0;
-    font-size: 20px;
-    font-weight: 300;
-    color: #333;
+	margin: 10px 0 0 2px;
+	font-size: 20px;
+	font-weight: 300;
+	color: #333;
 }
 
 .classBox table {
-    width: 100%;
-    border-collapse: collapse;
-    padding: 8px;
+	width: 100%;
+	border-collapse: collapse;
+	padding: 8px;
 }
 
 .classBox td {
-    padding: 4px;
-    border: 1px solid #ccc;
-    font-size: 13px;
+	padding: 4px;
+	border: 1px solid #ccc;
+	font-size: 13px;
 }
 
 .classListFooter {
-    max-width: 1200px;
-    margin: 15px auto 0 auto;
+	max-width: 1200px;
+	margin: 15px auto 0 auto;
 }

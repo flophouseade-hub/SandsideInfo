@@ -1,5 +1,5 @@
-<?php
-// AJAX handler for saving task order in CourseTasksDB
+﻿<?php
+// AJAX handler for saving task order in Coursetasks_tb
 // Don't include pageStarterPHP as it may output HTML
 session_start();
 include('../phpCode/includeFunctions.php');
@@ -49,7 +49,7 @@ mysqli_begin_transaction($connection);
 
 try {
   // Prepare update statement - using prepared statements as per coding guidelines
-  $updateQuery = "UPDATE CourseTasksDB SET CTTaskOrder = ? WHERE CTCourseID = ? AND CTTaskID = ?";
+  $updateQuery = "UPDATE Coursetasks_tb SET CTTaskOrder = ? WHERE CTCourseID = ? AND CTTaskID = ?";
   $stmt = $connection->prepare($updateQuery);
   
   if (!$stmt) {

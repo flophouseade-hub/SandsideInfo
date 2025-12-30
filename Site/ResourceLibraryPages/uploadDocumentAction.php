@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -118,7 +118,7 @@ $resourceURL = "uploadedDocuments/" . $newFileName;
 $uploadBy= $_SESSION['currentUserFirstName'] . " " . $_SESSION['currentUserLastName'];
 
 // LRLocal = 1 because file is stored locally on this server
-$insertQuery = "INSERT INTO ResourceLibrary (LRName, LRDescription, LRType, LRLink, LRGroup, LRLocal, LRUploadedWhen, LRUploadedBy) VALUES (?, ?, ?, ?, ?, 1, NOW(), ?)";
+$insertQuery = "INSERT INTO resource_library_tb (LRName, LRDescription, LRType, LRLink, LRGroup, LRLocal, LRUploadedWhen, LRUploadedBy) VALUES (?, ?, ?, ?, ?, 1, NOW(), ?)";
 $stmt = $connection->prepare($insertQuery);
 $stmt->bind_param("ssssss", 
     $resourceName,

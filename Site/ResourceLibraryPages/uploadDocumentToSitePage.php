@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Start a seesion if one is not already started
 $thisPageID = 40;
 include('../phpCode/includeFunctions.php');
@@ -22,7 +22,7 @@ $feedbackMessage = "";
 
 // Fetch existing resource groups from database
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT LRGroup FROM ResourceLibrary WHERE LRGroup IS NOT NULL AND LRGroup != '' ORDER BY LRGroup ASC";
+$groupQuery = "SELECT DISTINCT LRGroup FROM resource_library_tb WHERE LRGroup IS NOT NULL AND LRGroup != '' ORDER BY LRGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {
@@ -141,7 +141,7 @@ print("
             <button type=\"submit\" name=\"uploadResourceButton\" class=\"formButtonPrimary\">
                 Upload Resource
             </button>
-            <a href=\"viewResourceLibraryPage.php\" class=\"formButtonSecondary\">Cancel</a>
+            <a href=\"viewresource_library_tbPage.php\" class=\"formButtonSecondary\">Cancel</a>
         </div>
     </div>
 </form>

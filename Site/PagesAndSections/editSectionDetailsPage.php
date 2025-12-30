@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 25;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editSectionDetailsButt
   
   // Check if user has permission to edit this section
   $connection = connectToDatabase();
-  $permissionQuery = "SELECT SectionMakerEditOnly, SectionMakerID FROM SectionDB WHERE SectionID = ?";
+  $permissionQuery = "SELECT SectionMakerEditOnly, SectionMakerID FROM section_tb WHERE SectionID = ?";
   $permStmt = $connection->prepare($permissionQuery);
   $permStmt->bind_param("i", $sectionToEditID);
   $permStmt->execute();
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editSectionDetailsButt
     die("ERROR: Could not connect to the database: " . mysqli_connect_error());
   }
 
-  $query = "SELECT SectionID FROM SectionDB WHERE SectionID = ?";
+  $query = "SELECT SectionID FROM section_tb WHERE SectionID = ?";
   $stmt = $connection->prepare($query);
   $stmt->bind_param("i", $sectionToEditID);
   $stmt->execute();
@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editSectionDetailsButt
   // If validation passes, update the database
   if ($inputOK === true) {
     $editSectionContent = encodeSectionContent($editSectionContent);
-    $query = "UPDATE SectionDB SET SectionTitle = ?, SectionContent = ?, SectionColour = ?, SectionStyle = ?, SectionGroup = ?, SectionColourSameAsPage = ?, SectionShowTitle = ?, SectionMakerEditOnly = ? WHERE SectionID = ?";
+    $query = "UPDATE section_tb SET SectionTitle = ?, SectionContent = ?, SectionColour = ?, SectionStyle = ?, SectionGroup = ?, SectionColourSameAsPage = ?, SectionShowTitle = ?, SectionMakerEditOnly = ? WHERE SectionID = ?";
     $stmt = $connection->prepare($query);
     $stmt->bind_param("sssssiiii", $editSectionTitle, $editSectionContent, $editSectionColour, $editSectionStyle, $editSectionGroup, $editSectionColourSameAsPage, $editSectionShowTitle, $editSectionMakerEditOnly, $sectionToEditID);
 
@@ -171,7 +171,7 @@ if (!isset($sectionTitle)) {
     die("ERROR: Could not connect to the database: " . mysqli_connect_error());
   }
 
-  $query = "SELECT SectionID, SectionTitle, SectionContent, SectionColour, SectionStyle, SectionGroup, SectionColourSameAsPage, SectionShowTitle, SectionMakerEditOnly, SectionMakerID FROM SectionDB WHERE SectionID = ?";
+  $query = "SELECT SectionID, SectionTitle, SectionContent, SectionColour, SectionStyle, SectionGroup, SectionColourSameAsPage, SectionShowTitle, SectionMakerEditOnly, SectionMakerID FROM section_tb WHERE SectionID = ?";
   $stmt = $connection->prepare($query);
   $stmt->bind_param("i", $editSectionID);
   $stmt->execute();
@@ -199,7 +199,7 @@ if (!isset($sectionTitle)) {
 // Get existing section groups for dropdown
 $connection = connectToDatabase();
 $existingGroups = array();
-$groupQuery = "SELECT DISTINCT SectionGroup FROM SectionDB WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
+$groupQuery = "SELECT DISTINCT SectionGroup FROM section_tb WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 if ($groupResult) {
   while ($row = mysqli_fetch_assoc($groupResult)) {
@@ -210,7 +210,7 @@ if ($groupResult) {
 // Get sections in the same group (if section has a group)
 $sectionsInGroup = array();
 if (!empty($sectionGroup)) {
-  $groupSectionsQuery = "SELECT SectionID, SectionTitle, SectionColour FROM SectionDB WHERE SectionGroup = ? AND SectionID != ? ORDER BY SectionTitle ASC";
+  $groupSectionsQuery = "SELECT SectionID, SectionTitle, SectionColour FROM section_tb WHERE SectionGroup = ? AND SectionID != ? ORDER BY SectionTitle ASC";
   $stmt = $connection->prepare($groupSectionsQuery);
   $stmt->bind_param("si", $sectionGroup, $editSectionID);
   $stmt->execute();
@@ -221,11 +221,11 @@ if (!empty($sectionGroup)) {
   $stmt->close();
 }
 
-// Get pages that contain this section (from PageSectionsDB, not PageContentRefs)
+// Get pages that contain this section (from page_sections_tb, not PageContentRefs)
 $pagesWithThisSection = array();
 $pagesQuery = "SELECT p.PageID, p.PageName, p.PageColour 
-               FROM PagesOnSite p
-               INNER JOIN PageSectionsDB ps ON p.PageID = ps.PSPageID
+               FROM pages_on_site_tb p
+               INNER JOIN page_sections_tb ps ON p.PageID = ps.PSPageID
                WHERE ps.PSSectionID = ? AND ps.PSIsActive = 1";
 $stmt = $connection->prepare($pagesQuery);
 $stmt->bind_param("i", $editSectionID);
@@ -239,9 +239,9 @@ $stmt->close();
 // Get other sections on the same page(s)
 $sectionsOnSamePage = array();
 foreach ($pagesWithThisSection as $page) {
-  // Get sections from PageSectionsDB instead of PageContentRefs
+  // Get sections from page_sections_tb instead of PageContentRefs
   $pageSectionsQuery = "SELECT ps.PSSectionID 
-                        FROM PageSectionsDB ps
+                        FROM page_sections_tb ps
                         WHERE ps.PSPageID = ? AND ps.PSIsActive = 1 AND ps.PSSectionID != ?
                         ORDER BY ps.PSDisplayOrder ASC";
   $stmt = $connection->prepare($pageSectionsQuery);
@@ -252,7 +252,7 @@ foreach ($pagesWithThisSection as $page) {
   while ($sectionRow = $sectionsResult->fetch_assoc()) {
     $sectionID = $sectionRow['PSSectionID'];
     if (!isset($sectionsOnSamePage[$sectionID])) {
-      $sectionQuery = "SELECT SectionID, SectionTitle, SectionColour FROM SectionDB WHERE SectionID = ?";
+      $sectionQuery = "SELECT SectionID, SectionTitle, SectionColour FROM section_tb WHERE SectionID = ?";
       $sectionStmt = $connection->prepare($sectionQuery);
       $sectionStmt->bind_param("i", $sectionID);
       $sectionStmt->execute();
@@ -274,8 +274,8 @@ $connection->close();
 
 // Get page details from session
 include('../phpCode/pagesAndImagesArrays.php');
-$pageName = $_SESSION['pagesOnSite'][$thisPageID]['PageName'] ?? "Edit Section";
-$pageAccess = $_SESSION['pagesOnSite'][$thisPageID]['PageAccess'] ?? "staff";
+$pageName = $_SESSION['pages_on_site_tb'][$thisPageID]['PageName'] ?? "Edit Section";
+$pageAccess = $_SESSION['pages_on_site_tb'][$thisPageID]['PageAccess'] ?? "staff";
 
 if (accessLevelCheck($pageAccess) == false) {
   die("Access denied");
@@ -347,7 +347,7 @@ if (count($pagesWithThisSection) > 0) {
   foreach ($pagesWithThisSection as $page) {
     $pageNameSafe = htmlspecialchars($page['PageName'], ENT_QUOTES, 'UTF-8');
     $pageID = (int)$page['PageID'];
-    $pageLink = $_SESSION['pagesOnSite'][$pageID]['PageLink'] ?? "#";
+    $pageLink = $_SESSION['pages_on_site_tb'][$pageID]['PageLink'] ?? "#";
     $pageLinks[] = "<a href=\"$pageLink\" style=\"color: #0066cc; text-decoration: none;\">$pageNameSafe (ID: $pageID)</a>";
   }
   $pagesDisplayString = "This section appears on: " . implode(", ", $pageLinks);
@@ -485,13 +485,13 @@ print("<div class=\"formInfoBox\">
 print("</div>"); // Close formPageWrapper
 
 // Temporarily populate session data for preview rendering
-$_SESSION['sectionDB'][$editSectionID]['SectionTitle'] = $sectionTitle;
-$_SESSION['sectionDB'][$editSectionID]['SectionContent'] = $sectionContent;
-$_SESSION['sectionDB'][$editSectionID]['SectionColour'] = $sectionColour;
-$_SESSION['sectionDB'][$editSectionID]['SectionStyle'] = $sectionStyle;
-$_SESSION['sectionDB'][$editSectionID]['SectionGroup'] = $sectionGroup;
-$_SESSION['sectionDB'][$editSectionID]['SectionColourSameAsPage'] = false;// Always show section colour in preview
-$_SESSION['sectionDB'][$editSectionID]['SectionShowTitle'] = $sectionShowTitle; 
+$_SESSION['section_tb'][$editSectionID]['SectionTitle'] = $sectionTitle;
+$_SESSION['section_tb'][$editSectionID]['SectionContent'] = $sectionContent;
+$_SESSION['section_tb'][$editSectionID]['SectionColour'] = $sectionColour;
+$_SESSION['section_tb'][$editSectionID]['SectionStyle'] = $sectionStyle;
+$_SESSION['section_tb'][$editSectionID]['SectionGroup'] = $sectionGroup;
+$_SESSION['section_tb'][$editSectionID]['SectionColourSameAsPage'] = false;// Always show section colour in preview
+$_SESSION['section_tb'][$editSectionID]['SectionShowTitle'] = $sectionShowTitle; 
 
 // Display the current section content as a preview
 insertPageSectionOneColumn($sectionContent, $sectionTitle, $editSectionID);

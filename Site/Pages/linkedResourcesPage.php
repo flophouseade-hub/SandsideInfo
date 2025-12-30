@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 4;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -7,7 +7,7 @@ $con = getDatabaseConnection();
 if (!$con) {
 	die("Connection Error");
 }
-$query = "SELECT * from ResourceLibrary WHERE 1 ";
+$query = "SELECT * from resource_library_tb WHERE 1 ";
 $result = mysqli_query($con, $query);
 //print("Check 7");
 insertPageHeader($thisPageID);

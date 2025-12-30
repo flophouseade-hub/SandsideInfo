@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 26;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertSectionDetailsBu
     }
     
     $currentUserID = $_SESSION['currentUserID'];
-    $query = "INSERT INTO SectionDB (SectionTitle, SectionContent, SectionColour, SectionGroup, SectionMakerID, SectionMakerEditOnly) VALUES (?, ?, ?, ?, ?, 1)";
+    $query = "INSERT INTO section_tb (SectionTitle, SectionContent, SectionColour, SectionGroup, SectionMakerID, SectionMakerEditOnly) VALUES (?, ?, ?, ?, ?, 1)";
     $stmt = $connection->prepare($query);
     $stmt->bind_param("ssssi", $newSectionTitle, $newSectionContent, $newSectionColour, $newSectionGroup, $currentUserID);
     
@@ -111,7 +111,7 @@ $pageAccess = $_SESSION['pagesOnSite'][$thisPageID]['PageAccess'] ?? "staff";
 
 // Fetch existing section groups
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT SectionGroup FROM SectionDB WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
+$groupQuery = "SELECT DISTINCT SectionGroup FROM section_tb WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {

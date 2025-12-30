@@ -1,10 +1,11 @@
 <?php
 // Start a seesion if one is not already started
-  if (session_status() == PHP_SESSION_NONE){
-  session_start();}
-  $thisPageID = 30;
-  include('../phpCode/includeFunctions.php');
-  include('../phpCode/pageStarterPHP.php');
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
+$thisPageID = 30;
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // Initialize variables
 $inputError = false;
@@ -20,169 +21,183 @@ $userAddedSuccess = false;
 $newUserID = 0;
 
 // Get the page details for this page from the array
-$pageName = $_SESSION['pagesOnSite'][$thisPageID]['PageName'] ?? "Add New User";
-$pageType = $_SESSION['pagesOnSite'][$thisPageID]['PageType'];
-$pageAccess = $_SESSION['pagesOnSite'][$thisPageID]['PageAccess'];
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "Add New User";
+$pageType = $_SESSION["pagesOnSite"][$thisPageID]["PageType"];
+$pageAccess = $_SESSION["pagesOnSite"][$thisPageID]["PageAccess"];
 
 // -----------------------------------------------
 // Run this section if the form has been submitted
 // -----------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertNewUserButton'])) {
-  // Get the form data
-  $inputFirstName = $_POST['fvUserFirstName'] ?? "";
-  $inputLastName = $_POST['fvUserLastName'] ?? "";
-  $inputUserEmail = $_POST['fvUserEmail'] ?? "";
-  $inputUserPassword = $_POST['fvUserPassword'] ?? "";
-  $inputLogOnStatus = $_POST['fvUserLogOnStatus'] ?? "staff";
-  $inputSchoolStatus = $_POST['fvUserSchoolStatus'] ?? "";
-  $inputClassID = $_POST['fvUserAssociatedClassID'] ?? "";
-  
-  // Reset POST variables
-  $_POST = array();
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["insertNewUserButton"])) {
+	// Get the form data
+	$inputFirstName = $_POST["fvUserFirstName"] ?? "";
+	$inputLastName = $_POST["fvUserLastName"] ?? "";
+	$inputUserEmail = $_POST["fvUserEmail"] ?? "";
+	$inputUserPassword = $_POST["fvUserPassword"] ?? "";
+	$inputLogOnStatus = $_POST["fvUserLogOnStatus"] ?? "staff";
+	$inputSchoolStatus = $_POST["fvUserSchoolStatus"] ?? "";
+	$inputClassID = $_POST["fvUserAssociatedClassID"] ?? "";
 
-  // Validate inputs
-  $checkFirstName = validateFirstName($inputFirstName);
-  if ($checkFirstName !== true) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">First Name: $checkFirstName</p>";
-    $inputError = true;
-  }
-  
-  $checkLastName = validateLastName($inputLastName);
-  if ($checkLastName !== true) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Last Name: $checkLastName</p>";
-    $inputError = true;
-  }
-  
-  $checkEmail = validateEmail($inputUserEmail);
-  if ($checkEmail !== true) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">$checkEmail</p>";
-    $inputError = true;
-  }
-  
-  $checkPassword = validatePassword($inputUserPassword);
-  if ($checkPassword !== true) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">$checkPassword</p>";
-    $inputError = true;
-  }
-  
-  // Validate LogOnStatus
-  $validStatuses = array('staff', 'pageEditor', 'fullAdmin');
-  if (!in_array($inputLogOnStatus, $validStatuses)) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Please select a valid access level.</p>";
-    $inputError = true;
-  }
-  
-  // Validate School Status (check if it exists in the array)
-  if (empty($inputSchoolStatus) || !isset($formSchoolStatusOptionArray[$inputSchoolStatus])) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Please select a valid school status.</p>";
-    $inputError = true;
-  }
-  
-  // Validate Class ID (optional, but if provided must be a valid class from database)
-  if (!empty($inputClassID)) {
-    if (!validatePositiveInteger($inputClassID)) {
-      $inputError = true;
-      $feedbackMessage .= "<p class=\"formFeedbackError\">Associated Class ID must be a positive number.</p>";
-    } else {
-      // Verify the class exists in the database
-      $connection = connectToDatabase();
-      $checkClassQuery = "SELECT ClassID FROM classes WHERE ClassID = ?";
-      $stmtCheck = $connection->prepare($checkClassQuery);
-      $stmtCheck->bind_param("i", $inputClassID);
-      $stmtCheck->execute();
-      $resultCheck = $stmtCheck->get_result();
-      
-      if ($resultCheck->num_rows === 0) {
-        $inputError = true;
-        $feedbackMessage .= "<p class=\"formFeedbackError\">Selected class does not exist.</p>";
-      }
-      
-      $stmtCheck->close();
-      mysqli_close($connection);
-    }
-  }
-  
-  // Convert empty string to null for ClassID
-  if (empty($inputClassID)) {
-    $inputClassID = null;
-  }
+	// Reset POST variables
+	$_POST = [];
 
-  // If no input errors, proceed to add the user
-  if ($inputError === false) {
-    // Connect to the database
-    $connection = connectToDatabase();
-    
-    // Check if email already exists
-    $checkEmailQuery = "SELECT UsersID FROM UsersDB WHERE Email = ?";
-    $stmt = $connection->prepare($checkEmailQuery);
-    $stmt->bind_param('s', $inputUserEmail);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-      $inputError = true;
-      $feedbackMessage .= "<p class=\"formFeedbackError\">This email address is already registered. Please use a different email address.</p>";
-    } else {
-      // Hash the password
-      $hashedPassword = password_hash($inputUserPassword, PASSWORD_DEFAULT);
-      
-      // Insert new user with all fields
-      $insertQuery = "INSERT INTO UsersDB (FirstName, LastName, Email, UsersPassword, LogOnStatus, SchoolStatus, AssociatedClassID) VALUES (?, ?, ?, ?, ?, ?, ?)";
-      $stmtInsert = $connection->prepare($insertQuery);
-      $stmtInsert->bind_param("ssssssi", $inputFirstName, $inputLastName, $inputUserEmail, $hashedPassword, $inputLogOnStatus, $inputSchoolStatus, $inputClassID);
-      
-      if ($stmtInsert->execute()) {
-        $newUserID = $connection->insert_id;
-        $userAddedSuccess = true;
-        
-        // Get class name if associated
-        $className = "None";
-        if (!empty($inputClassID)) {
-          $classQuery = "SELECT ClassName FROM classes WHERE ClassID = ?";
-          $stmtClass = $connection->prepare($classQuery);
-          $stmtClass->bind_param("i", $inputClassID);
-          $stmtClass->execute();
-          $classResult = $stmtClass->get_result();
-          if ($classRow = $classResult->fetch_assoc()) {
-            $className = $classRow['ClassName'];
-          }
-          $stmtClass->close();
-        }
-        
-        $feedbackMessage = "
+	// Validate inputs
+	$checkFirstName = validateFirstName($inputFirstName);
+	if ($checkFirstName !== true) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">First Name: $checkFirstName</p>";
+		$inputError = true;
+	}
+
+	$checkLastName = validateLastName($inputLastName);
+	if ($checkLastName !== true) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Last Name: $checkLastName</p>";
+		$inputError = true;
+	}
+
+	$checkEmail = validateEmail($inputUserEmail);
+	if ($checkEmail !== true) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">$checkEmail</p>";
+		$inputError = true;
+	}
+
+	$checkPassword = validatePassword($inputUserPassword);
+	if ($checkPassword !== true) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">$checkPassword</p>";
+		$inputError = true;
+	}
+
+	// Validate LogOnStatus
+	$validStatuses = ["staff", "pageEditor", "fullAdmin"];
+	if (!in_array($inputLogOnStatus, $validStatuses)) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Please select a valid access level.</p>";
+		$inputError = true;
+	}
+
+	// Validate School Status (check if it exists in the array)
+	if (empty($inputSchoolStatus) || !isset($formSchoolStatusOptionArray[$inputSchoolStatus])) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Please select a valid school status.</p>";
+		$inputError = true;
+	}
+
+	// Validate Class ID (optional, but if provided must be a valid class from database)
+	if (!empty($inputClassID)) {
+		if (!validatePositiveInteger($inputClassID)) {
+			$inputError = true;
+			$feedbackMessage .= "<p class=\"formFeedbackError\">Associated Class ID must be a positive number.</p>";
+		} else {
+			// Verify the class exists in the database
+			$connection = connectToDatabase();
+			$checkClassQuery = "SELECT ClassID FROM classes WHERE ClassID = ?";
+			$stmtCheck = $connection->prepare($checkClassQuery);
+			$stmtCheck->bind_param("i", $inputClassID);
+			$stmtCheck->execute();
+			$resultCheck = $stmtCheck->get_result();
+
+			if ($resultCheck->num_rows === 0) {
+				$inputError = true;
+				$feedbackMessage .= "<p class=\"formFeedbackError\">Selected class does not exist.</p>";
+			}
+
+			$stmtCheck->close();
+			mysqli_close($connection);
+		}
+	}
+
+	// Convert empty string to null for ClassID
+	if (empty($inputClassID)) {
+		$inputClassID = null;
+	}
+
+	// If no input errors, proceed to add the user
+	if ($inputError === false) {
+		// Connect to the database
+		$connection = connectToDatabase();
+
+		// Check if email already exists
+		$checkEmailQuery = "SELECT UsersID FROM users_tb WHERE Email = ?";
+		$stmt = $connection->prepare($checkEmailQuery);
+		$stmt->bind_param("s", $inputUserEmail);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		if ($result->num_rows > 0) {
+			$inputError = true;
+			$feedbackMessage .=
+				"<p class=\"formFeedbackError\">This email address is already registered. Please use a different email address.</p>";
+		} else {
+			// Hash the password
+			$hashedPassword = password_hash($inputUserPassword, PASSWORD_DEFAULT);
+
+			// Insert new user with all fields
+			$insertQuery =
+				"INSERT INTO users_tb (FirstName, LastName, Email, UsersPassword, LogOnStatus, SchoolStatus, AssociatedClassID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			$stmtInsert = $connection->prepare($insertQuery);
+			$stmtInsert->bind_param(
+				"ssssssi",
+				$inputFirstName,
+				$inputLastName,
+				$inputUserEmail,
+				$hashedPassword,
+				$inputLogOnStatus,
+				$inputSchoolStatus,
+				$inputClassID,
+			);
+
+			if ($stmtInsert->execute()) {
+				$newUserID = $connection->insert_id;
+				$userAddedSuccess = true;
+
+				// Get class name if associated
+				$className = "None";
+				if (!empty($inputClassID)) {
+					$classQuery = "SELECT ClassName FROM classes WHERE ClassID = ?";
+					$stmtClass = $connection->prepare($classQuery);
+					$stmtClass->bind_param("i", $inputClassID);
+					$stmtClass->execute();
+					$classResult = $stmtClass->get_result();
+					if ($classRow = $classResult->fetch_assoc()) {
+						$className = $classRow["ClassName"];
+					}
+					$stmtClass->close();
+				}
+
+				$feedbackMessage =
+					"
         <p class=\"formFeedbackSuccess\">✓ User successfully added!</p>
         <div style=\"background-color: #f0f0f0; padding: 15px; border-left: 4px solid #4CAF50; border-radius: 4px; margin: 20px 0;\">
           <p style=\"margin: 5px 0;\"><strong>Name:</strong> $inputFirstName $inputLastName</p>
           <p style=\"margin: 5px 0;\"><strong>Email:</strong> $inputUserEmail</p>
           <p style=\"margin: 5px 0;\"><strong>Access Level:</strong> $inputLogOnStatus</p>
-          <p style=\"margin: 5px 0;\"><strong>School Status:</strong> " . $formSchoolStatusOptionArray[$inputSchoolStatus] . "</p>
+          <p style=\"margin: 5px 0;\"><strong>School Status:</strong> " .
+					$formSchoolStatusOptionArray[$inputSchoolStatus] .
+					"</p>
           <p style=\"margin: 5px 0;\"><strong>Associated Class:</strong> $className</p>
           <p style=\"margin: 5px 0;\"><strong>User ID:</strong> $newUserID</p>
         </div>";
-        
-        $inputError = false;
-        
-        // Clear input values on success
-        $inputFirstName = "";
-        $inputLastName = "";
-        $inputUserEmail = "";
-        $inputUserPassword = "";
-        $inputLogOnStatus = "staff";
-        $inputSchoolStatus = "";
-        $inputClassID = "";
-      } else {
-        $inputError = true;
-        $errorMsg = urlencode("Could not add user: " . $stmtInsert->error);
-        $stmtInsert->close();
-        mysqli_close($connection);
-        header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
-        exit;
-      }
-      $stmtInsert->close();
-    }
-    $stmt->close();
-    $connection->close();
-  }
+
+				$inputError = false;
+
+				// Clear input values on success
+				$inputFirstName = "";
+				$inputLastName = "";
+				$inputUserEmail = "";
+				$inputUserPassword = "";
+				$inputLogOnStatus = "staff";
+				$inputSchoolStatus = "";
+				$inputClassID = "";
+			} else {
+				$inputError = true;
+				$errorMsg = urlencode("Could not add user: " . $stmtInsert->error);
+				$stmtInsert->close();
+				mysqli_close($connection);
+				header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
+				exit();
+			}
+			$stmtInsert->close();
+		}
+		$stmt->close();
+		$connection->close();
+	}
 }
 
 // -----------------------------------------------
@@ -193,15 +208,15 @@ $classesQuery = "SELECT ClassID, ClassName FROM classes ORDER BY ClassName ASC";
 $classesResult = mysqli_query($connection, $classesQuery);
 
 if (!$classesResult) {
-    $errorMsg = urlencode("Failed to load classes: " . mysqli_error($connection));
-    mysqli_close($connection);
-    header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
-    exit;
+	$errorMsg = urlencode("Failed to load classes: " . mysqli_error($connection));
+	mysqli_close($connection);
+	header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
+	exit();
 }
 
-$classesArray = array();
+$classesArray = [];
 while ($row = mysqli_fetch_assoc($classesResult)) {
-    $classesArray[$row['ClassID']] = $row['ClassName'];
+	$classesArray[$row["ClassID"]] = $row["ClassName"];
 }
 
 mysqli_close($connection);
@@ -210,70 +225,84 @@ mysqli_close($connection);
 // Build the page
 // -----------------------------------------------
 insertPageHeader($pageID);
-insertPageLocalMenu($thisPageID); 
+insertPageLocalMenu($thisPageID);
 
 // Add the form formatting CSS
-print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
+print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
 // If user was successfully added, show success message
 if ($userAddedSuccess === true) {
-  print("<div class=\"formFeedback\">$feedbackMessage</div>");
-  
-  print("<div class=\"formPageWrapper\">");
-  print("
+	print "<div class=\"formFeedback\">$feedbackMessage</div>";
+
+	print "<div class=\"formPageWrapper\">";
+	print "
     <div class=\"formButtonContainer\" style=\"margin-top: 20px;\">
       <a href=\"editUserDetailsPage.php?editUserID=$newUserID\" class=\"formButtonPrimary\">Edit This User</a>
       <a href=\"listAllUsersPage.php\" class=\"formButtonSecondary\">View All Users</a>
       <a href=\"addNewUserPage.php\" class=\"formButtonSecondary\">Add Another User</a>
     </div>
-  ");
-  print("</div>");
-  
+  ";
+	print "</div>";
 } else {
-  // Show the add user form
-  
-  // Display feedback message if there are errors
-  if (!empty($feedbackMessage)) {
-      print("<div class=\"formFeedback\">$feedbackMessage</div>");
-  }
-  
-  // Generate LogOnStatus dropdown
-  $logOnStatusOptions = "";
-  $logOnStatuses = array(
-    'staff' => 'View Pages Only',
-    'pageEditor' => 'Page Editor',
-    'fullAdmin' => 'Full Admin'
-  );
-  foreach ($logOnStatuses as $statusValue => $statusText) {
-    $selected = ($inputLogOnStatus == $statusValue) ? 'selected' : '';
-    $logOnStatusOptions .= "<option value=\"" . htmlspecialchars($statusValue, ENT_QUOTES, 'UTF-8') . "\" $selected>" . htmlspecialchars($statusText, ENT_QUOTES, 'UTF-8') . "</option>";
-  }
-  
-  // Generate School Status dropdown from pageStarterPHP.php array
-  $schoolStatusOptions = "";
-  foreach ($formSchoolStatusOptionArray as $statusValue => $statusText) {
-    $selected = ($inputSchoolStatus == $statusValue) ? 'selected' : '';
-    $schoolStatusOptions .= "<option value=\"" . htmlspecialchars($statusValue, ENT_QUOTES, 'UTF-8') . "\" $selected>" . htmlspecialchars($statusText, ENT_QUOTES, 'UTF-8') . "</option>";
-  }
-  
-  // Generate Associated Class dropdown from database
-  $classOptions = "";
-  foreach ($classesArray as $classID => $className) {
-    $selected = ($inputClassID == $classID) ? 'selected' : '';
-    $classOptions .= "<option value=\"" . htmlspecialchars($classID, ENT_QUOTES, 'UTF-8') . "\" $selected>" . htmlspecialchars($className, ENT_QUOTES, 'UTF-8') . "</option>";
-  }
-  
-  // Sanitize values for display
-  $inputFirstNameSafe = htmlspecialchars($inputFirstName, ENT_QUOTES, 'UTF-8');
-  $inputLastNameSafe = htmlspecialchars($inputLastName, ENT_QUOTES, 'UTF-8');
-  $inputUserEmailSafe = htmlspecialchars($inputUserEmail, ENT_QUOTES, 'UTF-8');
+	// Show the add user form
 
-  // Build the main form
-  print("<div class=\"formPageWrapper\">");
+	// Display feedback message if there are errors
+	if (!empty($feedbackMessage)) {
+		print "<div class=\"formFeedback\">$feedbackMessage</div>";
+	}
 
-  print("
+	// Generate LogOnStatus dropdown
+	$logOnStatusOptions = "";
+	$logOnStatuses = [
+		"staff" => "View Pages Only",
+		"pageEditor" => "Page Editor",
+		"fullAdmin" => "Full Admin",
+	];
+	foreach ($logOnStatuses as $statusValue => $statusText) {
+		$selected = $inputLogOnStatus == $statusValue ? "selected" : "";
+		$logOnStatusOptions .=
+			"<option value=\"" .
+			htmlspecialchars($statusValue, ENT_QUOTES, "UTF-8") .
+			"\" $selected>" .
+			htmlspecialchars($statusText, ENT_QUOTES, "UTF-8") .
+			"</option>";
+	}
+
+	// Generate School Status dropdown from pageStarterPHP.php array
+	$schoolStatusOptions = "";
+	foreach ($formSchoolStatusOptionArray as $statusValue => $statusText) {
+		$selected = $inputSchoolStatus == $statusValue ? "selected" : "";
+		$schoolStatusOptions .=
+			"<option value=\"" .
+			htmlspecialchars($statusValue, ENT_QUOTES, "UTF-8") .
+			"\" $selected>" .
+			htmlspecialchars($statusText, ENT_QUOTES, "UTF-8") .
+			"</option>";
+	}
+
+	// Generate Associated Class dropdown from database
+	$classOptions = "";
+	foreach ($classesArray as $classID => $className) {
+		$selected = $inputClassID == $classID ? "selected" : "";
+		$classOptions .=
+			"<option value=\"" .
+			htmlspecialchars($classID, ENT_QUOTES, "UTF-8") .
+			"\" $selected>" .
+			htmlspecialchars($className, ENT_QUOTES, "UTF-8") .
+			"</option>";
+	}
+
+	// Sanitize values for display
+	$inputFirstNameSafe = htmlspecialchars($inputFirstName, ENT_QUOTES, "UTF-8");
+	$inputLastNameSafe = htmlspecialchars($inputLastName, ENT_QUOTES, "UTF-8");
+	$inputUserEmailSafe = htmlspecialchars($inputUserEmail, ENT_QUOTES, "UTF-8");
+
+	// Build the main form
+	print "<div class=\"formPageWrapper\">";
+
+	print "
   <div class=\"formInfoBox\">
       <p>Enter the details for a new user below. The user will be able to log in using their email address and the password you set here. Fields marked with * are required.</p>
   </div>
@@ -369,9 +398,9 @@ if ($userAddedSuccess === true) {
       }
   }
   </script>
-  ");
+  ";
 
-  print("</div>");
+	print "</div>";
 }
 
 insertPageFooter($thisPageID);

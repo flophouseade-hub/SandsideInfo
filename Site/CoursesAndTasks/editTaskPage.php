@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 67;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateTaskButton'])) {
     }
   }
   
-  // Validate Task Resource (optional - must be from ResourceLibrary if provided)
+  // Validate Task Resource (optional - must be from resource_library_tb if provided)
   if (!empty($inputTaskResource)) {
     if (!validatePositiveInteger($inputTaskResource)) {
       $feedbackMessage .= "<p class=\"formFeedbackError\">Invalid Resource ID selected.</p>";
@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateTaskButton'])) {
     $connection = connectToDatabase();
 
     // Check if another task with the same name exists (excluding current task)
-    $checkNameQuery = "SELECT TaskID FROM TasksDB WHERE TaskName = ? AND TaskID != ?";
+    $checkNameQuery = "SELECT TaskID FROM tasks_tb WHERE TaskName = ? AND TaskID != ?";
     $stmtCheck = $connection->prepare($checkNameQuery);
     $stmtCheck->bind_param('si', $inputTaskName, $taskForThisPageID);
     $stmtCheck->execute();
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateTaskButton'])) {
       $feedbackMessage .= "<p class=\"formFeedbackError\">A task with this name already exists. Please use a different name.</p>";
     } else {
       // Update the task details including TaskLastEditBy and TaskLastEditTime
-      $updateQuery = "UPDATE TasksDB SET TaskName = ?, TaskDescription = ?, TaskResource = ?, TaskGroup = ?, TaskColour = ?, TaskLastEditBy = ?, TaskLastEditTime = ? WHERE TaskID = ?";
+      $updateQuery = "UPDATE tasks_tb SET TaskName = ?, TaskDescription = ?, TaskResource = ?, TaskGroup = ?, TaskColour = ?, TaskLastEditBy = ?, TaskLastEditTime = ? WHERE TaskID = ?";
       $stmt = $connection->prepare($updateQuery);
       $stmt->bind_param("sssssssi", $inputTaskName, $inputTaskDescription, $inputTaskResource, $inputTaskGroup, $inputTaskColour, $taskLastEditBy, $taskLastEditTime, $taskForThisPageID);
 
@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateTaskButton'])) {
   // Connect to database and get task details
   $connection = connectToDatabase();
   
-  $query = "SELECT TaskName, TaskDescription, TaskResource, TaskGroup, TaskColour, TaskMadeBy, TaskMadeTime, TaskLastEditBy, TaskLastEditTime FROM TasksDB WHERE TaskID = ?";
+  $query = "SELECT TaskName, TaskDescription, TaskResource, TaskGroup, TaskColour, TaskMadeBy, TaskMadeTime, TaskLastEditBy, TaskLastEditTime FROM tasks_tb WHERE TaskID = ?";
   $stmt = $connection->prepare($query);
   $stmt->bind_param('i', $taskForThisPageID);
   $stmt->execute();
@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateTaskButton'])) {
 
 // Fetch existing task groups from database for dropdown
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT TaskGroup FROM TasksDB WHERE TaskGroup IS NOT NULL AND TaskGroup != '' ORDER BY TaskGroup ASC";
+$groupQuery = "SELECT DISTINCT TaskGroup FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' ORDER BY TaskGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {
@@ -230,7 +230,7 @@ while ($groupRow = mysqli_fetch_assoc($groupResult)) {
 }
 
 // Fetch all tasks with their groups and colours for colour dropdown
-$colourQuery = "SELECT TaskName, TaskGroup, TaskColour FROM TasksDB WHERE TaskGroup IS NOT NULL AND TaskGroup != '' AND TaskColour IS NOT NULL AND TaskColour != '' ORDER BY TaskGroup, TaskName";
+$colourQuery = "SELECT TaskName, TaskGroup, TaskColour FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' AND TaskColour IS NOT NULL AND TaskColour != '' ORDER BY TaskGroup, TaskName";
 $colourResult = mysqli_query($connection, $colourQuery);
 
 if (!$colourResult) {
@@ -257,8 +257,8 @@ while ($colourRow = mysqli_fetch_assoc($colourResult)) {
     );
 }
 
-// Fetch all resources from ResourceLibrary
-$resourceQuery = "SELECT LinkedResourceID, LRName, LRGroup FROM ResourceLibrary ORDER BY LRGroup, LRName";
+// Fetch all resources from resource_library_tb
+$resourceQuery = "SELECT LinkedResourceID, LRName, LRGroup FROM resource_library_tb ORDER BY LRGroup, LRName";
 $resourceResult = mysqli_query($connection, $resourceQuery);
 
 if (!$resourceResult) {
@@ -318,7 +318,7 @@ $resourceLinkPreview = "";
 $resourceNamePreview = "";
 if (!empty($taskResourceSafe)) {
     $connection = connectToDatabase();
-    $resourceQuery = "SELECT LRLink, LRName FROM ResourceLibrary WHERE LinkedResourceID = ?";
+    $resourceQuery = "SELECT LRLink, LRName FROM resource_library_tb WHERE LinkedResourceID = ?";
     $stmtResource = $connection->prepare($resourceQuery);
     $stmtResource->bind_param('i', $taskResourceSafe);
     $stmtResource->execute();

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 17;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addNewPageButton'])) {
     $emptyContentRefs = "";
     $emptyLocalMenu = "";
     $currentUserID = $_SESSION['currentUserID'];
-    $updateQuery = "INSERT INTO PagesOnSite (PageName, PageImageIDRef, PageDescription, PageType, PageContentRefs, PageAccess, PageLocalMenu, PageColour, PageGroup, PageMakerID, PageMakerEditOnly) VALUES(?,?,?,?,?,?,?,?,?,?,1)";
+    $updateQuery = "INSERT INTO pages_on_site_tb (PageName, PageImageIDRef, PageDescription, PageType, PageContentRefs, PageAccess, PageLocalMenu, PageColour, PageGroup, PageMakerID, PageMakerEditOnly) VALUES(?,?,?,?,?,?,?,?,?,?,1)";
     $stmt = $connection->prepare($updateQuery);
     $stmt->bind_param("sssssssssi", $newPageName, $newImageRef, $newPageDescription, $newPageType, $emptyContentRefs, $newPageAccessLevel, $emptyLocalMenu, $newPageColour, $newPageGroup, $currentUserID);
     
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addNewPageButton'])) {
       }
       
       if (!empty($pageLink)) {
-        $updateLinkQuery = "UPDATE PagesOnSite SET PageLink = ? WHERE PageID = ?";
+        $updateLinkQuery = "UPDATE pages_on_site_tb SET PageLink = ? WHERE PageID = ?";
         $stmtLink = $connection->prepare($updateLinkQuery);
         $stmtLink->bind_param("si", $pageLink, $lastPage);
         $stmtLink->execute();
@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addNewPageButton'])) {
 
 // Connect to database to fetch existing page groups
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT PageGroup FROM PagesOnSite WHERE PageGroup IS NOT NULL AND PageGroup != '' ORDER BY PageGroup ASC";
+$groupQuery = "SELECT DISTINCT PageGroup FROM pages_on_site_tb WHERE PageGroup IS NOT NULL AND PageGroup != '' ORDER BY PageGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 62; 
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertNewCourseButton'
     }
     
     // Check if a course with the same name already exists
-    $checkNameQuery = "SELECT CourseID FROM CoursesDB WHERE CourseName = ?";
+    $checkNameQuery = "SELECT CourseID FROM courses_tb WHERE CourseName = ?";
     $stmt = $connection->prepare($checkNameQuery);
     $stmt->bind_param('s', $inputCourseName);
     $stmt->execute();
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertNewCourseButton'
       $feedbackMessage .= "<p style=\"color: red;\">A course with this name already exists. Please use a different name.</p>";
     } else {
       // Insert new course
-      $insertQuery = "INSERT INTO CoursesDB (CourseName, CourseContent, CourseDescription, CourseGroup, CourseColour, CourseMadeBy, CourseMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      $insertQuery = "INSERT INTO courses_tb (CourseName, CourseContent, CourseDescription, CourseGroup, CourseColour, CourseMadeBy, CourseMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
       $stmtInsert = $connection->prepare($insertQuery);
       $stmtInsert->bind_param("sssssss", $inputCourseName, $inputCourseContent, $inputCourseDescription, $inputCourseGroup, $inputCourseColour, $courseMadeBy, $courseMadeTime);
       

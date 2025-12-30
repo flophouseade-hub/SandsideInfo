@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 2; // You may want to create a new page entry
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -265,7 +265,7 @@ if (!$connection) {
 $query = "SELECT c.ClassID, c.classname, c.colour, c.classOrder, 
           COUNT(s.StudentID) as studentCount
           FROM classes c
-          LEFT JOIN Students s ON c.ClassID = s.ClassID
+          LEFT JOIN students_tb s ON c.ClassID = s.ClassID
           GROUP BY c.ClassID, c.classname, c.colour, c.classOrder
           ORDER BY c.classOrder, c.classname";
 
@@ -433,7 +433,7 @@ print("<button type='submit' name='saveClass' class='formButtonPrimary'>" . ($ed
 if ($editMode) {
     print("<a href='manageClassesPage.php' class='formButtonSecondary'>Cancel Edit</a>");
 }
-print("<a href='manageStudentsPage.php' class='formButtonSecondary'>Manage Students</a>");
+print("<a href='managestudents_tbPage.php' class='formButtonSecondary'>Manage students_tb</a>");
 print("</div>");
 
 print("</div>");
@@ -463,7 +463,7 @@ if (count($classes) > 0) {
     print("<th>Order</th>");
     print("<th>Class Name</th>");
     print("<th>Colour</th>");
-    print("<th>Students</th>");
+    print("<th>students_tb</th>");
     print("<th>Actions</th>");
     print("</tr>");
     print("</thead>");

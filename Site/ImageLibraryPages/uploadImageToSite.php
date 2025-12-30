@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 16;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -18,7 +18,7 @@ $inputError = false;
 
 // Collect all unique image groups from the session
 $imageGroups = array();
-foreach ($_SESSION['imageLibrary'] as $imageID => $imageDetails) {
+foreach ($_SESSION['image_library_tb'] as $imageID => $imageDetails) {
   $group = isset($imageDetails['ImageGroup']) && !empty($imageDetails['ImageGroup']) 
     ? $imageDetails['ImageGroup'] 
     : '';
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['uploadFileToSiteButton
     }
     
     // Insert the image details in the database
-    $updateQuery = "INSERT INTO ImageLibrary (ImageLink, ImageCaption, ImageDescription, UploadedBy) VALUES (?, ?, ?, ?)";
+    $updateQuery = "INSERT INTO image_library_tb (ImageLink, ImageCaption, ImageDescription, UploadedBy) VALUES (?, ?, ?, ?)";
     $stmt = $connection->prepare($updateQuery);
     $userName = $_SESSION['currentUserFirstName'] . " " . $_SESSION['currentUserLastName'];
     $stmt->bind_param("ssss", $target_file, $newImageCaption, $newImageDescription, $userName);
@@ -208,7 +208,7 @@ $formAndContentString = "
       <button type=\"submit\" name=\"uploadFileToSiteButton\" class=\"formButtonPrimary\">
         Upload Image
       </button>
-      <a href=\"../ImageLibraryPages/imageLibraryPage.php\" class=\"formButtonSecondary\">
+      <a href=\"../image_library_tbPages/image_library_tbPage.php\" class=\"formButtonSecondary\">
         View Image Library
       </a>
     </div>

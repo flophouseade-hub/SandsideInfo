@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 18;
 include "../phpCode/pageStarterPHP.php";
 include "../phpCode/includeFunctions.php";
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 
 	// Check if user has permission to edit this page
 	$connection = connectToDatabase();
-	$permissionQuery = "SELECT PageMakerEditOnly, PageMakerID FROM PagesOnSite WHERE PageID = ?";
+	$permissionQuery = "SELECT PageMakerEditOnly, PageMakerID FROM pages_on_site_tb WHERE PageID = ?";
 	$permStmt = $connection->prepare($permissionQuery);
 	$permStmt->bind_param("i", $pageToEditID);
 	$permStmt->execute();
@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 			$contentRefArray = explode(",", $editPageContentRefs);
 			foreach ($contentRefArray as $contentRef) {
 				$contentRef = trim($contentRef);
-				if (!empty($contentRef) && !array_key_exists($contentRef, $_SESSION["pagesOnSite"])) {
+				if (!empty($contentRef) && !array_key_exists($contentRef, $_SESSION["pages_on_site_tb"])) {
 					$feedbackMessage .= "<p>There is no page with ID $contentRef.</p>";
 					$inputOK = false;
 				}
@@ -204,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 		// Update the page details in the database using prepared statements
 		// Note: PageLocalMenu removed from updates
 		if ($editPageType == "builtInPage") {
-			$updateQuery = "UPDATE PagesOnSite SET 
+			$updateQuery = "UPDATE pages_on_site_tb SET 
         PageName = ?,
         PageDescription = ?,
         PageImageIDRef = ?,
@@ -225,8 +225,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 				$pageToEditID,
 			);
 		} elseif ($editPageType == "sectionsPage") {
-			// For sections pages, don't update PageContentRefs (handled in PageSectionsDB)
-			$updateQuery = "UPDATE PagesOnSite SET 
+			// For sections pages, don't update PageContentRefs (handled in page_sections_tb)
+			$updateQuery = "UPDATE pages_on_site_tb SET 
         PageName = ?,
         PageDescription = ?,
         PageImageIDRef = ?,
@@ -249,8 +249,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 				$pageToEditID,
 			);
 		} elseif ($editPageType == "blockMenu") {
-			// For blockMenu pages, don't update PageContentRefs (handled in PageMenuLinksDB)
-			$updateQuery = "UPDATE PagesOnSite SET 
+			// For blockMenu pages, don't update PageContentRefs (handled in page_menu_links_tb)
+			$updateQuery = "UPDATE pages_on_site_tb SET 
         PageName = ?,
         PageDescription = ?,
         PageImageIDRef = ?,
@@ -274,7 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 			);
 		} else {
 			// For other types, update PageContentRefs
-			$updateQuery = "UPDATE PagesOnSite SET 
+			$updateQuery = "UPDATE pages_on_site_tb SET 
         PageName = ?,
         PageDescription = ?,
         PageImageIDRef = ?,
@@ -303,10 +303,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 		if ($stmt->execute()) {
 			$feedbackMessage = "<p style=\"color: #28a745; font-weight: bold;\">✓ Page details updated successfully. Page ID: $pageToEditID</p>";
 
-			// For sectionsPage, also update PageSectionsDB
+			// For sectionsPage, also update page_sections_tb
 			if ($editPageType == "sectionsPage" && isset($_POST["selectedSections"])) {
 				// Delete existing sections for this page
-				$deleteQuery = "DELETE FROM PageSectionsDB WHERE PSPageID = ?";
+				$deleteQuery = "DELETE FROM page_sections_tb WHERE PSPageID = ?";
 				$deleteStmt = $connection->prepare($deleteQuery);
 				$deleteStmt->bind_param("i", $pageToEditID);
 				$deleteStmt->execute();
@@ -317,7 +317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 				if (!empty($selectedSections)) {
 					$sectionArray = explode(",", $selectedSections);
 					$insertQuery =
-						"INSERT INTO PageSectionsDB (PSPageID, PSSectionID, PSDisplayOrder, PSIsActive, PSShowTitle) VALUES (?, ?, ?, 1, 1)";
+						"INSERT INTO page_sections_tb (PSPageID, PSSectionID, PSDisplayOrder, PSIsActive, PSShowTitle) VALUES (?, ?, ?, 1, 1)";
 					$insertStmt = $connection->prepare($insertQuery);
 
 					foreach ($sectionArray as $index => $sectionID) {
@@ -350,10 +350,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 				$feedbackMessage .= "<p style=\"color: #28a745;\">Page sections updated successfully.</p>";
 			}
 
-			// For blockMenu, also update PageMenuLinksDB
+			// For blockMenu, also update page_menu_links_tb
 			if ($editPageType == "blockMenu" && isset($_POST["selectedPages"])) {
 				// Delete existing menu links for this page
-				$deleteQuery = "DELETE FROM PageMenuLinksDB WHERE PMLMenuPageID = ?";
+				$deleteQuery = "DELETE FROM page_menu_links_tb WHERE PMLMenuPageID = ?";
 				$deleteStmt = $connection->prepare($deleteQuery);
 				$deleteStmt->bind_param("i", $pageToEditID);
 				$deleteStmt->execute();
@@ -364,7 +364,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 				if (!empty($selectedPages)) {
 					$pageArray = explode(",", $selectedPages);
 					$insertQuery =
-						"INSERT INTO PageMenuLinksDB (PMLMenuPageID, PMLLinkedPageID, PMLDisplayOrder, PMLIsActive) VALUES (?, ?, ?, 1)";
+						"INSERT INTO page_menu_links_tb (PMLMenuPageID, PMLLinkedPageID, PMLDisplayOrder, PMLIsActive) VALUES (?, ?, ?, 1)";
 					$insertStmt = $connection->prepare($insertQuery);
 
 					foreach ($pageArray as $index => $linkedPageID) {
@@ -416,17 +416,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 	$pageToEditID = $_GET["editPageID"];
 	// Get the details for this page we want to edit from the session array:
 
-	$editPageName = $_SESSION["pagesOnSite"][$pageToEditID]["PageName"];
-	$editPageDescription = $_SESSION["pagesOnSite"][$pageToEditID]["PageDescription"];
-	$editPageImageIDRef = $_SESSION["pagesOnSite"][$pageToEditID]["PageImageIDRef"];
-	$editPageContentRefs = $_SESSION["pagesOnSite"][$pageToEditID]["PageContentRefs"];
-	$editPageType = $_SESSION["pagesOnSite"][$pageToEditID]["PageType"];
-	$editPageAccess = $_SESSION["pagesOnSite"][$pageToEditID]["PageAccess"];
-	$editPageColour = $_SESSION["pagesOnSite"][$pageToEditID]["PageColour"];
-	$editPageLink = $_SESSION["pagesOnSite"][$pageToEditID]["PageLink"];
-	$editPageGroup = $_SESSION["pagesOnSite"][$pageToEditID]["PageGroup"];
-	$editPageMakerEditOnly = $_SESSION["pagesOnSite"][$pageToEditID]["PageMakerEditOnly"] ?? 1;
-	$editPageMakerID = $_SESSION["pagesOnSite"][$pageToEditID]["PageMakerID"] ?? 0;
+	$editPageName = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageName"];
+	$editPageDescription = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageDescription"];
+	$editPageImageIDRef = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageImageIDRef"];
+	$editPageContentRefs = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageContentRefs"];
+	$editPageType = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageType"];
+	$editPageAccess = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageAccess"];
+	$editPageColour = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageColour"];
+	$editPageLink = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageLink"];
+	$editPageGroup = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageGroup"];
+	$editPageMakerEditOnly = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageMakerEditOnly"] ?? 1;
+	$editPageMakerID = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageMakerID"] ?? 0;
 
 	$feedbackMessage = "";
 }
@@ -436,7 +436,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 // -----------------------------------------
 $connection = connectToDatabase();
 $groupQuery =
-	"SELECT DISTINCT PageGroup FROM PagesOnSite WHERE PageGroup IS NOT NULL AND PageGroup != '' ORDER BY PageGroup ASC";
+	"SELECT DISTINCT PageGroup FROM pages_on_site_tb WHERE PageGroup IS NOT NULL AND PageGroup != '' ORDER BY PageGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {
@@ -452,7 +452,7 @@ while ($groupRow = mysqli_fetch_assoc($groupResult)) {
 $groupColoursWithPages = [];
 if (!empty($editPageGroup)) {
 	$colourQuery =
-		"SELECT PageColour, PageName FROM PagesOnSite WHERE PageGroup = ? AND PageColour IS NOT NULL AND PageColour != '' ORDER BY PageColour ASC, PageName ASC";
+		"SELECT PageColour, PageName FROM pages_on_site_tb WHERE PageGroup = ? AND PageColour IS NOT NULL AND PageColour != '' ORDER BY PageColour ASC, PageName ASC";
 	$stmtColour = $connection->prepare($colourQuery);
 	$stmtColour->bind_param("s", $editPageGroup);
 	$stmtColour->execute();
@@ -760,8 +760,8 @@ if ($showContentRefs && $editPageType == "blockMenu") {
 		$menuLinksList .= "<ul id='currentMenuLinksList' style='list-style: none; padding: 0; margin: 10px 0;'>";
 		foreach ($currentMenuLinks as $menuLink) {
 			$linkedPageID = $menuLink["LinkedPageID"];
-			$linkedPageName = isset($_SESSION["pagesOnSite"][$linkedPageID])
-				? htmlspecialchars($_SESSION["pagesOnSite"][$linkedPageID]["PageName"], ENT_QUOTES, "UTF-8")
+			$linkedPageName = isset($_SESSION["pages_on_site_tb"][$linkedPageID])
+				? htmlspecialchars($_SESSION["pages_on_site_tb"][$linkedPageID]["PageName"], ENT_QUOTES, "UTF-8")
 				: "Unknown Page";
 			$menuLinksList .= "<li draggable='true' style='padding: 8px; margin: 4px 0; background-color: #f8f9fa; border-left: 3px solid #007bff; display: flex; justify-content: space-between; align-items: center; cursor: move;' data-page-id='$linkedPageID'>";
 			$menuLinksList .= "<span><strong>ID $linkedPageID:</strong> $linkedPageName</span>";
@@ -826,7 +826,7 @@ $formAndContentString .= "
 
 if ($editPageType != "builtInPage") {
 	// Use stored PageLink from session
-	$viewPageLink = $_SESSION["pagesOnSite"][$pageToEditID]["PageLink"];
+	$viewPageLink = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageLink"];
 
 	$formAndContentString .= "
       <a href=\"$viewPageLink\" class=\"formButtonSecondary\" target=\"_blank\" style=\"margin-right: 10px;\">
@@ -1152,7 +1152,7 @@ if ($editPageType == "blockMenu") {
 	// Get unique page types and groups for filter dropdowns
 	$pageTypes = [];
 	$pageGroups = [];
-	foreach ($_SESSION["pagesOnSite"] as $pageDetails) {
+	foreach ($_SESSION["pages_on_site_tb"] as $pageDetails) {
 		if (isset($pageDetails["PageType"]) && !empty($pageDetails["PageType"])) {
 			$pageTypes[$pageDetails["PageType"]] = true;
 		}
@@ -1167,7 +1167,7 @@ if ($editPageType == "blockMenu") {
 
 	// Filter pages based on selected filters
 	$filteredPages = [];
-	foreach ($_SESSION["pagesOnSite"] as $pageID => $pageDetails) {
+	foreach ($_SESSION["pages_on_site_tb"] as $pageID => $pageDetails) {
 		// Skip Access Denied and 404 Error pages
 		if ($pageID == 73 || $pageID == 74) {
 			continue;

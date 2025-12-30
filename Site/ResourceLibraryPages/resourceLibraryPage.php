@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 41;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -11,14 +11,14 @@ $selectedGroup = $_GET['group'] ?? 'all';
 
 // Build query based on filter
 if ($selectedGroup !== 'all' && !empty($selectedGroup)) {
-    $ResourceLibraryQuery = "SELECT * FROM ResourceLibrary WHERE LRGroup = ? ORDER BY LinkedResourceID ASC";
-    $stmt = $connection->prepare($ResourceLibraryQuery);
+    $resource_library_tbQuery = "SELECT * FROM resource_library_tb WHERE LRGroup = ? ORDER BY LinkedResourceID ASC";
+    $stmt = $connection->prepare($resource_library_tbQuery);
     $stmt->bind_param("s", $selectedGroup);
     $stmt->execute();
     $result = $stmt->get_result();
 } else {
-    $ResourceLibraryQuery = "SELECT * FROM ResourceLibrary ORDER BY LinkedResourceID ASC";
-    $result = mysqli_query($connection, $ResourceLibraryQuery);
+    $resource_library_tbQuery = "SELECT * FROM resource_library_tb ORDER BY LinkedResourceID ASC";
+    $result = mysqli_query($connection, $resource_library_tbQuery);
 }
 
 if (!$result) {
@@ -29,7 +29,7 @@ if (!$result) {
 }
 
 // Fetch all distinct groups for the filter dropdown
-$groupQuery = "SELECT DISTINCT LRGroup FROM ResourceLibrary WHERE LRGroup IS NOT NULL AND LRGroup != '' ORDER BY LRGroup ASC";
+$groupQuery = "SELECT DISTINCT LRGroup FROM resource_library_tb WHERE LRGroup IS NOT NULL AND LRGroup != '' ORDER BY LRGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 $availableGroups = array();
 while ($groupRow = mysqli_fetch_assoc($groupResult)) {
@@ -41,24 +41,24 @@ insertPageHeader($pageID);
 insertPageLocalMenu($thisPageID); 
 
 // Add CSS for resource library grid layout
-print("<link href=\"../styleSheets/resourceLibraryStyles.css\"rel=\"stylesheet\" type=\"text/css\">");
+print("<link href=\"../styleSheets/resource_library_tbStyles.css\"rel=\"stylesheet\" type=\"text/css\">");
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
 // Fetch the document library details
-$_SESSION['ResourceLibrary'] = array();
+$_SESSION['resource_library_tb'] = array();
 while ($row = mysqli_fetch_assoc($result)) {
-    $_SESSION['ResourceLibrary'][] = $row;
+    $_SESSION['resource_library_tb'][] = $row;
 }
 
-$ResourceLibraryArray = $_SESSION['ResourceLibrary'];
+$resource_library_tbArray = $_SESSION['resource_library_tb'];
 
-print("<div class=\"resourceLibraryWrapper\">");
+print("<div class=\"resource_library_tbWrapper\">");
 
 // Header with intro text and filter
-print("<div class=\"resourceLibraryHeader\">");
-print("<p class=\"resourceLibraryIntro\">List all the resources on the site or apply a group filter to narrow your search.</p>");
-print("<div class=\"resourceLibraryFilter\">");
+print("<div class=\"resource_library_tbHeader\">");
+print("<p class=\"resource_library_tbIntro\">List all the resources on the site or apply a group filter to narrow your search.</p>");
+print("<div class=\"resource_library_tbFilter\">");
 print("<label for=\"groupFilter\">Filter by Group:</label>");
 print("<select id=\"groupFilter\" onchange=\"filterByGroup(this.value)\">");
 print("<option value=\"all\"" . ($selectedGroup === 'all' ? ' selected' : '') . ">All Groups</option>");
@@ -77,17 +77,17 @@ print("</div>");
 print("<script>
 function filterByGroup(group) {
     if (group === 'all') {
-        window.location.href = 'resourceLibraryPage.php';
+        window.location.href = 'resource_library_tbPage.php';
     } else {
-        window.location.href = 'resourceLibraryPage.php?group=' + encodeURIComponent(group);
+        window.location.href = 'resource_library_tbPage.php?group=' + encodeURIComponent(group);
     }
 }
 </script>");
 
-print("<div class=\"resourceLibrary\">");
+print("<div class=\"resource_library_tb\">");
 
 $count = 0;
-foreach ($ResourceLibraryArray as $documentRef) {
+foreach ($resource_library_tbArray as $documentRef) {
     $count = $count + 1;
 
     $documentID = $documentRef['LinkedResourceID'];
@@ -115,7 +115,7 @@ foreach ($ResourceLibraryArray as $documentRef) {
         $shortDescription = $documentDescription;
     }
 
-    $editLink = "../ResourceLibraryPages/editAResourcePage.php?resourceID=$documentID";
+    $editLink = "../resource_library_tbPages/editAResourcePage.php?resourceID=$documentID";
     
     // Handle empty group
     $displayGroup = !empty($documentGroup) ? $documentGroup : 'No group assigned';
@@ -124,11 +124,11 @@ foreach ($ResourceLibraryArray as $documentRef) {
     $canEdit = ($_SESSION['currentUserLogOnStatus'] == "fullAdmin" || $_SESSION['currentUserLogOnStatus'] == "pageEditor");
 
     print("
-        <div class=\"resourceLibraryCard\">
-            <div class=\"resourceLibraryCardHeader\">
+        <div class=\"resource_library_tbCard\">
+            <div class=\"resource_library_tbCardHeader\">
                 <h4>$documentName <small style=\"font-weight: normal;font-size: 12px;\">id&nbsp;</small>$documentID</h4>
             </div>
-            <div class=\"resourceLibraryCardBody\">
+            <div class=\"resource_library_tbCardBody\">
                 <div class=\"infoBox type\">
                     <strong>Type:</strong> $documentType2 ($locality)
                 </div>
@@ -139,14 +139,14 @@ foreach ($ResourceLibraryArray as $documentRef) {
                     <strong>Description:</strong> $shortDescription
                 </div>
             </div>
-            <div class=\"resourceLibraryCardFooter\">
-                <a href=\"$documentLink\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"resourceLibraryButton view\">
+            <div class=\"resource_library_tbCardFooter\">
+                <a href=\"$documentLink\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"resource_library_tbButton view\">
                     <i class=\"fas fa-external-link-alt\"></i> View
                 </a>
     ");
     
     if ($canEdit) {
-        print("<a href=\"$editLink\" class=\"resourceLibraryButton edit\">
+        print("<a href=\"$editLink\" class=\"resource_library_tbButton edit\">
                     <i class=\"fas fa-edit\"></i> Edit
                 </a>");
     }
@@ -157,8 +157,8 @@ foreach ($ResourceLibraryArray as $documentRef) {
     ");
 }
 
-print("</div>"); // Close resourceLibrary
-print("</div>"); // Close resourceLibraryWrapper
+print("</div>"); // Close resource_library_tb
+print("</div>"); // Close resource_library_tbWrapper
 
 mysqli_close($connection);
 

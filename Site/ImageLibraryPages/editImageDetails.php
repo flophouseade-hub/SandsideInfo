@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 14;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -11,12 +11,12 @@ if (isset($_GET['deleteImageID']) && is_numeric($_GET['deleteImageID'])) {
   
   $connection = connectToDatabase();
   if (!$connection) {
-    header("Location: ../ImageLibraryPages/imageLibraryPage.php?deleteStatus=error&message=" . urlencode("Could not connect to the database."));
+    header("Location: ../image_library_tbPages/image_library_tbPage.php?deleteStatus=error&message=" . urlencode("Could not connect to the database."));
     exit();
   }
   
   // Check if image is used in any pages
-  $checkQuery = "SELECT PageID, PageName FROM PagesOnSite WHERE PageImageIDRef = ?";
+  $checkQuery = "SELECT PageID, PageName FROM pages_on_site_tb WHERE PageImageIDRef = ?";
   $stmt = $connection->prepare($checkQuery);
   $stmt->bind_param("i", $imageToDelete);
   $stmt->execute();
@@ -31,12 +31,12 @@ if (isset($_GET['deleteImageID']) && is_numeric($_GET['deleteImageID'])) {
   if (count($pagesUsingImage) > 0) {
     $connection->close();
     $pagesList = implode(", ", $pagesUsingImage);
-    header("Location: ../ImageLibraryPages/imageLibraryPage.php?deleteStatus=error&message=" . urlencode("Cannot delete this image. It is used in the following page(s): " . $pagesList));
+    header("Location: ../image_library_tbPages/image_library_tbPage.php?deleteStatus=error&message=" . urlencode("Cannot delete this image. It is used in the following page(s): " . $pagesList));
     exit();
   }
   
   // Get image file path before deletion
-  $fileQuery = "SELECT ImageLink FROM ImageLibrary WHERE ImageID = ?";
+  $fileQuery = "SELECT ImageLink FROM image_library_tb WHERE ImageID = ?";
   $stmt = $connection->prepare($fileQuery);
   $stmt->bind_param("i", $imageToDelete);
   $stmt->execute();
@@ -46,7 +46,7 @@ if (isset($_GET['deleteImageID']) && is_numeric($_GET['deleteImageID'])) {
   
   if ($imageData) {
     // Delete from database
-    $deleteQuery = "DELETE FROM ImageLibrary WHERE ImageID = ?";
+    $deleteQuery = "DELETE FROM image_library_tb WHERE ImageID = ?";
     $stmt = $connection->prepare($deleteQuery);
     $stmt->bind_param("i", $imageToDelete);
     
@@ -61,17 +61,17 @@ if (isset($_GET['deleteImageID']) && is_numeric($_GET['deleteImageID'])) {
       
       $stmt->close();
       $connection->close();
-      header("Location: ../ImageLibraryPages/imageLibraryPage.php?deleteStatus=success&message=" . urlencode("Image deleted successfully."));
+      header("Location: ../image_library_tbPages/image_library_tbPage.php?deleteStatus=success&message=" . urlencode("Image deleted successfully."));
       exit();
     } else {
       $stmt->close();
       $connection->close();
-      header("Location: ../ImageLibraryPages/imageLibraryPage.php?deleteStatus=error&message=" . urlencode("Error deleting image from database."));
+      header("Location: ../image_library_tbPages/image_library_tbPage.php?deleteStatus=error&message=" . urlencode("Error deleting image from database."));
       exit();
     }
   } else {
     $connection->close();
-    header("Location: ../ImageLibraryPages/imageLibraryPage.php?deleteStatus=error&message=" . urlencode("Image not found."));
+    header("Location: ../image_library_tbPages/image_library_tbPage.php?deleteStatus=error&message=" . urlencode("Image not found."));
     exit();
   }
 }
@@ -128,9 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateImageButton'])) 
   // If validation passes, update the database
   if ($inputOK === true) {
     // Update the session array with the new details   
-    $_SESSION['imageLibrary'][$imageForThisPageID]['ImageCaption'] = $newImageCaption;
-    $_SESSION['imageLibrary'][$imageForThisPageID]['ImageDescription'] = $newImageDescription;
-    $_SESSION['imageLibrary'][$imageForThisPageID]['ImageGroup'] = $newImageGroup;
+    $_SESSION['image_library_tb'][$imageForThisPageID]['ImageCaption'] = $newImageCaption;
+    $_SESSION['image_library_tb'][$imageForThisPageID]['ImageDescription'] = $newImageDescription;
+    $_SESSION['image_library_tb'][$imageForThisPageID]['ImageGroup'] = $newImageGroup;
 
     // Connect to the database
     $connection = connectToDatabase();
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateImageButton'])) 
     }
 
     // Update the image details in the database using prepared statements
-    $updateQuery = "UPDATE ImageLibrary SET ImageCaption = ?, ImageDescription = ?, ImageGroup = ? WHERE ImageID = ?";
+    $updateQuery = "UPDATE image_library_tb SET ImageCaption = ?, ImageDescription = ?, ImageGroup = ? WHERE ImageID = ?";
     $stmt = $connection->prepare($updateQuery);
     $stmt->bind_param("sssi", $newImageCaption, $newImageDescription, $newImageGroup, $imageForThisPageID);
 
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateImageButton'])) 
   $imageForThisPageID = $_GET['editImageID'];
   
   // Check that the image array exists
-  if (!isset($_SESSION['imageLibrary'][$imageForThisPageID])) {
+  if (!isset($_SESSION['image_library_tb'][$imageForThisPageID])) {
     die("Image not found. Please contact the administrator.");
   }
   
@@ -172,14 +172,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateImageButton'])) 
 }
 
 // Get the image details from the image library array
-$imageCaption = $_SESSION['imageLibrary'][$imageForThisPageID]['ImageCaption'];
-$imageLink = $_SESSION['imageLibrary'][$imageForThisPageID]['ImageLink'];  
-$imageDescription = $_SESSION['imageLibrary'][$imageForThisPageID]['ImageDescription'];
-$imageGroup = $_SESSION['imageLibrary'][$imageForThisPageID]['ImageGroup'] ?? "";
+$imageCaption = $_SESSION['image_library_tb'][$imageForThisPageID]['ImageCaption'];
+$imageLink = $_SESSION['image_library_tb'][$imageForThisPageID]['ImageLink'];  
+$imageDescription = $_SESSION['image_library_tb'][$imageForThisPageID]['ImageDescription'];
+$imageGroup = $_SESSION['image_library_tb'][$imageForThisPageID]['ImageGroup'] ?? "";
 
 // Collect all unique image groups from the session
 $imageGroups = array();
-foreach ($_SESSION['imageLibrary'] as $imageID => $imageDetails) {
+foreach ($_SESSION['image_library_tb'] as $imageID => $imageDetails) {
   $group = isset($imageDetails['ImageGroup']) && !empty($imageDetails['ImageGroup']) 
     ? $imageDetails['ImageGroup'] 
     : '';
@@ -228,7 +228,7 @@ print("
 ");
 
 $formAndContentString = "
-<form action=\"../ImageLibraryPages/editImageDetails.php?editImageID=$imageForThisPageID\" method=\"POST\">
+<form action=\"../image_library_tbPages/editImageDetails.php?editImageID=$imageForThisPageID\" method=\"POST\">
   <input type=\"hidden\" name=\"fvImageForThisPageID\" value=\"$imageForThisPageID\">
   
   <div class=\"formContainer\">
@@ -282,7 +282,7 @@ $formAndContentString = "
       <button type=\"submit\" name=\"updateImageButton\" class=\"formButtonPrimary\">
         Update Image Details
       </button>
-      <a href=\"../ImageLibraryPages/imageLibraryPage.php\" class=\"formButtonSecondary\">
+      <a href=\"../image_library_tbPages/image_library_tbPage.php\" class=\"formButtonSecondary\">
         Back to Image Library
       </a>      <a href=\"editImageDetails.php?deleteImageID=$imageForThisPageID\" 
          class=\"formButtonSecondary\" 

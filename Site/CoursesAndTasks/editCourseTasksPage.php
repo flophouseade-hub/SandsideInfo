@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 69;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateCourseTasksButto
   
   try {
     // Get current tasks in course
-    $currentTasksQuery = "SELECT CTTaskID FROM CourseTasksDB WHERE CTCourseID = ?";
+    $currentTasksQuery = "SELECT CTTaskID FROM Coursetasks_tb WHERE CTCourseID = ?";
     $stmtCurrent = $connection->prepare($currentTasksQuery);
     $stmtCurrent->bind_param('i', $courseForThisPageID);
     $stmtCurrent->execute();
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateCourseTasksButto
     
     // Remove unchecked tasks
     if (count($tasksToRemove) > 0) {
-      $deleteQuery = "DELETE FROM CourseTasksDB WHERE CTCourseID = ? AND CTTaskID = ?";
+      $deleteQuery = "DELETE FROM Coursetasks_tb WHERE CTCourseID = ? AND CTTaskID = ?";
       $stmtDelete = $connection->prepare($deleteQuery);
       
       if (!$stmtDelete) {
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateCourseTasksButto
     // Add newly checked tasks
     if (count($tasksToAdd) > 0) {
       // Get the current maximum order for this course
-      $maxOrderQuery = "SELECT MAX(CTTaskOrder) as MaxOrder FROM CourseTasksDB WHERE CTCourseID = ?";
+      $maxOrderQuery = "SELECT MAX(CTTaskOrder) as MaxOrder FROM Coursetasks_tb WHERE CTCourseID = ?";
       $stmtMax = $connection->prepare($maxOrderQuery);
       $stmtMax->bind_param('i', $courseForThisPageID);
       $stmtMax->execute();
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateCourseTasksButto
       $stmtMax->close();
       
       // Prepare insert statement
-      $insertQuery = "INSERT INTO CourseTasksDB (CTCourseID, CTTaskID, CTTaskOrder) VALUES (?, ?, ?)";
+      $insertQuery = "INSERT INTO Coursetasks_tb (CTCourseID, CTTaskID, CTTaskOrder) VALUES (?, ?, ?)";
       $stmtInsert = $connection->prepare($insertQuery);
       
       if (!$stmtInsert) {
@@ -155,7 +155,7 @@ if (!$connection) {
 }
 
 // Get course details
-$queryCourse = "SELECT CourseName, CourseDescription, CourseColour FROM CoursesDB WHERE CourseID = ?";
+$queryCourse = "SELECT CourseName, CourseDescription, CourseColour FROM courses_tb WHERE CourseID = ?";
 $stmtCourse = $connection->prepare($queryCourse);
 $stmtCourse->bind_param('i', $courseForThisPageID);
 $stmtCourse->execute();
@@ -174,8 +174,8 @@ $courseColour = $rowCourse['CourseColour'];
 
 $stmtCourse->close();
 
-// Get all tasks associated with this course from CourseTasksDB, ordered by CTTaskOrder
-$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM CourseTasksDB WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
+// Get all tasks associated with this course from Coursetasks_tb, ordered by CTTaskOrder
+$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM Coursetasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
 $stmtTasks = $connection->prepare($queryTasks);
 $stmtTasks->bind_param('i', $courseForThisPageID);
 $stmtTasks->execute();
@@ -196,7 +196,7 @@ $tasksArray = array();
 if (count($taskIDs) > 0) {
   // Build IN clause for query
   $placeholders = implode(',', array_fill(0, count($taskIDs), '?'));
-  $queryTaskDetails = "SELECT TaskID, TaskName, TaskDescription, TaskColour FROM TasksDB WHERE TaskID IN ($placeholders)";
+  $queryTaskDetails = "SELECT TaskID, TaskName, TaskDescription, TaskColour FROM tasks_tb WHERE TaskID IN ($placeholders)";
   $stmtTaskDetails = $connection->prepare($queryTaskDetails);
   
   // Bind parameters dynamically
@@ -227,8 +227,8 @@ if (count($taskIDs) > 0) {
   $stmtTaskDetails->close();
 }
 
-// Get all available tasks from TasksDB with TaskGroup
-$queryAllTasks = "SELECT TaskID, TaskName, TaskDescription, TaskColour, TaskGroup FROM TasksDB ORDER BY TaskGroup, TaskName";
+// Get all available tasks from tasks_tb with TaskGroup
+$queryAllTasks = "SELECT TaskID, TaskName, TaskDescription, TaskColour, TaskGroup FROM tasks_tb ORDER BY TaskGroup, TaskName";
 $resultAllTasks = mysqli_query($connection, $queryAllTasks);
 
 $allTasksArray = array();

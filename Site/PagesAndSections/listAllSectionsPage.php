@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 24;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -21,7 +21,7 @@ if (isset($_GET['deleteSectionID']) && is_numeric($_GET['deleteSectionID'])) {
     $deletionMessage = "<p style='color: red;'>ERROR: Could not connect to the database.</p>";
   } else {
     // Check if section is used in any pages
-    $checkQuery = "SELECT COUNT(*) as count FROM PageSectionsDB WHERE PSSectionID = ?";
+    $checkQuery = "SELECT COUNT(*) as count FROM page_sections_tb WHERE PSSectionID = ?";
     $stmt = $connection->prepare($checkQuery);
     $stmt->bind_param("i", $sectionToDelete);
     $stmt->execute();
@@ -33,7 +33,7 @@ if (isset($_GET['deleteSectionID']) && is_numeric($_GET['deleteSectionID'])) {
       $deletionMessage = "<p style='color: red;'>Cannot delete this section. It is currently used in " . $row['count'] . " page(s). Please remove it from all pages first.</p>";
     } else {
       // Delete the section
-      $deleteQuery = "DELETE FROM SectionDB WHERE SectionID = ?";
+      $deleteQuery = "DELETE FROM section_tb WHERE SectionID = ?";
       $stmt = $connection->prepare($deleteQuery);
       $stmt->bind_param("i", $sectionToDelete);
       
@@ -60,7 +60,7 @@ if (!$connection) {
 }
 
 // Get unique groups for filter dropdown
-$groupQuery = "SELECT DISTINCT SectionGroup FROM SectionDB WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
+$groupQuery = "SELECT DISTINCT SectionGroup FROM section_tb WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 $availableGroups = array();
 if ($groupResult) {
@@ -70,7 +70,7 @@ if ($groupResult) {
 }
 
 // Get unique styles for filter dropdown
-$styleQuery = "SELECT DISTINCT SectionStyle FROM SectionDB WHERE SectionStyle IS NOT NULL AND SectionStyle != '' ORDER BY SectionStyle ASC";
+$styleQuery = "SELECT DISTINCT SectionStyle FROM section_tb WHERE SectionStyle IS NOT NULL AND SectionStyle != '' ORDER BY SectionStyle ASC";
 $styleResult = mysqli_query($connection, $styleQuery);
 $availableStyles = array();
 if ($styleResult) {
@@ -80,7 +80,7 @@ if ($styleResult) {
 }
 
 // Build main query with optional filters
-$query = "SELECT SectionID, SectionTitle, SectionContent, SectionGroup, SectionStyle, SectionColour FROM SectionDB WHERE 1=1";
+$query = "SELECT SectionID, SectionTitle, SectionContent, SectionGroup, SectionStyle, SectionColour FROM section_tb WHERE 1=1";
 if (!empty($filterGroup)) {
   $query .= " AND SectionGroup = '" . mysqli_real_escape_string($connection, $filterGroup) . "'";
 }

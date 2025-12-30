@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 72;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteResourceButton']
         $connection = connectToDatabase();
         
         // Delete the resource
-        $deleteQuery = "DELETE FROM ResourceLibrary WHERE LinkedResourceID = ?";
+        $deleteQuery = "DELETE FROM resource_library_tb WHERE LinkedResourceID = ?";
         $stmt = $connection->prepare($deleteQuery);
         $stmt->bind_param("i", $resourceToEditID);
         
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteResourceButton']
             $stmt->close();
             $connection->close();
             // Redirect to resource library with success message
-            header("Location: resourceLibraryPage.php?deleted=success");
+            header("Location: resource_library_tbPage.php?deleted=success");
             exit;
         } else {
             $errorMsg = urlencode("Could not delete resource: " . $stmt->error);
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateResourceButton']
 
         // Update resource details - only update LRLink if it's an external resource
         if ($editResourceLocal == 0) {
-            $updateQuery = "UPDATE ResourceLibrary SET 
+            $updateQuery = "UPDATE resource_library_tb SET 
             LRName = ?,
             LRDescription = ?,
             LRType = ?,
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateResourceButton']
             );
         } else {
             // For local resources, don't update LRLink
-            $updateQuery = "UPDATE ResourceLibrary SET 
+            $updateQuery = "UPDATE resource_library_tb SET 
             LRName = ?,
             LRDescription = ?,
             LRType = ?,
@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateResourceButton']
     // First time loading - get resource details from database
     $connection = connectToDatabase();
 
-    $selectQuery = "SELECT * FROM ResourceLibrary WHERE LinkedResourceID = ?";
+    $selectQuery = "SELECT * FROM resource_library_tb WHERE LinkedResourceID = ?";
     $stmt = $connection->prepare($selectQuery);
     $stmt->bind_param("i", $resourceToEditID);
     $stmt->execute();
@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateResourceButton']
 
 // Fetch existing resource groups from database for dropdown
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT LRGroup FROM ResourceLibrary WHERE LRGroup IS NOT NULL AND LRGroup != '' ORDER BY LRGroup ASC";
+$groupQuery = "SELECT DISTINCT LRGroup FROM resource_library_tb WHERE LRGroup IS NOT NULL AND LRGroup != '' ORDER BY LRGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {
@@ -328,7 +328,7 @@ print("
             <button type=\"submit\" name=\"updateResourceButton\" class=\"formButtonPrimary\">
                 Update Resource
             </button>
-            <a href=\"resourceLibraryPage.php\" class=\"formButtonSecondary\">
+            <a href=\"resource_library_tbPage.php\" class=\"formButtonSecondary\">
                 Return to Resource Library
             </a>
             <button type=\"button\" onclick=\"deleteResource()\" class=\"formButtonPrimary\" 
@@ -353,7 +353,7 @@ print("
 if ($_SESSION['currentUserLogOnStatus'] == 'pageEditor' || $_SESSION['currentUserLogOnStatus'] == 'fullAdmin') {
     // Fetch metadata from database
     $connection = connectToDatabase();
-    $metaQuery = "SELECT LRUploadedBy, LRUploadedWhen, LREditBy, LREditWhen, LRLocal, LRLink FROM ResourceLibrary WHERE LinkedResourceID = ?";
+    $metaQuery = "SELECT LRUploadedBy, LRUploadedWhen, LREditBy, LREditWhen, LRLocal, LRLink FROM resource_library_tb WHERE LinkedResourceID = ?";
     $stmt = $connection->prepare($metaQuery);
     $stmt->bind_param("i", $resourceToEditID);
     $stmt->execute();

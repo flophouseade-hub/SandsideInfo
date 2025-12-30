@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 85; 
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -31,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirmImport'])) {
         mysqli_begin_transaction($connection);
         
         try {
-            // Step 1: Delete all existing students
-            $deleteStudents = "DELETE FROM Students";
-            mysqli_query($connection, $deleteStudents);
-            $studentsDeleted = mysqli_affected_rows($connection);
+            // Step 1: Delete all existing students_tb
+            $deletestudents_tb = "DELETE FROM students_tb";
+            mysqli_query($connection, $deletestudents_tb);
+            $students_tbDeleted = mysqli_affected_rows($connection);
             
             // Step 2: Get all existing classes
             $existingClasses = array();
@@ -82,9 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirmImport'])) {
                 $classesDeleted = mysqli_affected_rows($connection);
             }
             
-            // Step 6: Insert all students
-            $insertStmt = $connection->prepare("INSERT INTO Students (FirstName, LastName, UPN, Sex, ClassID) VALUES (?, ?, ?, ?, ?)");
-            $studentsInserted = 0;
+            // Step 6: Insert all students_tb
+            $insertStmt = $connection->prepare("INSERT INTO students_tb (FirstName, LastName, UPN, Sex, ClassID) VALUES (?, ?, ?, ?, ?)");
+            $students_tbInserted = 0;
             $errors = array();
             
             foreach ($csvData as $index => $row) {
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirmImport'])) {
                 
                 $insertStmt->bind_param("ssssi", $firstName, $lastName, $upn, $sex, $classID);
                 if ($insertStmt->execute()) {
-                    $studentsInserted++;
+                    $students_tbInserted++;
                 } else {
                     $errors[] = "Row " . ($index + 2) . ": " . $insertStmt->error;
                 }
@@ -115,8 +115,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirmImport'])) {
             mysqli_commit($connection);
             
             $uploadStats = array(
-                'studentsDeleted' => $studentsDeleted,
-                'studentsInserted' => $studentsInserted,
+                'students_tbDeleted' => $students_tbDeleted,
+                'students_tbInserted' => $students_tbInserted,
                 'classesCreated' => $classesCreated,
                 'classesDeleted' => $classesDeleted,
                 'errors' => $errors
@@ -222,8 +222,8 @@ if ($uploadStats) {
     print("<div style='background-color: #d4edda; padding: 20px; margin: 20px 0; border-radius: 4px; border: 1px solid #c3e6cb;'>");
     print("<h3>Import Summary</h3>");
     print("<ul>");
-    print("<li><strong>Students deleted:</strong> " . $uploadStats['studentsDeleted'] . "</li>");
-    print("<li><strong>Students inserted:</strong> " . $uploadStats['studentsInserted'] . "</li>");
+    print("<li><strong>students_tb deleted:</strong> " . $uploadStats['students_tbDeleted'] . "</li>");
+    print("<li><strong>students_tb inserted:</strong> " . $uploadStats['students_tbInserted'] . "</li>");
     print("<li><strong>Classes created:</strong> " . $uploadStats['classesCreated'] . "</li>");
     print("<li><strong>Classes deleted:</strong> " . $uploadStats['classesDeleted'] . "</li>");
     print("</ul>");
@@ -239,7 +239,7 @@ if ($uploadStats) {
     
     print("<div style='display: flex; gap: 10px; margin-top: 15px;'>");
     print("<a href='classListPage.php' class='formButtonPrimary'>View Class Lists</a>");
-    print("<a href='manageStudentsPage.php' class='formButtonSecondary'>Manage Students</a>");
+    print("<a href='managestudents_tbPage.php' class='formButtonSecondary'>Manage students_tb</a>");
     print("<a href='manageClassesPage.php' class='formButtonSecondary'>Manage Classes</a>");
     print("</div>");
     print("</div>");
@@ -248,7 +248,7 @@ if ($uploadStats) {
 // Show preview if data was uploaded
 if ($previewData) {
     print("<div class='formInfoBox' style='background-color: #fff3cd; border-color: #ffc107;'>");
-    print("<h3>Preview: " . $previewData['total'] . " students found</h3>");
+    print("<h3>Preview: " . $previewData['total'] . " students_tb found</h3>");
     
     if (count($previewData['duplicates']) > 0) {
         print("<div style='background-color: #f8d7da; padding: 15px; margin: 15px 0; border-radius: 4px; border: 1px solid #f5c6cb;'>");
@@ -265,10 +265,10 @@ if ($previewData) {
     
     print("<p><strong>⚠ WARNING:</strong> Clicking 'Confirm Import' will:</p>");
     print("<ul>");
-    print("<li>Delete ALL existing students from the database</li>");
+    print("<li>Delete ALL existing students_tb from the database</li>");
     print("<li>Create any new classes found in the CSV</li>");
     print("<li>Delete any classes not in the CSV</li>");
-    print("<li>Import all " . $previewData['total'] . " students from the CSV</li>");
+    print("<li>Import all " . $previewData['total'] . " students_tb from the CSV</li>");
     print("</ul>");
     print("</div>");
     
@@ -304,7 +304,7 @@ if ($previewData) {
     print("<form method='POST' action='uploadStudentDataPage.php'>");
     print("<input type='hidden' name='csvData' value='" . htmlspecialchars(json_encode($previewData['data']), ENT_QUOTES, 'UTF-8') . "'>");
     print("<div class='formButtonContainer'>");
-    print("<button type='submit' name='confirmImport' class='formButtonPrimary' style='background-color: #d32f2f;' onclick=\"return confirm('This will DELETE all existing students and classes. Are you absolutely sure?');\">Confirm Import</button>");
+    print("<button type='submit' name='confirmImport' class='formButtonPrimary' style='background-color: #d32f2f;' onclick=\"return confirm('This will DELETE all existing students_tb and classes. Are you absolutely sure?');\">Confirm Import</button>");
     print("<a href='uploadStudentDataPage.php' class='formButtonSecondary'>Cancel</a>");
     print("</div>");
     print("</form>");
@@ -313,7 +313,7 @@ if ($previewData) {
     // Show upload form
     print("<div class='formInfoBox'>");
     print("<h3>Upload Student CSV File</h3>");
-    print("<p>Upload a CSV file with student data to replace all existing students in the database.</p>");
+    print("<p>Upload a CSV file with student data to replace all existing students_tb in the database.</p>");
     print("<p><strong>Required CSV columns (in this order):</strong></p>");
     print("<ol>");
     print("<li>First Name</li>");
@@ -334,7 +334,7 @@ if ($previewData) {
     
     print("<div class='formButtonContainer'>");
     print("<button type='submit' class='formButtonPrimary'>Upload and Preview</button>");
-    print("<a href='manageStudentsPage.php' class='formButtonSecondary'>Manage Students</a>");
+    print("<a href='managestudents_tbPage.php' class='formButtonSecondary'>Manage students_tb</a>");
     print("<a href='manageClassesPage.php' class='formButtonSecondary'>Manage Classes</a>");
     print("</div>");
     print("</div>");

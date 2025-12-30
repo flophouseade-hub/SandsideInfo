@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 //list all the pages with links to edit them in the editPageDetailsPage.php page
 $thisPageID = 23;
 include('../phpCode/pageStarterPHP.php');
@@ -18,10 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePageButton'])) {
   $protectedPageIDs = array(1, 15); // 1 = Main Menu, 15 = Admin Home (adjust IDs as needed)
 
   // Get page name for error messages
-  $pageToDeleteName = isset($_SESSION['pagesOnSite'][$pageToDeleteID]) ? $_SESSION['pagesOnSite'][$pageToDeleteID]['PageName'] : 'Unknown';
+  $pageToDeleteName = isset($_SESSION['pages_on_site_tb'][$pageToDeleteID]) ? $_SESSION['pages_on_site_tb'][$pageToDeleteID]['PageName'] : 'Unknown';
 
   // Validate the page ID exists
-  if (!isset($_SESSION['pagesOnSite'][$pageToDeleteID])) {
+  if (!isset($_SESSION['pages_on_site_tb'][$pageToDeleteID])) {
     $inputOK = false;
     $feedbackMessage = "<p style=\"color:red; font-weight: bold; margin-left: 20px;\">Error: Page ID $pageToDeleteID does not exist.</p>";
   }
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePageButton'])) {
     $feedbackMessage = "<p style=\"color:red; font-weight: bold; margin-left: 20px;\">Cannot delete core navigation page: $pageToDeleteName (ID: $pageToDeleteID).</p>";
   }
   // Prevent deletion of all builtInPage types
-  elseif ($_SESSION['pagesOnSite'][$pageToDeleteID]['PageType'] == 'builtInPage') {
+  elseif ($_SESSION['pages_on_site_tb'][$pageToDeleteID]['PageType'] == 'builtInPage') {
     $inputOK = false;
     $feedbackMessage = "<p style=\"color:red; font-weight: bold; margin-left: 20px;\">Cannot delete built-in page: $pageToDeleteName (ID: $pageToDeleteID). These are linked to PHP controllers.</p>";
   } else {
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePageButton'])) {
 
     // First check: PageLocalMenu references
     $query = "SELECT PageID, PageName, PageLocalMenu 
-                FROM PagesOnSite 
+                FROM pages_on_site_tb 
                 WHERE PageLocalMenu IS NOT NULL 
                 AND PageLocalMenu != '' 
                 AND (
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePageButton'])) {
     } else {
       // Second check: blockMenu PageContentRefs
       $query = "SELECT PageID, PageName, PageContentRefs 
-                  FROM PagesOnSite 
+                  FROM pages_on_site_tb 
                   WHERE PageType = 'blockMenu' 
                   AND (
                     PageContentRefs = ? 
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePageButton'])) {
         $connection->close();
       } else {
           // All checks passed - proceed with deletion
-          $query = "DELETE FROM PagesOnSite WHERE PageID = ?";
+          $query = "DELETE FROM pages_on_site_tb WHERE PageID = ?";
           $stmt = $connection->prepare($query);
           $stmt->bind_param("i", $pageToDeleteID);
 
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deletePageButton'])) {
             $feedbackMessage = "<p style=\"color:green; font-weight: bold; margin-left: 20px;\">Page '$pageToDeleteName' (ID: $pageToDeleteID) deleted successfully.</p>";
 
             // Remove from session array
-            unset($_SESSION['pagesOnSite'][$pageToDeleteID]);
+            unset($_SESSION['pages_on_site_tb'][$pageToDeleteID]);
 
             // Reload the pages array to ensure consistency
             include('../phpCode/pagesAndImagesArrays.php');
@@ -158,7 +158,7 @@ $allPageTypes = array();
 $allPageAccess = array();
 $allPageGroups = array();
 
-foreach ($_SESSION['pagesOnSite'] as $pageDetails) {
+foreach ($_SESSION['pages_on_site_tb'] as $pageDetails) {
   if (!empty($pageDetails['PageType']) && !in_array($pageDetails['PageType'], $allPageTypes)) {
     $allPageTypes[] = $pageDetails['PageType'];
   }
@@ -175,21 +175,21 @@ sort($allPageAccess);
 sort($allPageGroups);
 
 // Get the page details for this page from the array:
-$pageName = $_SESSION['pagesOnSite'][$thisPageID]['PageName'];
-$pageDescription = $_SESSION['pagesOnSite'][$thisPageID]['PageDescription'];
-$pageImageRef = $_SESSION['pagesOnSite'][$thisPageID]['PageImageIDRef'];
-$pageType = $_SESSION['pagesOnSite'][$thisPageID]['PageType'];
-$pageContentRefs = $_SESSION['pagesOnSite'][$thisPageID]['PageContentRefs'];
-$pageAccess = $_SESSION['pagesOnSite'][$thisPageID]['PageAccess'];
-$pageColour = $_SESSION['pagesOnSite'][$thisPageID]['PageColour'];
-$pageLocalMenu = $_SESSION['pagesOnSite'][$thisPageID]['PageLocalMenu'];
+$pageName = $_SESSION['pages_on_site_tb'][$thisPageID]['PageName'];
+$pageDescription = $_SESSION['pages_on_site_tb'][$thisPageID]['PageDescription'];
+$pageImageRef = $_SESSION['pages_on_site_tb'][$thisPageID]['PageImageIDRef'];
+$pageType = $_SESSION['pages_on_site_tb'][$thisPageID]['PageType'];
+$pageContentRefs = $_SESSION['pages_on_site_tb'][$thisPageID]['PageContentRefs'];
+$pageAccess = $_SESSION['pages_on_site_tb'][$thisPageID]['PageAccess'];
+$pageColour = $_SESSION['pages_on_site_tb'][$thisPageID]['PageColour'];
+$pageLocalMenu = $_SESSION['pages_on_site_tb'][$thisPageID]['PageLocalMenu'];
 
 // Make the array local for easier access
-$pagesOnSite = $_SESSION['pagesOnSite'];
+$pages_on_site_tb = $_SESSION['pages_on_site_tb'];
 
 // Apply filters if specified
 $filteredPages = array();
-foreach ($_SESSION['pagesOnSite'] as $pageID => $pageDetails) {
+foreach ($_SESSION['pages_on_site_tb'] as $pageID => $pageDetails) {
   $include = true;
   
   // Filter by Type
@@ -216,27 +216,27 @@ foreach ($_SESSION['pagesOnSite'] as $pageID => $pageDetails) {
     $filteredPages[$pageID] = $pageDetails;
   }
 }
-$pagesOnSite = $filteredPages;
+$pages_on_site_tb = $filteredPages;
 
 // Apply sorting
 if ($sortBy === 'name') {
-  uasort($pagesOnSite, function($a, $b) {
+  uasort($pages_on_site_tb, function($a, $b) {
     return strcasecmp($a['PageName'], $b['PageName']);
   });
 } elseif ($sortBy === 'description') {
-  uasort($pagesOnSite, function($a, $b) {
+  uasort($pages_on_site_tb, function($a, $b) {
     return strcasecmp($a['PageDescription'], $b['PageDescription']);
   });
 } elseif ($sortBy === 'type') {
-  uasort($pagesOnSite, function($a, $b) {
+  uasort($pages_on_site_tb, function($a, $b) {
     return strcasecmp($a['PageType'], $b['PageType']);
   });
 } elseif ($sortBy === 'access') {
-  uasort($pagesOnSite, function($a, $b) {
+  uasort($pages_on_site_tb, function($a, $b) {
     return strcasecmp($a['PageAccess'], $b['PageAccess']);
   });
 } elseif ($sortBy === 'group') {
-  uasort($pagesOnSite, function($a, $b) {
+  uasort($pages_on_site_tb, function($a, $b) {
     $groupA = isset($a['PageGroup']) ? $a['PageGroup'] : '';
     $groupB = isset($b['PageGroup']) ? $b['PageGroup'] : '';
     return strcasecmp($groupA, $groupB);
@@ -346,7 +346,7 @@ print("</form>");
 
 print("<tbody>");
 
-foreach ($pagesOnSite as $pageID => $pageDetails) {
+foreach ($pages_on_site_tb as $pageID => $pageDetails) {
   $pageName = $pageDetails['PageName'];
   $pageDescription = $pageDetails['PageDescription'];
   $pageType = $pageDetails['PageType'];

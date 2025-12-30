@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 32;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editUserButton'])) {
     if (!empty($editUserPassword)) {
       //hash the password
       $hashedPassword = password_hash($editUserPassword, PASSWORD_DEFAULT);
-      $updateQuery = "UPDATE UsersDB SET 
+      $updateQuery = "UPDATE users_tb SET 
           FirstName = ?,
           LastName = ?,
           SchoolStatus = ?,
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editUserButton'])) {
       );
     } else {
       // Update without changing password
-      $updateQuery = "UPDATE UsersDB SET 
+      $updateQuery = "UPDATE users_tb SET 
           FirstName = ?,
           LastName = ?,
           SchoolStatus = ?,

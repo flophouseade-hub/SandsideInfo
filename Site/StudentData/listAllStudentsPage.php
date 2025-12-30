@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 86;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');
@@ -21,7 +21,7 @@ if (isset($_GET['deleteStudentID']) && is_numeric($_GET['deleteStudentID'])) {
     if (!$connection) {
         $feedbackMessage = "<p style='color: red;'>ERROR: Could not connect to database.</p>";
     } else {
-        $deleteQuery = "DELETE FROM Students WHERE StudentID = ?";
+        $deleteQuery = "DELETE FROM students_tb WHERE StudentID = ?";
         $stmt = $connection->prepare($deleteQuery);
         $stmt->bind_param("i", $studentToDelete);
         
@@ -56,7 +56,7 @@ while ($row = mysqli_fetch_assoc($classesResult)) {
 }
 
 // Get distinct sex values for filter
-$sexQuery = "SELECT DISTINCT Sex FROM Students WHERE Sex IS NOT NULL AND Sex != '' ORDER BY Sex";
+$sexQuery = "SELECT DISTINCT Sex FROM students_tb WHERE Sex IS NOT NULL AND Sex != '' ORDER BY Sex";
 $sexResult = mysqli_query($connection, $sexQuery);
 $sexOptions = array();
 while ($row = mysqli_fetch_assoc($sexResult)) {
@@ -64,39 +64,39 @@ while ($row = mysqli_fetch_assoc($sexResult)) {
 }
 
 // Build student query with optional filter
-$studentsQuery = "SELECT s.StudentID, s.FirstName, s.LastName, s.UPN, s.Sex, s.ClassID, c.classname, c.colour, c.classOrder 
-                  FROM Students s 
+$students_tbQuery = "SELECT s.StudentID, s.FirstName, s.LastName, s.UPN, s.Sex, s.ClassID, c.classname, c.colour, c.classOrder 
+                  FROM students_tb s 
                   LEFT JOIN classes c ON s.ClassID = c.ClassID 
                   WHERE 1=1";
 
 if ($filterClass > 0) {
-    $studentsQuery .= " AND s.ClassID = " . $filterClass;
+    $students_tbQuery .= " AND s.ClassID = " . $filterClass;
 }
 if (!empty($filterSex)) {
-    $studentsQuery .= " AND s.Sex = '" . mysqli_real_escape_string($connection, $filterSex) . "'";
+    $students_tbQuery .= " AND s.Sex = '" . mysqli_real_escape_string($connection, $filterSex) . "'";
 }
 
 // Add sorting based on sortBy parameter
 switch ($sortBy) {
     case 'firstName':
-        $studentsQuery .= " ORDER BY s.FirstName, s.LastName";
+        $students_tbQuery .= " ORDER BY s.FirstName, s.LastName";
         break;
     case 'lastName':
-        $studentsQuery .= " ORDER BY s.LastName, s.FirstName";
+        $students_tbQuery .= " ORDER BY s.LastName, s.FirstName";
         break;
     case 'sex':
-        $studentsQuery .= " ORDER BY s.Sex, s.LastName, s.FirstName";
+        $students_tbQuery .= " ORDER BY s.Sex, s.LastName, s.FirstName";
         break;
     case 'class':
     default:
-        $studentsQuery .= " ORDER BY c.classOrder, c.classname, s.LastName, s.FirstName";
+        $students_tbQuery .= " ORDER BY c.classOrder, c.classname, s.LastName, s.FirstName";
         break;
 }
 
-$studentsResult = mysqli_query($connection, $studentsQuery);
-$students = array();
-while ($row = mysqli_fetch_assoc($studentsResult)) {
-    $students[] = $row;
+$students_tbResult = mysqli_query($connection, $students_tbQuery);
+$students_tb = array();
+while ($row = mysqli_fetch_assoc($students_tbResult)) {
+    $students_tb[] = $row;
 }
 
 $connection->close();
@@ -108,7 +108,7 @@ insertPageHeader($thisPageID);
 insertPageLocalMenu($thisPageID);
 print('<link rel="stylesheet" href="../styleSheets/listAllTableStyles.css">');
 
-$pageTitle = "All Students";
+$pageTitle = "All students_tb";
 if ($filterClass > 0) {
     foreach ($allClasses as $class) {
         if ($class['ClassID'] == $filterClass) {
@@ -137,9 +137,9 @@ $filterParams = '';
 if ($filterClass > 0) $filterParams .= '&filterClass=' . $filterClass;
 if (!empty($filterSex)) $filterParams .= '&filterSex=' . urlencode($filterSex);
 
-// Students table
-if (count($students) > 0) {
-    print("<div id='studentsReferenceTable' class='listAllTable' style=\"margin: 0 auto;width: calc(100% - 20px);max-width: 1200px;\">");
+// students_tb table
+if (count($students_tb) > 0) {
+    print("<div id='students_tbReferenceTable' class='listAllTable' style=\"margin: 0 auto;width: calc(100% - 20px);max-width: 1200px;\">");
     print("<table>");
     print("<thead>");
     print("<tr>");
@@ -176,13 +176,13 @@ if (count($students) > 0) {
     print("<td style='text-align: left;padding-left: 9px;'>");
     if ($filterClass > 0 || !empty($filterSex)) {
         $sortParam = ($sortBy !== 'class') ? '?sortBy=' . $sortBy : '';
-        print("<button type='button' onclick=\"location.href='listAllStudentsPage.php{$sortParam}'\" style='padding: 4px 12px; background-color: #666; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 12px; font-weight: 500;'>Clear</button>");
+        print("<button type='button' onclick=\"location.href='listAllstudents_tbPage.php{$sortParam}'\" style='padding: 4px 12px; background-color: #666; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 12px; font-weight: 500;'>Clear</button>");
     }
     print("</td>");
     print("</tr>");
     print("</thead>");
     
-    print("<form id='filterForm' method='GET' action='listAllStudentsPage.php' style='display: none;'>");
+    print("<form id='filterForm' method='GET' action='listAllstudents_tbPage.php' style='display: none;'>");
     if ($sortBy !== 'class') {
         print("<input type='hidden' name='sortBy' value='$sortBy'>");
     }
@@ -190,7 +190,7 @@ if (count($students) > 0) {
     
     print("<tbody>");
     
-    foreach ($students as $student) {
+    foreach ($students_tb as $student) {
         $studentID = $student['StudentID'];
         $firstName = htmlspecialchars($student['FirstName'], ENT_QUOTES, 'UTF-8');
         $lastName = htmlspecialchars($student['LastName'], ENT_QUOTES, 'UTF-8');
@@ -214,11 +214,11 @@ if (count($students) > 0) {
         
         // Delete button column
         print("<td class='listAllTableCellCenter'>");
-        $deleteUrl = "listAllStudentsPage.php?deleteStudentID=$studentID";
+        $deleteUrl = "listAllstudents_tbPage.php?deleteStudentID=$studentID";
         if ($filterClass > 0) {
             $deleteUrl .= "&filterClass=$filterClass";
         }
-        print("<form method='GET' action='listAllStudentsPage.php' class='listAllTableDeleteForm' onsubmit=\"return confirm('Are you sure you want to delete $firstName $lastName? This action cannot be undone.');\">");
+        print("<form method='GET' action='listAllstudents_tbPage.php' class='listAllTableDeleteForm' onsubmit=\"return confirm('Are you sure you want to delete $firstName $lastName? This action cannot be undone.');\">");
         print("<input type='hidden' name='deleteStudentID' value='$studentID'>");
         if ($filterClass > 0) {
             print("<input type='hidden' name='filterClass' value='$filterClass'>");
@@ -236,7 +236,7 @@ if (count($students) > 0) {
     print("</div>");
 } else {
     print("<div style='text-align: center; padding: 40px; margin: 20px auto; max-width: 95%; background-color: #f5f5f5; border-radius: 4px;'>");
-    print("<p style='color: #999; font-style: italic; font-size: 1.1em;'>No students found" . ($filterClass > 0 ? " in this class" : "") . ".</p>");
+    print("<p style='color: #999; font-style: italic; font-size: 1.1em;'>No students_tb found" . ($filterClass > 0 ? " in this class" : "") . ".</p>");
     print("</div>");
 }
 
@@ -245,12 +245,12 @@ print("<div class='listAllTableNote'>");
 print("<strong>Note:</strong>");
 print("<ul>");
 print("<li>Click 'Edit' to modify a student's details including name, UPN, sex, and class.</li>");
-print("<li>Use the filter above to view students by class.</li>");
-print("<li>Click 'Add New Student' to add individual students, or use the Upload CSV option for bulk uploads.</li>");
+print("<li>Use the filter above to view students_tb by class.</li>");
+print("<li>Click 'Add New Student' to add individual students_tb, or use the Upload CSV option for bulk uploads.</li>");
 print("</ul>");
 print("</div>");
 
-print("</div>"); // Close studentsListWrapper
+print("</div>"); // Close students_tbListWrapper
 
 insertPageFooter($thisPageID);
 ?>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 64;
 include('../phpCode/includeFunctions.php');
 include('../phpCode/pageStarterPHP.php');
@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateCourseButton']))
     }
 
     // Check if another course with the same name exists (excluding current course)
-    $checkNameQuery = "SELECT CourseID FROM CoursesDB WHERE CourseName = ? AND CourseID != ?";
+    $checkNameQuery = "SELECT CourseID FROM courses_tb WHERE CourseName = ? AND CourseID != ?";
     $stmtCheck = $connection->prepare($checkNameQuery);
     $stmtCheck->bind_param('si', $inputCourseName, $courseForThisPageID);
     $stmtCheck->execute();
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateCourseButton']))
       $feedbackMessage .= "<p style=\"color: red;\">A course with this name already exists. Please use a different name.</p>";
     } else {
       // Update the course details - removed CourseContent from update
-      $updateQuery = "UPDATE CoursesDB SET CourseName = ?, CourseDescription = ?, CourseGroup = ?, CourseColour = ?, CourseEditBy = ?, CourseEditTime = ? WHERE CourseID = ?";
+      $updateQuery = "UPDATE courses_tb SET CourseName = ?, CourseDescription = ?, CourseGroup = ?, CourseColour = ?, CourseEditBy = ?, CourseEditTime = ? WHERE CourseID = ?";
       $stmt = $connection->prepare($updateQuery);
       $stmt->bind_param("ssssssi", $inputCourseName, $inputCourseDescription, $inputCourseGroup, $inputCourseColour, $courseEditBy, $courseEditTime, $courseForThisPageID);
 
@@ -171,7 +171,7 @@ if (!$connection) {
   die("ERROR: Could not connect to database: " . mysqli_connect_error());
 }
 
-$query = "SELECT CourseName, CourseDescription, CourseGroup, CourseColour, CourseMadeBy, CourseMadeTime, CourseEditBy, CourseEditTime FROM CoursesDB WHERE CourseID = ?";
+$query = "SELECT CourseName, CourseDescription, CourseGroup, CourseColour, CourseMadeBy, CourseMadeTime, CourseEditBy, CourseEditTime FROM courses_tb WHERE CourseID = ?";
 $stmt = $connection->prepare($query);
 $stmt->bind_param('i', $courseForThisPageID);
 $stmt->execute();
@@ -197,7 +197,7 @@ if (empty($courseName)) {
 $stmt->close();
 
 // Get tasks associated with this course
-$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM CourseTasksDB WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
+$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM Coursetasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
 $stmtTasks = $connection->prepare($queryTasks);
 $stmtTasks->bind_param('i', $courseForThisPageID);
 $stmtTasks->execute();
@@ -212,7 +212,7 @@ $stmtTasks->close();
 // Get task details if we have tasks
 if (count($taskIDs) > 0) {
   $placeholders = implode(',', array_fill(0, count($taskIDs), '?'));
-  $queryTaskDetails = "SELECT TaskID, TaskName, TaskColour FROM TasksDB WHERE TaskID IN ($placeholders)";
+  $queryTaskDetails = "SELECT TaskID, TaskName, TaskColour FROM tasks_tb WHERE TaskID IN ($placeholders)";
   $stmtTaskDetails = $connection->prepare($queryTaskDetails);
 
   $types = str_repeat('i', count($taskIDs));
@@ -235,7 +235,7 @@ $connection->close();
 
 // Fetch existing course groups from database for dropdown
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT CourseGroup FROM CoursesDB WHERE CourseGroup IS NOT NULL AND CourseGroup != '' ORDER BY CourseGroup ASC";
+$groupQuery = "SELECT DISTINCT CourseGroup FROM courses_tb WHERE CourseGroup IS NOT NULL AND CourseGroup != '' ORDER BY CourseGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {

@@ -1,5 +1,5 @@
-<?php
-$thisPageID = 68; // Update this to match the actual page ID in your PagesOnSite table
+﻿<?php
+$thisPageID = 68; // Update this to match the actual page ID in your pages_on_site_tb table
 include "../phpCode/includeFunctions.php";
 include "../phpCode/pageStarterPHP.php";
 
@@ -25,7 +25,7 @@ if (isset($_GET["deleteTaskID"]) && isset($_GET["confirm"]) && $_GET["confirm"] 
 		}
 
 		// Delete the task
-		$deleteQuery = "DELETE FROM TasksDB WHERE TaskID = ?";
+		$deleteQuery = "DELETE FROM tasks_tb WHERE TaskID = ?";
 		$stmt = $connection->prepare($deleteQuery);
 		$stmt->bind_param("i", $deleteTaskID);
 
@@ -42,7 +42,7 @@ if (isset($_GET["deleteTaskID"]) && isset($_GET["confirm"]) && $_GET["confirm"] 
 }
 
 // Get the page details for this page from the array
-$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "List All Tasks";
+$pageName = $_SESSION["pages_on_site_tb"][$thisPageID]["PageName"] ?? "List All Tasks";
 
 // Connect to database and get unique groups and creators for filter dropdowns
 $connection = connectToDatabase();
@@ -52,7 +52,7 @@ if (!$connection) {
 
 // Get unique groups
 $groupQuery =
-	"SELECT DISTINCT TaskGroup FROM TasksDB WHERE TaskGroup IS NOT NULL AND TaskGroup != '' ORDER BY TaskGroup ASC";
+	"SELECT DISTINCT TaskGroup FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' ORDER BY TaskGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 $availableGroups = [];
 if ($groupResult) {
@@ -63,7 +63,7 @@ if ($groupResult) {
 
 // Get unique creators
 $creatorQuery =
-	"SELECT DISTINCT TaskMadeBy FROM TasksDB WHERE TaskMadeBy IS NOT NULL AND TaskMadeBy != '' ORDER BY TaskMadeBy ASC";
+	"SELECT DISTINCT TaskMadeBy FROM tasks_tb WHERE TaskMadeBy IS NOT NULL AND TaskMadeBy != '' ORDER BY TaskMadeBy ASC";
 $creatorResult = mysqli_query($connection, $creatorQuery);
 $availableCreators = [];
 if ($creatorResult) {
@@ -167,7 +167,7 @@ print "</form>
   <tbody>";
 
 // Build query with optional filters
-$query = "SELECT TaskID, TaskName, TaskGroup, TaskDescription, TaskMadeBy, TaskMadeTime FROM TasksDB WHERE 1=1";
+$query = "SELECT TaskID, TaskName, TaskGroup, TaskDescription, TaskMadeBy, TaskMadeTime FROM tasks_tb WHERE 1=1";
 if (!empty($filterGroup)) {
 	$query .= " AND TaskGroup = '" . mysqli_real_escape_string($connection, $filterGroup) . "'";
 }

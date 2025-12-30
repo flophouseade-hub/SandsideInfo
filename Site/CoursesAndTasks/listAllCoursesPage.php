@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $thisPageID = 65;
 include "../phpCode/includeFunctions.php";
 include "../phpCode/pageStarterPHP.php";
@@ -24,7 +24,7 @@ if (isset($_GET["deleteCourseID"]) && isset($_GET["confirm"]) && $_GET["confirm"
 		}
 
 		// Delete the course
-		$deleteQuery = "DELETE FROM CoursesDB WHERE CourseID = ?";
+		$deleteQuery = "DELETE FROM courses_tb WHERE CourseID = ?";
 		$stmt = $connection->prepare($deleteQuery);
 		$stmt->bind_param("i", $deleteCourseID);
 
@@ -51,7 +51,7 @@ if (!$connection) {
 
 // Get unique groups
 $groupQuery =
-	"SELECT DISTINCT CourseGroup FROM CoursesDB WHERE CourseGroup IS NOT NULL AND CourseGroup != '' ORDER BY CourseGroup ASC";
+	"SELECT DISTINCT CourseGroup FROM courses_tb WHERE CourseGroup IS NOT NULL AND CourseGroup != '' ORDER BY CourseGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 $availableGroups = [];
 if ($groupResult) {
@@ -138,7 +138,7 @@ print "</form>
 
 // Build query with optional filter
 $query =
-	"SELECT CourseID, CourseName, CourseGroup, CourseDescription, CourseMadeBy, CourseMadeTime FROM CoursesDB WHERE 1=1";
+	"SELECT CourseID, CourseName, CourseGroup, CourseDescription, CourseMadeBy, CourseMadeTime FROM courses_tb WHERE 1=1";
 if (!empty($filterGroup)) {
 	$query .= " AND CourseGroup = '" . mysqli_real_escape_string($connection, $filterGroup) . "'";
 }

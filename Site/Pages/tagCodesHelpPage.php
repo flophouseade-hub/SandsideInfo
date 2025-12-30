@@ -1,14 +1,15 @@
 <?php
 $thisPageID = 52;
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // Print the page
-insertPageHeader($pageID);
-insertPageLocalMenu($thisPageID); 
+insertPageHeader($thisPageID);
+insertPageLocalMenu($thisPageID);
 insertPageTitleAndClass("Special Tag Codes Guide", "sectionsPageTitle", $thisPageID);
+print '<link rel="stylesheet" href="../styleSheets/sectionsPageStyles.css">';
 
-print("
+print "
 <section class=\"mainContent\">
   <section class=\"section1\" style=\"margin: 40\">
     <h2 class=\"sectionTitle\">Using Special Tag Codes in Content</h2>
@@ -130,7 +131,7 @@ print("
     </div>
   </section>
 </section>
-");
+";
 
 insertPageFooter($thisPageID);
 ?>
