@@ -1,20 +1,20 @@
 <?php
 function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectionID)
 {
-  // Get some data from the session variables:
-  $sectionColour = $_SESSION['sectionDB'][$sectionID]['SectionColour'] ?? '#b3b3b3';
-  $sectionColourSameAsPage = $_SESSION['sectionDB'][$sectionID]['SectionColourSameAsPage'] ?? 0;
-  $sectionShowTitle = $_SESSION['sectionDB'][$sectionID]['SectionShowTitle'] ?? 1;
-  // Original style - title on left, content on right with horizontal rules
-  $divClass = "sectionID" . $sectionID . "ColourDiv";
+	// Get some data from the session variables:
+	$sectionColour = $_SESSION["sectionDB"][$sectionID]["SectionColour"] ?? "#b3b3b3";
+	$sectionColourSameAsPage = $_SESSION["sectionDB"][$sectionID]["SectionColourSameAsPage"] ?? 0;
+	$sectionShowTitle = $_SESSION["sectionDB"][$sectionID]["SectionShowTitle"] ?? 1;
+	// Original style - title on left, content on right with horizontal rules
+	$divClass = "sectionID" . $sectionID . "ColourDiv";
 
-  //have seperage div for each section to apply colour variables
-  print("<div class=\"$divClass\">");
+	//have seperage div for each section to apply colour variables
+	print "<div class=\"$divClass\">";
 
-  // Only generate local color variations if not using page colors
-  if (!$sectionColourSameAsPage) {
-    $colourCombo = generateColorVariations($sectionColour, 95);
-    print("<style>\n
+	// Only generate local color variations if not using page colors
+	if (!$sectionColourSameAsPage) {
+		$colourCombo = generateColorVariations($sectionColour, 95);
+		print "<style>\n
   .$divClass {
     --chosen-color: $sectionColour;
     --chosen-color-lighter: {$colourCombo['lighter']};
@@ -122,7 +122,7 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	border: none;
 }
 
-.$divClass  .section1 .section1Content input.asButton {
+.$divClass .section1 .section1Content input.asButton {
 	font-size: 14px;
 	line-height: 1.3;
 	font-weight: 100;
@@ -243,7 +243,12 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
     </section>
   </section>
   <div style=\"clear: both;\"></div>
-  ",  $editButton, $title, $errorMessage, $sectionContent);
-  print("</div>");
-  return;
+  ",
+		$editButton,
+		$title,
+		$errorMessage,
+		$sectionContent,
+	);
+	print "</div>";
+	return;
 }
