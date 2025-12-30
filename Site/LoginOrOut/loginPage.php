@@ -52,6 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($numberOfRows < 1) {
       $inputError = true;
       $feedbackMessage .= "<p class=\"formFeedbackError\">Email not found. Did you register with your school email address or your personal email?</p>";
+      // Log failed login with user ID 0 for email not found
+      logUserLogin(0, $inputEmail, 'failed', 'Email not found');
     } elseif ($numberOfRows == 1) {
       $users = $result->fetch_assoc();
       $ID = $users['UsersID'];
@@ -72,6 +74,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['currentUserPassword'] = $passwordInDB;
         $_SESSION['currentUserSchoolStatus'] = $userSchoolStatus;
         
+        // Log successful login
+        logUserLogin($ID, $inputEmail, 'success');
+        
         // User is now logged in
         $feedbackMessage = "<p class=\"formFeedbackSuccess\">✓ Login successful. Redirecting to Main Menu...</p>";
         $stmt->close();
@@ -81,6 +86,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       } else {
         $inputError = true;
         $feedbackMessage .= "<p class=\"formFeedbackError\">Your password does not appear correct.</p>";
+        // Log failed login attempt
+        if (isset($ID)) {
+          logUserLogin($ID, $inputEmail, 'failed', 'Invalid password');
+        }
       }
     } else {
       $inputError = true;

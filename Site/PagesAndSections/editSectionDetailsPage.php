@@ -284,14 +284,14 @@ if (accessLevelCheck($pageAccess) == false) {
 //------------------------------------------------------------------------------------------------------
 // Display the page
 //------------------------------------------------------------------------------------------------------
-insertPageHeader($pageID);
+insertPageHeader($thisPageID);
 insertPageLocalMenu($thisPageID); 
 
 // Add the form formatting CSS
-print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
+//print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
 print('<link rel="stylesheet" href="../styleSheets/sectionsPageStyles.css">');
-print('<link rel="stylesheet" href="../styleSheets/spaceLeftSectionStyles.css">');
-print('<link rel="stylesheet" href="../styleSheets/centredAccentSectionStyles.css">');
+//print('<link rel="stylesheet" href="../styleSheets/spaceLeftSectionStyles.css">');
+//print('<link rel="stylesheet" href="../styleSheets/centredAccentSectionStyles.css">');
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 

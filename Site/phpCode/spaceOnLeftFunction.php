@@ -17,27 +17,30 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 		print "<style>\n
   .$divClass {
     --chosen-color: $sectionColour;
-    --chosen-color-lighter: $colourCombo[lighter];
-    --chosen-color-Comp1: $colourCombo[splitComp1];
-    --chosen-color-Comp2: $colourCombo[splitComp2];
-    --chosen-color-Comp2-lighter: $colourCombo[splitComp2Lighter];
-    --chosen-color-Comp1-lighter: $colourCombo[splitComp1Lighter];
+    --chosen-color-lighter: {$colourCombo['lighter']};
+    --chosen-color-Comp1: {$colourCombo['splitComp1']};
+    --chosen-color-Comp2: {$colourCombo['splitComp2']};
+    --chosen-color-Comp2-lighter: {$colourCombo['splitComp2Lighter']};
+    --chosen-color-Comp1-lighter: {$colourCombo['splitComp1Lighter']};
     }
-    </style>\n ";
-	} else {
-		// Use root page colors - no need to define local variables
-	}
+    </style>\n ");
+  } else {
+    // Use root page colors - no need to define local variables
+  }
+  print("<style>\n
+  /* -------------------------------------------------- */
+/* SpaceLeft Styles */
+/* --------------------------------------------------- */
 
-	// add local CSS for Space on Left layout
-	print "<style>\n  .$divClass section.section1 {
+.$divClass  section.section1 {
 	margin-top: 40px;
 	margin-bottom: 10px;
 	margin-right: 0px;
 	margin-left: 0px;
 }
 
-.$divClass .section1 .section1Content ul,
-.$divClass .section1 .section1Content ol {
+.$divClass  .section1 .section1Content ul,
+.$divClass  .section1 .section1Content ol {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	background-color: var(--chosen-color-Comp1-lighter);
@@ -45,7 +48,7 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	border-bottom: 1px solid var(--chosen-color);
 }
 
-.section1 h1.sectionTitle {
+.$divClass .section1 h1.sectionTitle {
 	font-family: 'Roboto', sans-serif;
 	font-size: 18px;
 	font-weight: 200;
@@ -54,7 +57,7 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	text-align: left;
 }
 
-.$divClass .section1 .section1Content h1{
+.$divClass  .section1 .section1Content h1{
 	background-color: var(--chosen-color-Comp1-lighter);
 	padding-top: 15px;
 	padding-bottom: 15px;
@@ -75,7 +78,7 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	padding-top: 6px;
 }
 
-.section1 .sectionTitle a {
+.$divClass .section1 .sectionTitle a {
 	color: var(--chosen-color);
 	font-family: 'Roboto', sans-serif;
 	font-size: 24px;
@@ -84,28 +87,31 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	text-decoration: none;
 }
 
-.section1 .sectionTitleRule {
+.$divClass .section1 .sectionTitleRule {
 	margin: 0 3% 0 0;
 	float: left;
 	clear: both;
 	height: 2px;
 }
 
-.section1 .sectionTitleRule2 {
+.$divClass .section1 .sectionTitleRule2 {
 	/* background-color: rgba(208,207,207,1.00); */
 	height: 2px;
 	padding: 0px;
 	margin: 0 1% 0 0;
 }
 
-.$divClass .section1 .section1Content {
+.$divClass  .section1 .section1Content {
 	color: rgba(146, 146, 146, 1.00);
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 1.5;
 }
 
-.$divClass .section1 .section1Content button {
+
+
+
+.$divClass  .section1 .section1Content button {
 	font-size: 14px;
 	line-height: 1.3;
 	font-weight: 100;
@@ -127,12 +133,12 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	border: none;
 }
 
-.$divClass .section1 .section1Content span {
+.$divClass  .section1 .section1Content span {
 	color: rgba(146, 146, 146, 1.00);
 
 }
 
-.stretch {
+.$divClass .stretch {
 	content: '';
 	display: inline-block;
 	margin-left: 2%;
@@ -143,24 +149,24 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 @media only screen and (min-width : 285px) and (max-width : 480px) {
 
 	/* Main content sections */
-	.$divClass .section1 {
+	.$divClass  .section1 {
 		text-align: center;
 		margin-bottom: 10%;
 	}
 
-	.section1 .section1Title {
+	.$divClass .section1 .section1Title {
 		text-align: center;
 	}
 
-	.section1 .sectionTitleRule {
+	.$divClass .section1 .sectionTitleRule {
 		width: 100%;
 	}
 
-	.section1 .sectionTitleRule2 {
+	.$divClass .section1 .sectionTitleRule2 {
 		display: none;
 	}
 
-	.$divClass .section1 .section1Content {
+	.$divClass  .section1 .section1Content {
 		display: inline-block;
 		text-align: left;
 		font-family:   'Open Sans', sans-serif;
@@ -184,7 +190,7 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 		display: none;
 	}
 
-	.$divClass .section1 .section1Content {
+	.$divClass  .section1 .section1Content {
 		display: block;
 		margin: 0% 0% 0% 20%;
 		font-family:  'Poppins', sans-serif;
@@ -201,7 +207,7 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 		width: 22.5%;
 	}
 
-	.$divClass .section1 .section1Content {
+	.$divClass  .section1 .section1Content {
 		display: block;
 		margin-top: 0%;
 		margin-right: 0%;
@@ -211,50 +217,22 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	}
 }
 
-/* End of Media Queries */\n</style>\n";
+/* End of Media Queries */
+    
+    </style>\n ");
+  // Add CSS to hide title if SectionShowTitle is false
+  if (!$sectionShowTitle) {
+    print("<style>\n  .$divClass .sectionTitle,\n  .$divClass .sectionTitleRule,\n  .$divClass .sectionTitleRule2 { display: none; }\n</style>\n");
+  }
 
-	// Add CSS to hide title if SectionShowTitle is false
-	if (!$sectionShowTitle) {
-		print "<style>\n  .$divClass .sectionTitle,\n  .$divClass .sectionTitleRule,\n  .$divClass .sectionTitleRule2 { display: none; }\n</style>\n";
-	}
+  // Add floating edit button for editors/admins
+  $editButton = '';
+  if (accessLevelCheck("pageEditor") === true) {
+    print("<style>\n  .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    left: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .section1:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .section1 {\n    position: relative;\n  }\n</style>\n");
+    $editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
+  }
 
-	// Add floating edit button for editors/admins
-	$editButton = "";
-	if (accessLevelCheck("pageEditor") === true) {
-		print "<style>\n  
-		.$divClass .sectionEditButton {\n    
-			position: absolute;\n    
-			top: 5px;\n    
-			left: 5px;\n    
-			background-color: rgba(25, 118, 210, 0.7);\n    
-			color: white;\n    
-			border: none;\n    
-			border-radius: 4px;\n    
-			padding: 6px 10px;\n    
-			font-size: 12px;\n    
-			cursor: pointer;\n    
-			text-decoration: none;\n    
-			display: inline-block;\n    
-			z-index: 100;\n    
-			opacity: 0;\n    
-			transition: opacity 0.3s ease;\n  
-		}\n  
-		.$divClass .sectionEditButton:hover {\n    
-			background-color: rgba(25, 118, 210, 1);\n    
-			opacity: 1;\n  
-		}\n  .
-		$divClass .section1:hover .sectionEditButton {\n    
-			opacity: 1;\n  
-		}\n  
-		.$divClass .section1 {\n    
-			position: relative;\n  
-		}\n
-			</style>\n";
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
-	}
-
-	printf(
-		"
+  printf("
   <section class=\"mainContent\">
     <section class=\"section1\" >
       %s
@@ -274,4 +252,3 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	print "</div>";
 	return;
 }
-?>

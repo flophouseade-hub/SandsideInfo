@@ -126,6 +126,43 @@ function sanitizeInput($inputString)
   return $inputString;
 }
 
+/**
+ * Log user login attempts to the LoginLog table
+ * 
+ * @param int $userID The user's ID
+ * @param string $email The user's email address
+ * @param string $status 'success' or 'failed'
+ * @param string|null $failReason Optional reason for failed login
+ * @return bool True if logged successfully, false otherwise
+ */
+function logUserLogin($userID, $email, $status = 'success', $failReason = null)
+{
+  $connection = connectToDatabase();
+  
+  // Get user's IP address
+  $ipAddress = $_SERVER['REMOTE_ADDR'] ?? null;
+  
+  // Get user agent string
+  $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
+  
+  // Prepare the insert statement
+  $stmt = $connection->prepare(
+    'INSERT INTO LoginLog (UserID, Email, LoginTime, IPAddress, UserAgent, LoginStatus, FailReason) 
+     VALUES (?, ?, NOW(), ?, ?, ?, ?)'
+  );
+  
+  if ($stmt) {
+    $stmt->bind_param('isssss', $userID, $email, $ipAddress, $userAgent, $status, $failReason);
+    $success = $stmt->execute();
+    $stmt->close();
+    $connection->close();
+    return $success;
+  }
+  
+  $connection->close();
+  return false;
+}
+
 
 
 function accessLevelCheck($requiredAccessLevel)

@@ -93,7 +93,8 @@ if (!empty($filterGroup)) {
 }
 
 // Build the table content
-print "<div class=\"listAllTable\">
+$tableContent = "
+<div class=\"listAllTable\" style=\"max-width: 95%; margin: 20px auto;\">
 <table>
   <thead>
     <tr>

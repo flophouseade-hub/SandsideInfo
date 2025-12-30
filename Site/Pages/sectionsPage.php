@@ -30,7 +30,7 @@ if (
 	insertPageLocalMenu($thisPageID);
 
 	//print('<link rel="stylesheet" href="../styleSheets/blockMenuStyles.css">');
-	print '<link rel="stylesheet" href="../styleSheets/sectionsPageStyles.css">';
+	print('<link rel="stylesheet" href="../styleSheets/sectionsPageStyles.css">');
 	//print('<link rel="stylesheet" href="../styleSheets/spaceLeftSectionStyles.css">');
 	/*print('<link rel="stylesheet" href="../styleSheets/columnFramesSectionStyles.css">');
 	 print('<link rel="stylesheet" href="../styleSheets/centredAccentSectionStyles.css">'); */
