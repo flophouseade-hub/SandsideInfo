@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["registerButton"])) {
 				mail($to, $subject, $message, $headers);
 
 				$feedbackMessage =
-					"<p class=\"formFeedbackSuccess\">✓ Registration successful! Check your email for password setup instructions.</p>";
+					"<p class=\"formFeedbackSuccess\">âœ“ Registration successful! Check your email for password setup instructions.</p>";
 
 				// Clear input values on success
 				$inputFirstName = "";
@@ -139,7 +139,7 @@ if ($registrationSuccess === true) {
 	print "<div class=\"formPageWrapper\">";
 	print "
     <div class=\"formBlueInfoBox\">
-      <p style=\"font-weight: bold; font-size: 18px; margin-top: 0;\">✓ Registration Complete!</p>
+      <p style=\"font-weight: bold; font-size: 18px; margin-top: 0;\">âœ“ Registration Complete!</p>
       <p style=\"margin: 10px 0;\"><strong>Name:</strong> $inputFirstName $inputLastName</p>
       <p style=\"margin: 10px 0;\"><strong>Email:</strong> $inputUserEmail</p>
       <hr style=\"border: none; border-top: 1px solid #90caf9; margin: 15px 0;\">
@@ -183,7 +183,7 @@ print "<div class=\"formPageWrapper\">";
 
 print "
 <div class=\"formInfoBox\">
-    <p><strong>📧 Email Verification Required</strong></p>
+    <p><strong>ðŸ“§ Email Verification Required</strong></p>
     <p>After registration, you'll receive an email with instructions to set your password and verify your account.</p>
 </div>
 

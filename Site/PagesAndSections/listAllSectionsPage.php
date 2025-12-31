@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $thisPageID = 24;
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');

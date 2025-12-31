@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //list all the pages with links to edit them in the editPageDetailsPage.php page
 $thisPageID = 23;
 include('../phpCode/pageStarterPHP.php');

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 function validateURL($url)
 {
   $url = trim($url);

@@ -487,7 +487,7 @@ function generateColorManipulationJS()
   }
 
   /**
-   * Get analogous colors (±30° on color wheel)
+   * Get analogous colors (Â±30Â° on color wheel)
    * @param {string} hexColor - Hex color code (e.g., '#FF5733')
    * @returns {Array} Array of two hex colors [analogous1, analogous2]
    */
@@ -517,7 +517,7 @@ function generateColorManipulationJS()
         }
     }
     
-    // Get analogous colors by shifting hue ±30 degrees
+    // Get analogous colors by shifting hue Â±30 degrees
     var analogous1 = hslToHex((h + 30/360) % 1, s, l);
     var analogous2 = hslToHex((h - 30/360 + 1) % 1, s, l);
     
@@ -633,7 +633,7 @@ function generateColorVariations($hexColor, $lightenPercent = 90)
 		}
 	}
 
-	// Calculate split-complementary colors (±150° from original hue)
+	// Calculate split-complementary colors (Â±150Â° from original hue)
 	$splitComp1Hue = fmod($h + 150 / 360, 1);
 	$splitComp2Hue = fmod($h - 150 / 360 + 1, 1);
 

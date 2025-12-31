@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //list all the users with links to edit them in the editPageDetailsPage.php page
 
 // Start a seesion if one is not already started

@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         logUserLogin($ID, $inputEmail, 'success');
         
         // User is now logged in
-        $feedbackMessage = "<p class=\"formFeedbackSuccess\">✓ Login successful. Redirecting to Main Menu...</p>";
+        $feedbackMessage = "<p class=\"formFeedbackSuccess\">âœ“ Login successful. Redirecting to Main Menu...</p>";
         $stmt->close();
         $connection->close();
         header("refresh:2;url=../Pages/blockMenuPage.php?pageID=1");

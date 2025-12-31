@@ -148,13 +148,13 @@ if ($showCorrectAnswers) {
 		$statusIcon = "";
 		$statusColor = "#666";
 		if ($isCorrect === null) {
-			$statusIcon = "⏳ Pending Manual Grading";
+			$statusIcon = "â³ Pending Manual Grading";
 			$statusColor = "#FF9800";
 		} elseif ($isCorrect == 1) {
-			$statusIcon = "✓ Correct";
+			$statusIcon = "âœ“ Correct";
 			$statusColor = "#4CAF50";
 		} else {
-			$statusIcon = "✗ Incorrect";
+			$statusIcon = "âœ— Incorrect";
 			$statusColor = "#f44336";
 		}
 

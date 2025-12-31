@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Start session before any includes (following Site/index.php pattern)
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();

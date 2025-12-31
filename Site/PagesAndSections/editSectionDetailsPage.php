@@ -1,228 +1,259 @@
-﻿<?php
+<?php
 $thisPageID = 25;
-include('../phpCode/pageStarterPHP.php');
-include('../phpCode/includeFunctions.php');
+include "../phpCode/pageStarterPHP.php";
+include "../phpCode/includeFunctions.php";
 
 //------------------------------------------------------------------------------------------------------
-// Run this section if the form has been submitted  
+// Run this section if the form has been submitted
 //------------------------------------------------------------------------------------------------------
 $feedbackMessage = "";
 $inputOK = true;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editSectionDetailsButton'])) {
-  // Get the form data
-  $sectionToEditID = (int)$_POST['editSectionID'];
-  
-  // Check if user has permission to edit this section
-  $connection = connectToDatabase();
-  $permissionQuery = "SELECT SectionMakerEditOnly, SectionMakerID FROM section_tb WHERE SectionID = ?";
-  $permStmt = $connection->prepare($permissionQuery);
-  $permStmt->bind_param("i", $sectionToEditID);
-  $permStmt->execute();
-  $permResult = $permStmt->get_result();
-  $permRow = $permResult->fetch_assoc();
-  $permStmt->close();
-  $connection->close();
-  
-  // Store the section maker ID for use in the form
-  $sectionMakerID = $permRow['SectionMakerID'];
-  
-  if ($permRow['SectionMakerEditOnly'] == 1 && $permRow['SectionMakerID'] != $_SESSION['currentUserID']) {
-    insertPageHeader($pageID);
-    insertPageLocalMenu($thisPageID);
-    print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
-    insertPageTitleAndClass("Access Denied", "blockMenuPageTitle", $thisPageID);
-    print('<div class="formPageWrapper">');
-    print('<div class="formInfoBox" style="background-color: #f8d7da; border-color: #f5c6cb; color: #721c24;">');
-    print('<h3>Permission Denied</h3>');
-    print('<p>You do not have permission to update this section. Only the section creator can edit this section.</p>');
-    print('<a href="listAllSectionsPage.php" class="formButtonSecondary">Back to Sections List</a>');
-    print('</div></div>');
-    insertPageFooter($thisPageID);
-    exit();
-  }
-  
-  $editSectionTitle = $_POST['fvSectionTitle'] ?? "";
-  $editSectionContent = $_POST['fvSectionContent'] ?? "";
-  $editSectionColour = $_POST['fvSectionColour'] ?? "";
-  $editSectionStyle = $_POST['fvSectionStyle'] ?? "";
-  $editSectionColourSameAsPage = isset($_POST['fvSectionColourSameAsPage']) ? 1 : 0;
-  $editSectionShowTitle = isset($_POST['fvSectionShowTitle']) ? 1 : 0;
-  $editSectionMakerEditOnly = isset($_POST['fvSectionMakerEditOnly']) ? 1 : 0;
-  
-  // Handle Section Group - check if new or existing
-  $editSectionGroup = "";
-  if (isset($_POST['fvSectionGroupExisting'])) {
-    if ($_POST['fvSectionGroupExisting'] === '_new_' && !empty($_POST['fvSectionGroupNew'])) {
-      $editSectionGroup = $_POST['fvSectionGroupNew'];
-    } elseif ($_POST['fvSectionGroupExisting'] !== '_new_') {
-      $editSectionGroup = $_POST['fvSectionGroupExisting'];
-    }
-  }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editSectionDetailsButton"])) {
+	// Get the form data
+	$sectionToEditID = (int) $_POST["editSectionID"];
 
-  // Validate Section Title
-  $testSectionTitle = validateBasicTextInput($editSectionTitle);
-  if ($testSectionTitle !== true) {
-    $inputOK = false;
-    $feedbackMessage .= "<p style=\"color:red;\">Section Title: " . $testSectionTitle . "</p>";
-  }
+	// Check if user has permission to edit this section
+	$connection = connectToDatabase();
+	$permissionQuery = "SELECT SectionMakerEditOnly, SectionMakerID FROM section_tb WHERE SectionID = ?";
+	$permStmt = $connection->prepare($permissionQuery);
+	$permStmt->bind_param("i", $sectionToEditID);
+	$permStmt->execute();
+	$permResult = $permStmt->get_result();
+	$permRow = $permResult->fetch_assoc();
+	$permStmt->close();
+	$connection->close();
 
-  // Validate Section Content - must not be empty
-  $testSectionContent = validateBasicTextInput($editSectionContent);
-  if ($testSectionContent !== true) {
-    $inputOK = false;
-    $feedbackMessage .= "<p style=\"color:red;\">Section Content: " . $testSectionContent . "</p>";
-  }
+	// Store the section maker ID for use in the form
+	$sectionMakerID = $permRow["SectionMakerID"];
 
-  // Validate Section Style - must be one of the valid options
-  if (!empty($editSectionStyle) && !array_key_exists($editSectionStyle, $sectionStyleOptionArray)) {
-    $inputOK = false;
-    $feedbackMessage .= "<p style=\"color:red;\">Section Style: Invalid style selected.</p>";
-  }
+	if ($permRow["SectionMakerEditOnly"] == 1 && $permRow["SectionMakerID"] != $_SESSION["currentUserID"]) {
+		insertPageHeader($pageID);
+		insertPageLocalMenu($thisPageID);
+		print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
+		insertPageTitleAndClass("Access Denied", "blockMenuPageTitle", $thisPageID);
+		print '<div class="formPageWrapper">';
+		print '<div class="formInfoBox" style="background-color: #f8d7da; border-color: #f5c6cb; color: #721c24;">';
+		print "<h3>Permission Denied</h3>";
+		print "<p>You do not have permission to update this section. Only the section creator can edit this section.</p>";
+		print '<a href="listAllSectionsPage.php" class="formButtonSecondary">Back to Sections List</a>';
+		print "</div></div>";
+		insertPageFooter($thisPageID);
+		exit();
+	}
 
-  // Validate Section Group (if provided)
-  if (!empty($editSectionGroup)) {
-    $testSectionGroup = validateBasicTextInput($editSectionGroup);
-    if ($testSectionGroup !== true) {
-      $inputOK = false;
-      $feedbackMessage .= "<p style=\"color:red;\">Section Group: " . $testSectionGroup . "</p>";
-    }
-  }
+	$editSectionTitle = $_POST["fvSectionTitle"] ?? "";
+	$editSectionContent = $_POST["fvSectionContent"] ?? "";
+	$editSectionColour = $_POST["fvSectionColour"] ?? "";
+	$editSectionStyle = $_POST["fvSectionStyle"] ?? "";
+	$editSectionColourSameAsPage = isset($_POST["fvSectionColourSameAsPage"]) ? 1 : 0;
+	$editSectionShowTitle = isset($_POST["fvSectionShowTitle"]) ? 1 : 0;
+	$editSectionMakerEditOnly = isset($_POST["fvSectionMakerEditOnly"]) ? 1 : 0;
 
-  // Validate colour code (only if provided)
-  if (!empty($editSectionColour)) {
-    // Check if it's a hex color with #
-    if (preg_match('/^#[0-9A-Fa-f]{6}$/', $editSectionColour)) {
-      // Valid hex color with #
-    } elseif (preg_match('/^#[0-9A-Fa-f]{3}$/', $editSectionColour)) {
-      // Valid 3-digit hex color with #
-    } elseif (preg_match('/^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/i', $editSectionColour)) {
-      // Valid rgb color
-    } elseif (in_array(strtolower($editSectionColour), ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'black', 'white', 'gray', 'grey'])) {
-      // Valid color name
-    } else {
-      $inputOK = false;
-      $feedbackMessage .= "<p style=\"color:red;\">Section Colour must be a valid hex code with # (e.g., #FF5733), rgb value (e.g., rgb(255,87,51)), or color name (e.g., red).</p>";
-    }
-  }
+	// Handle Section Group - check if new or existing
+	$editSectionGroup = "";
+	if (isset($_POST["fvSectionGroupExisting"])) {
+		if ($_POST["fvSectionGroupExisting"] === "_new_" && !empty($_POST["fvSectionGroupNew"])) {
+			$editSectionGroup = $_POST["fvSectionGroupNew"];
+		} elseif ($_POST["fvSectionGroupExisting"] !== "_new_") {
+			$editSectionGroup = $_POST["fvSectionGroupExisting"];
+		}
+	}
 
-  // Validate that the section ID exists in the database
-  $connection = connectToDatabase();
-  if (!$connection) {
-    die("ERROR: Could not connect to the database: " . mysqli_connect_error());
-  }
+	// Validate Section Title
+	$testSectionTitle = validateBasicTextInput($editSectionTitle);
+	if ($testSectionTitle !== true) {
+		$inputOK = false;
+		$feedbackMessage .= "<p style=\"color:red;\">Section Title: " . $testSectionTitle . "</p>";
+	}
 
-  $query = "SELECT SectionID FROM section_tb WHERE SectionID = ?";
-  $stmt = $connection->prepare($query);
-  $stmt->bind_param("i", $sectionToEditID);
-  $stmt->execute();
-  $stmt->store_result();
+	// Validate Section Content - must not be empty
+	$testSectionContent = validateBasicTextInput($editSectionContent);
+	if ($testSectionContent !== true) {
+		$inputOK = false;
+		$feedbackMessage .= "<p style=\"color:red;\">Section Content: " . $testSectionContent . "</p>";
+	}
 
-  if ($stmt->num_rows == 0) {
-    $inputOK = false;
-    $feedbackMessage .= "<p style=\"color:red;\">Error: Section ID $sectionToEditID does not exist in the database.</p>";
-  }
-  $stmt->close();
+	// Validate Section Style - must be one of the valid options
+	if (!empty($editSectionStyle) && !array_key_exists($editSectionStyle, $sectionStyleOptionArray)) {
+		$inputOK = false;
+		$feedbackMessage .= "<p style=\"color:red;\">Section Style: Invalid style selected.</p>";
+	}
 
-  // If validation passes, update the database
-  if ($inputOK === true) {
-    $editSectionContent = encodeSectionContent($editSectionContent);
-    $query = "UPDATE section_tb SET SectionTitle = ?, SectionContent = ?, SectionColour = ?, SectionStyle = ?, SectionGroup = ?, SectionColourSameAsPage = ?, SectionShowTitle = ?, SectionMakerEditOnly = ? WHERE SectionID = ?";
-    $stmt = $connection->prepare($query);
-    $stmt->bind_param("sssssiiii", $editSectionTitle, $editSectionContent, $editSectionColour, $editSectionStyle, $editSectionGroup, $editSectionColourSameAsPage, $editSectionShowTitle, $editSectionMakerEditOnly, $sectionToEditID);
+	// Validate Section Group (if provided)
+	if (!empty($editSectionGroup)) {
+		$testSectionGroup = validateBasicTextInput($editSectionGroup);
+		if ($testSectionGroup !== true) {
+			$inputOK = false;
+			$feedbackMessage .= "<p style=\"color:red;\">Section Group: " . $testSectionGroup . "</p>";
+		}
+	}
 
-    if ($stmt->execute()) {
-      $feedbackMessage = "<p style=\"color:green;\"><strong>Section updated successfully.</strong></p>";
-      // Update the display values with the newly saved data
-      $sectionTitle = $editSectionTitle;
-      $sectionContent = $editSectionContent;
-      $sectionColour = $editSectionColour;
-      $sectionStyle = $editSectionStyle;
-      $sectionGroup = $editSectionGroup;
-      $sectionColourSameAsPage = $editSectionColourSameAsPage;
-      $sectionShowTitle = $editSectionShowTitle;
-      $sectionMakerEditOnly = $editSectionMakerEditOnly;
-    } else {
-      $inputOK = false;
-      $feedbackMessage = "<p style=\"color:red;\">Database error: " . $stmt->error . "</p>";
-    }
+	// Validate colour code (only if provided)
+	if (!empty($editSectionColour)) {
+		// Check if it's a hex color with #
+		if (preg_match('/^#[0-9A-Fa-f]{6}$/', $editSectionColour)) {
+			// Valid hex color with #
+		} elseif (preg_match('/^#[0-9A-Fa-f]{3}$/', $editSectionColour)) {
+			// Valid 3-digit hex color with #
+		} elseif (preg_match('/^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/i', $editSectionColour)) {
+			// Valid rgb color
+		} elseif (
+			in_array(strtolower($editSectionColour), [
+				"red",
+				"blue",
+				"green",
+				"yellow",
+				"orange",
+				"purple",
+				"pink",
+				"brown",
+				"black",
+				"white",
+				"gray",
+				"grey",
+			])
+		) {
+			// Valid color name
+		} else {
+			$inputOK = false;
+			$feedbackMessage .=
+				"<p style=\"color:red;\">Section Colour must be a valid hex code with # (e.g., #FF5733), rgb value (e.g., rgb(255,87,51)), or color name (e.g., red).</p>";
+		}
+	}
 
-    $stmt->close();
-  }
+	// Validate that the section ID exists in the database
+	$connection = connectToDatabase();
+	if (!$connection) {
+		die("ERROR: Could not connect to the database: " . mysqli_connect_error());
+	}
 
-  $connection->close();
-  $_POST = array();
+	$query = "SELECT SectionID FROM section_tb WHERE SectionID = ?";
+	$stmt = $connection->prepare($query);
+	$stmt->bind_param("i", $sectionToEditID);
+	$stmt->execute();
+	$stmt->store_result();
+
+	if ($stmt->num_rows == 0) {
+		$inputOK = false;
+		$feedbackMessage .= "<p style=\"color:red;\">Error: Section ID $sectionToEditID does not exist in the database.</p>";
+	}
+	$stmt->close();
+
+	// If validation passes, update the database
+	if ($inputOK === true) {
+		$editSectionContent = encodeSectionContent($editSectionContent);
+		$query =
+			"UPDATE section_tb SET SectionTitle = ?, SectionContent = ?, SectionColour = ?, SectionStyle = ?, SectionGroup = ?, SectionColourSameAsPage = ?, SectionShowTitle = ?, SectionMakerEditOnly = ? WHERE SectionID = ?";
+		$stmt = $connection->prepare($query);
+		$stmt->bind_param(
+			"sssssiiii",
+			$editSectionTitle,
+			$editSectionContent,
+			$editSectionColour,
+			$editSectionStyle,
+			$editSectionGroup,
+			$editSectionColourSameAsPage,
+			$editSectionShowTitle,
+			$editSectionMakerEditOnly,
+			$sectionToEditID,
+		);
+
+		if ($stmt->execute()) {
+			$feedbackMessage = "<p style=\"color:green;\"><strong>Section updated successfully.</strong></p>";
+			// Update the display values with the newly saved data
+			$sectionTitle = $editSectionTitle;
+			$sectionContent = $editSectionContent;
+			$sectionColour = $editSectionColour;
+			$sectionStyle = $editSectionStyle;
+			$sectionGroup = $editSectionGroup;
+			$sectionColourSameAsPage = $editSectionColourSameAsPage;
+			$sectionShowTitle = $editSectionShowTitle;
+			$sectionMakerEditOnly = $editSectionMakerEditOnly;
+		} else {
+			$inputOK = false;
+			$feedbackMessage = "<p style=\"color:red;\">Database error: " . $stmt->error . "</p>";
+		}
+
+		$stmt->close();
+	}
+
+	$connection->close();
+	$_POST = [];
 }
 
 //------------------------------------------------------------------------------------------------------
 // Get section data to edit
 //------------------------------------------------------------------------------------------------------
 // Get the section ID from the URL
-if (isset($_GET['editSectionID'])) {
-  $editSectionID = (int)$_GET['editSectionID'];
+if (isset($_GET["editSectionID"])) {
+	$editSectionID = (int) $_GET["editSectionID"];
 } else {
-  die("No section ID provided.");
+	die("No section ID provided.");
 }
 
 // Retrieve section details from database (only if not already loaded from POST)
 if (!isset($sectionTitle)) {
-  $connection = connectToDatabase();
-  if (!$connection) {
-    die("ERROR: Could not connect to the database: " . mysqli_connect_error());
-  }
+	$connection = connectToDatabase();
+	if (!$connection) {
+		die("ERROR: Could not connect to the database: " . mysqli_connect_error());
+	}
 
-  $query = "SELECT SectionID, SectionTitle, SectionContent, SectionColour, SectionStyle, SectionGroup, SectionColourSameAsPage, SectionShowTitle, SectionMakerEditOnly, SectionMakerID FROM section_tb WHERE SectionID = ?";
-  $stmt = $connection->prepare($query);
-  $stmt->bind_param("i", $editSectionID);
-  $stmt->execute();
-  $result = $stmt->get_result();
+	$query =
+		"SELECT SectionID, SectionTitle, SectionContent, SectionColour, SectionStyle, SectionGroup, SectionColourSameAsPage, SectionShowTitle, SectionMakerEditOnly, SectionMakerID FROM section_tb WHERE SectionID = ?";
+	$stmt = $connection->prepare($query);
+	$stmt->bind_param("i", $editSectionID);
+	$stmt->execute();
+	$result = $stmt->get_result();
 
-  if ($result->num_rows > 0) {
-    $section = $result->fetch_assoc();
-    $sectionTitle = $section['SectionTitle'];
-    $sectionContent = $section['SectionContent'];
-    $sectionColour = $section['SectionColour'];
-    $sectionStyle = $section['SectionStyle'];
-    $sectionGroup = $section['SectionGroup'];
-    $sectionColourSameAsPage = $section['SectionColourSameAsPage'] ?? 0;
-    $sectionShowTitle = $section['SectionShowTitle'] ?? 1;
-    $sectionMakerEditOnly = $section['SectionMakerEditOnly'] ?? 1;
-    $sectionMakerID = $section['SectionMakerID'] ?? 0;
-  } else {
-    die("Section not found.");
-  }
+	if ($result->num_rows > 0) {
+		$section = $result->fetch_assoc();
+		$sectionTitle = $section["SectionTitle"];
+		$sectionContent = $section["SectionContent"];
+		$sectionColour = $section["SectionColour"];
+		$sectionStyle = $section["SectionStyle"];
+		$sectionGroup = $section["SectionGroup"];
+		$sectionColourSameAsPage = $section["SectionColourSameAsPage"] ?? 0;
+		$sectionShowTitle = $section["SectionShowTitle"] ?? 1;
+		$sectionMakerEditOnly = $section["SectionMakerEditOnly"] ?? 1;
+		$sectionMakerID = $section["SectionMakerID"] ?? 0;
+	} else {
+		die("Section not found.");
+	}
 
-  $stmt->close();
-  $connection->close();
+	$stmt->close();
+	$connection->close();
 }
 
 // Get existing section groups for dropdown
 $connection = connectToDatabase();
-$existingGroups = array();
-$groupQuery = "SELECT DISTINCT SectionGroup FROM section_tb WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
+$existingGroups = [];
+$groupQuery =
+	"SELECT DISTINCT SectionGroup FROM section_tb WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 if ($groupResult) {
-  while ($row = mysqli_fetch_assoc($groupResult)) {
-    $existingGroups[] = $row['SectionGroup'];
-  }
+	while ($row = mysqli_fetch_assoc($groupResult)) {
+		$existingGroups[] = $row["SectionGroup"];
+	}
 }
 
 // Get sections in the same group (if section has a group)
-$sectionsInGroup = array();
+$sectionsInGroup = [];
 if (!empty($sectionGroup)) {
-  $groupSectionsQuery = "SELECT SectionID, SectionTitle, SectionColour FROM section_tb WHERE SectionGroup = ? AND SectionID != ? ORDER BY SectionTitle ASC";
-  $stmt = $connection->prepare($groupSectionsQuery);
-  $stmt->bind_param("si", $sectionGroup, $editSectionID);
-  $stmt->execute();
-  $groupResult = $stmt->get_result();
-  while ($row = $groupResult->fetch_assoc()) {
-    $sectionsInGroup[] = $row;
-  }
-  $stmt->close();
+	$groupSectionsQuery =
+		"SELECT SectionID, SectionTitle, SectionColour FROM section_tb WHERE SectionGroup = ? AND SectionID != ? ORDER BY SectionTitle ASC";
+	$stmt = $connection->prepare($groupSectionsQuery);
+	$stmt->bind_param("si", $sectionGroup, $editSectionID);
+	$stmt->execute();
+	$groupResult = $stmt->get_result();
+	while ($row = $groupResult->fetch_assoc()) {
+		$sectionsInGroup[] = $row;
+	}
+	$stmt->close();
 }
 
 // Get pages that contain this section (from page_sections_tb, not PageContentRefs)
-$pagesWithThisSection = array();
+$pagesWithThisSection = [];
 $pagesQuery = "SELECT p.PageID, p.PageName, p.PageColour 
                FROM pages_on_site_tb p
                INNER JOIN page_sections_tb ps ON p.PageID = ps.PSPageID
@@ -232,64 +263,64 @@ $stmt->bind_param("i", $editSectionID);
 $stmt->execute();
 $pagesResult = $stmt->get_result();
 while ($row = $pagesResult->fetch_assoc()) {
-  $pagesWithThisSection[] = $row;
+	$pagesWithThisSection[] = $row;
 }
 $stmt->close();
 
 // Get other sections on the same page(s)
-$sectionsOnSamePage = array();
+$sectionsOnSamePage = [];
 foreach ($pagesWithThisSection as $page) {
-  // Get sections from page_sections_tb instead of PageContentRefs
-  $pageSectionsQuery = "SELECT ps.PSSectionID 
+	// Get sections from page_sections_tb instead of PageContentRefs
+	$pageSectionsQuery = "SELECT ps.PSSectionID 
                         FROM page_sections_tb ps
                         WHERE ps.PSPageID = ? AND ps.PSIsActive = 1 AND ps.PSSectionID != ?
                         ORDER BY ps.PSDisplayOrder ASC";
-  $stmt = $connection->prepare($pageSectionsQuery);
-  $stmt->bind_param("ii", $page['PageID'], $editSectionID);
-  $stmt->execute();
-  $sectionsResult = $stmt->get_result();
-  
-  while ($sectionRow = $sectionsResult->fetch_assoc()) {
-    $sectionID = $sectionRow['PSSectionID'];
-    if (!isset($sectionsOnSamePage[$sectionID])) {
-      $sectionQuery = "SELECT SectionID, SectionTitle, SectionColour FROM section_tb WHERE SectionID = ?";
-      $sectionStmt = $connection->prepare($sectionQuery);
-      $sectionStmt->bind_param("i", $sectionID);
-      $sectionStmt->execute();
-      $sectionDetailsResult = $sectionStmt->get_result();
-      if ($sectionDetails = $sectionDetailsResult->fetch_assoc()) {
-        // Add page info to the section
-        $sectionDetails['PageName'] = $page['PageName'];
-        $sectionDetails['PageID'] = $page['PageID'];
-        $sectionDetails['PageColour'] = $page['PageColour'];
-        $sectionsOnSamePage[$sectionID] = $sectionDetails; // Use ID as key to avoid duplicates
-      }
-      $sectionStmt->close();
-    }
-  }
-  $stmt->close();
+	$stmt = $connection->prepare($pageSectionsQuery);
+	$stmt->bind_param("ii", $page["PageID"], $editSectionID);
+	$stmt->execute();
+	$sectionsResult = $stmt->get_result();
+
+	while ($sectionRow = $sectionsResult->fetch_assoc()) {
+		$sectionID = $sectionRow["PSSectionID"];
+		if (!isset($sectionsOnSamePage[$sectionID])) {
+			$sectionQuery = "SELECT SectionID, SectionTitle, SectionColour FROM section_tb WHERE SectionID = ?";
+			$sectionStmt = $connection->prepare($sectionQuery);
+			$sectionStmt->bind_param("i", $sectionID);
+			$sectionStmt->execute();
+			$sectionDetailsResult = $sectionStmt->get_result();
+			if ($sectionDetails = $sectionDetailsResult->fetch_assoc()) {
+				// Add page info to the section
+				$sectionDetails["PageName"] = $page["PageName"];
+				$sectionDetails["PageID"] = $page["PageID"];
+				$sectionDetails["PageColour"] = $page["PageColour"];
+				$sectionsOnSamePage[$sectionID] = $sectionDetails; // Use ID as key to avoid duplicates
+			}
+			$sectionStmt->close();
+		}
+	}
+	$stmt->close();
 }
 
 $connection->close();
 
 // Get page details from session
-include('../phpCode/pagesAndImagesArrays.php');
-$pageName = $_SESSION['pages_on_site_tb'][$thisPageID]['PageName'] ?? "Edit Section";
-$pageAccess = $_SESSION['pages_on_site_tb'][$thisPageID]['PageAccess'] ?? "staff";
+include "../phpCode/pagesAndImagesArrays.php";
+$pageName = $_SESSION["pages_on_site_tb"][$thisPageID]["PageName"] ?? "Edit Section";
+$pageAccess = $_SESSION["pages_on_site_tb"][$thisPageID]["PageAccess"] ?? "staff";
 
 if (accessLevelCheck($pageAccess) == false) {
-  die("Access denied");
+	die("Access denied");
 }
 
 //------------------------------------------------------------------------------------------------------
 // Display the page
 //------------------------------------------------------------------------------------------------------
 insertPageHeader($thisPageID);
-insertPageLocalMenu($thisPageID); 
+insertPageLocalMenu($thisPageID);
 
 // Add the form formatting CSS
-//print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
-print('<link rel="stylesheet" href="../styleSheets/sectionsPageStyles.css">');
+print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
+print '<link rel="stylesheet" href="../styleSheets/sectionsPageStyles.css">';
 //print('<link rel="stylesheet" href="../styleSheets/spaceLeftSectionStyles.css">');
 //print('<link rel="stylesheet" href="../styleSheets/centredAccentSectionStyles.css">');
 
@@ -301,63 +332,64 @@ insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 } */
 
 // Sanitize output to prevent XSS
-$sectionTitleSafe = htmlspecialchars($sectionTitle, ENT_QUOTES, 'UTF-8');
+$sectionTitleSafe = htmlspecialchars($sectionTitle, ENT_QUOTES, "UTF-8");
 $sectionContentSafe = decodeSectionContent($sectionContent);
-$sectionColourSafe = htmlspecialchars($sectionColour, ENT_QUOTES, 'UTF-8');
-$sectionStyleSafe = htmlspecialchars($sectionStyle ?? '', ENT_QUOTES, 'UTF-8');
-$sectionGroupSafe = htmlspecialchars($sectionGroup ?? '', ENT_QUOTES, 'UTF-8');
+$sectionColourSafe = htmlspecialchars($sectionColour, ENT_QUOTES, "UTF-8");
+$sectionStyleSafe = htmlspecialchars($sectionStyle ?? "", ENT_QUOTES, "UTF-8");
+$sectionGroupSafe = htmlspecialchars($sectionGroup ?? "", ENT_QUOTES, "UTF-8");
 
 // Build Section Style dropdown options
 $sectionStyleOptionsHTML = '<option value="">-- Select a style --</option>';
 foreach ($sectionStyleOptionArray as $styleKey => $styleDescription) {
-  $selected = ($sectionStyleSafe === $styleKey) ? 'selected' : '';
-  $styleKeySafe = htmlspecialchars($styleKey, ENT_QUOTES, 'UTF-8');
-  $styleDescSafe = htmlspecialchars($styleDescription, ENT_QUOTES, 'UTF-8');
-  $sectionStyleOptionsHTML .= "<option value=\"$styleKeySafe\" $selected>$styleDescSafe</option>";
+	$selected = $sectionStyleSafe === $styleKey ? "selected" : "";
+	$styleKeySafe = htmlspecialchars($styleKey, ENT_QUOTES, "UTF-8");
+	$styleDescSafe = htmlspecialchars($styleDescription, ENT_QUOTES, "UTF-8");
+	$sectionStyleOptionsHTML .= "<option value=\"$styleKeySafe\" $selected>$styleDescSafe</option>";
 }
 
 // Build Section Group dropdown options
 $groupOptionsHTML = '<option value="">-- No Group --</option>';
 foreach ($existingGroups as $group) {
-  $selected = ($sectionGroupSafe === $group) ? 'selected' : '';
-  $groupSafe = htmlspecialchars($group, ENT_QUOTES, 'UTF-8');
-  $groupOptionsHTML .= "<option value=\"$groupSafe\" $selected>$groupSafe</option>";
+	$selected = $sectionGroupSafe === $group ? "selected" : "";
+	$groupSafe = htmlspecialchars($group, ENT_QUOTES, "UTF-8");
+	$groupOptionsHTML .= "<option value=\"$groupSafe\" $selected>$groupSafe</option>";
 }
 $groupOptionsHTML .= '<option value="_new_">+ Create New Group</option>';
 
 // Prepare color picker value - ensure it has # prefix
-$colorPickerValue = '';
+$colorPickerValue = "";
 if (preg_match('/^#?([0-9A-Fa-f]{6})$/', $sectionColour, $matches)) {
-  $colorPickerValue = '#' . $matches[1];
+	$colorPickerValue = "#" . $matches[1];
 } else {
-  $colorPickerValue = '#FFFFFF';
+	$colorPickerValue = "#FFFFFF";
 }
 
 // Prepare checkbox state
-$sameAsPageChecked = ($sectionColourSameAsPage == 1) ? 'checked' : '';
+$sameAsPageChecked = $sectionColourSameAsPage == 1 ? "checked" : "";
 
-if(empty($feedbackMessage)) {
-  $feedbackMessage = "<p>Edit this section details below and click the 'Update This Section' button to save changes.</p>";
+if (empty($feedbackMessage)) {
+	$feedbackMessage =
+		"<p>Edit this section details below and click the 'Update This Section' button to save changes.</p>";
 }
 
 // Build the pages display string
 $pagesDisplayString = "";
 if (count($pagesWithThisSection) > 0) {
-  $pageLinks = array();
-  foreach ($pagesWithThisSection as $page) {
-    $pageNameSafe = htmlspecialchars($page['PageName'], ENT_QUOTES, 'UTF-8');
-    $pageID = (int)$page['PageID'];
-    $pageLink = $_SESSION['pages_on_site_tb'][$pageID]['PageLink'] ?? "#";
-    $pageLinks[] = "<a href=\"$pageLink\" style=\"color: #0066cc; text-decoration: none;\">$pageNameSafe (ID: $pageID)</a>";
-  }
-  $pagesDisplayString = "This section appears on: " . implode(", ", $pageLinks);
+	$pageLinks = [];
+	foreach ($pagesWithThisSection as $page) {
+		$pageNameSafe = htmlspecialchars($page["PageName"], ENT_QUOTES, "UTF-8");
+		$pageID = (int) $page["PageID"];
+		$pageLink = $_SESSION["pages_on_site_tb"][$pageID]["PageLink"] ?? "#";
+		$pageLinks[] = "<a href=\"$pageLink\" style=\"color: #0066cc; text-decoration: none;\">$pageNameSafe (ID: $pageID)</a>";
+	}
+	$pagesDisplayString = "This section appears on: " . implode(", ", $pageLinks);
 } else {
-  $pagesDisplayString = "<em style=\"color: #666;\">This section is not yet attached to a page.</em>";
+	$pagesDisplayString = "<em style=\"color: #666;\">This section is not yet attached to a page.</em>";
 }
 
-print("<div class=\"formPageWrapper\">");
+print "<div class=\"formPageWrapper\">";
 
-print("
+print "
 <div class=\"formInfoBox\">
 <h3>Edit Section Details ID = $editSectionID</h3>
 <p>$pagesDisplayString</p>
@@ -412,7 +444,9 @@ print("
         </div>        
         <div class=\"formField\">
           <label style=\"display: flex; align-items: center; gap: 10px; cursor: pointer;\">
-            <input type=\"checkbox\" name=\"fvSectionShowTitle\" id=\"fvSectionShowTitle\" value=\"1\" " . (($sectionShowTitle == 1) ? 'checked' : '') . " style=\"width: 20px; height: 20px; cursor: pointer;\">
+            <input type=\"checkbox\" name=\"fvSectionShowTitle\" id=\"fvSectionShowTitle\" value=\"1\" " .
+	($sectionShowTitle == 1 ? "checked" : "") .
+	" style=\"width: 20px; height: 20px; cursor: pointer;\">
             <span>Show Section Title as New Section</span>
           </label>
           <span class=\"formInputHelper\">Uncheck this to show the section title as a regular section title</span>
@@ -420,7 +454,9 @@ print("
         
         <div class=\"formField\">
           <label style=\"display: flex; align-items: center; gap: 10px; cursor: pointer;\">
-            <input type=\"checkbox\" name=\"fvSectionMakerEditOnly\" value=\"1\" " . (($sectionMakerEditOnly == 1) ? 'checked' : '') . " style=\"width: 20px; height: 20px; cursor: pointer;\">
+            <input type=\"checkbox\" name=\"fvSectionMakerEditOnly\" value=\"1\" " .
+	($sectionMakerEditOnly == 1 ? "checked" : "") .
+	" style=\"width: 20px; height: 20px; cursor: pointer;\">
             <span>Restrict Editing to Section Creator Only</span>
           </label>
           <span class=\"formInputHelper\">When checked, only the user who created this section (ID: $sectionMakerID) can edit it. Uncheck to allow all authorized users to edit.</span>
@@ -477,21 +513,21 @@ function handleGroupSelection() {
   }
 }
 </script>
-");
-print("<div class=\"formInfoBox\">
+";
+print "<div class=\"formInfoBox\">
   <p><strong>Below is a preview of how your section will appear on the page.</strong></p><p>Beneath that is some HTML advice which you can copy and paste into your section content if you wish.</p>
-</div>");
+</div>";
 
-print("</div>"); // Close formPageWrapper
+print "</div>"; // Close formPageWrapper
 
 // Temporarily populate session data for preview rendering
-$_SESSION['section_tb'][$editSectionID]['SectionTitle'] = $sectionTitle;
-$_SESSION['section_tb'][$editSectionID]['SectionContent'] = $sectionContent;
-$_SESSION['section_tb'][$editSectionID]['SectionColour'] = $sectionColour;
-$_SESSION['section_tb'][$editSectionID]['SectionStyle'] = $sectionStyle;
-$_SESSION['section_tb'][$editSectionID]['SectionGroup'] = $sectionGroup;
-$_SESSION['section_tb'][$editSectionID]['SectionColourSameAsPage'] = false;// Always show section colour in preview
-$_SESSION['section_tb'][$editSectionID]['SectionShowTitle'] = $sectionShowTitle; 
+$_SESSION["section_tb"][$editSectionID]["SectionTitle"] = $sectionTitle;
+$_SESSION["section_tb"][$editSectionID]["SectionContent"] = $sectionContent;
+$_SESSION["section_tb"][$editSectionID]["SectionColour"] = $sectionColour;
+$_SESSION["section_tb"][$editSectionID]["SectionStyle"] = $sectionStyle;
+$_SESSION["section_tb"][$editSectionID]["SectionGroup"] = $sectionGroup;
+$_SESSION["section_tb"][$editSectionID]["SectionColourSameAsPage"] = false; // Always show section colour in preview
+$_SESSION["section_tb"][$editSectionID]["SectionShowTitle"] = $sectionShowTitle;
 
 // Display the current section content as a preview
 insertPageSectionOneColumn($sectionContent, $sectionTitle, $editSectionID);
@@ -591,7 +627,7 @@ $htmlReferenceString = "
     <code class=\"htmlReference\">&lt;img src=\"../images/photo.jpg\" alt=\"description\" width=\"300\" height=\"200\"&gt;</code>
 </div>";
 
-print($htmlReferenceString);
+print $htmlReferenceString;
 
 // Site-Specific Custom Tags Reference
 $customTagsString = "
@@ -637,7 +673,7 @@ $customTagsString = "
 </div>
 </div>";
 
-print($customTagsString);
+print $customTagsString;
 
 insertPageFooter($thisPageID);
 ?>

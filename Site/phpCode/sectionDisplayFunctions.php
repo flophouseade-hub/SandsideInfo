@@ -290,7 +290,7 @@ function printRawAndBasicSection($sectionContent, $errorMessage, $title, $sectio
     position: relative;\n  }\n
     </style>\n";
 
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
 	}
 	printf(
 		"

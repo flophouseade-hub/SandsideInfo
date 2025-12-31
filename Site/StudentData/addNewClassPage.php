@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $thisPageID = 2; // You may want to create a new page entry
 include('../phpCode/pageStarterPHP.php');
 include('../phpCode/includeFunctions.php');

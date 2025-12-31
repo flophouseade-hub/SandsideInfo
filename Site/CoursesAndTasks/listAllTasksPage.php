@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $thisPageID = 68; // Update this to match the actual page ID in your pages_on_site_tb table
 include "../phpCode/includeFunctions.php";
 include "../phpCode/pageStarterPHP.php";

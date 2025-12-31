@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // View error log - admin only page to monitor site errors
 
 $thisPageID = 103;

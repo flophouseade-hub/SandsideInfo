@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // AJAX handler for saving task order in Coursetasks_tb
 // Don't include pageStarterPHP as it may output HTML
 session_start();

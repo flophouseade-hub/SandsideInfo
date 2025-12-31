@@ -163,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["insertNewUserButton"])
 
 				$feedbackMessage =
 					"
-        <p class=\"formFeedbackSuccess\">✓ User successfully added!</p>
+        <p class=\"formFeedbackSuccess\">âœ“ User successfully added!</p>
         <div style=\"background-color: #f0f0f0; padding: 15px; border-left: 4px solid #4CAF50; border-radius: 4px; margin: 20px 0;\">
           <p style=\"margin: 5px 0;\"><strong>Name:</strong> $inputFirstName $inputLastName</p>
           <p style=\"margin: 5px 0;\"><strong>Email:</strong> $inputUserEmail</p>

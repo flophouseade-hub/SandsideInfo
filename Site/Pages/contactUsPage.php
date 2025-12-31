@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contactUsButton"])) {
 		$adminEmailSent = mail($to, $subject, $message, $headers);
 
 		if ($userEmailSent && $adminEmailSent) {
-			$successMessage = "<p style='color: green; font-weight: bold;'>✓ Thank you, $firstName! Your message has been sent successfully.</p>";
+			$successMessage = "<p style='color: green; font-weight: bold;'>âœ“ Thank you, $firstName! Your message has been sent successfully.</p>";
 			// Clear form fields on success
 			$firstName = "";
 			$email = "";
@@ -136,7 +136,7 @@ if (!empty($successMessage)) {
 
 if ($inputError === true && !empty($errorMessage)) {
 	print "<div style=\"max-width: 80%; margin: 20px auto;\">
-        <p style='color: red; font-weight: bold;'>⚠ There were problems with your submission:</p>
+        <p style='color: red; font-weight: bold;'>âš  There were problems with your submission:</p>
         <p style='color: red;'>$errorMessage</p>
     </div>";
 }

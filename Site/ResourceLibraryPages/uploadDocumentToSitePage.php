@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Start a seesion if one is not already started
 $thisPageID = 40;
 include('../phpCode/includeFunctions.php');

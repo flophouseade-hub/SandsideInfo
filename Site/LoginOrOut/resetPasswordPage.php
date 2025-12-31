@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["setNewPasswordButton"]
 		if ($stmtUpdate->execute()) {
 			$passwordResetSuccess = true;
 			$feedbackMessage =
-				"<p class=\"formFeedbackSuccess\">✓ Your password has been reset successfully. You can now log in with your new password.</p>";
+				"<p class=\"formFeedbackSuccess\">âœ“ Your password has been reset successfully. You can now log in with your new password.</p>";
 			$inputError = false;
 		} else {
 			$errorMsg = urlencode("Could not update password: " . $stmtUpdate->error);
@@ -130,7 +130,7 @@ if ($passwordResetSuccess === true) {
 	print "<div class=\"formPageWrapper\">";
 	print "
     <div class=\"formBlueInfoBox\">
-      <p style=\"font-weight: bold; font-size: 18px; margin-top: 0;\">✓ Password Reset Complete!</p>
+      <p style=\"font-weight: bold; font-size: 18px; margin-top: 0;\">âœ“ Password Reset Complete!</p>
       <p style=\"margin: 10px 0;\">Your password has been changed successfully. You can now log in with your new password.</p>
     </div>
     

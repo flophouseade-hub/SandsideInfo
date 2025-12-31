@@ -103,12 +103,12 @@ print "
 
       <h3>Common Mistakes to Avoid</h3>
       <ul>
-        <li>❌ <code>&lt;imageL 45, 300, 200 /&gt;</code> - Missing the rounded parameter</li>
-        <li>✅ <code>&lt;imageL 45,300,200,0 /&gt;</code> - Correct format</li>
-        <li>❌ <code>&lt;linkE www.example.com /&gt;</code> - Missing https://</li>
-        <li>✅ <code>&lt;linkE https://www.example.com /&gt;</code> - Correct format</li>
-        <li>❌ <code>&lt;pageL /&gt;</code> - Missing page ID</li>
-        <li>✅ <code>&lt;pageL 15 /&gt;</code> - Correct format</li>
+        <li>âŒ <code>&lt;imageL 45, 300, 200 /&gt;</code> - Missing the rounded parameter</li>
+        <li>âœ… <code>&lt;imageL 45,300,200,0 /&gt;</code> - Correct format</li>
+        <li>âŒ <code>&lt;linkE www.example.com /&gt;</code> - Missing https://</li>
+        <li>âœ… <code>&lt;linkE https://www.example.com /&gt;</code> - Correct format</li>
+        <li>âŒ <code>&lt;pageL /&gt;</code> - Missing page ID</li>
+        <li>âœ… <code>&lt;pageL 15 /&gt;</code> - Correct format</li>
       </ul>
 
       <h3>Example: Full Content with Multiple Tags</h3>

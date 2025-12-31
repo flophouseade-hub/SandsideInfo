@@ -165,7 +165,7 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
         .$divClass .columnFramesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  
         .$divClass .columnFramesWrapper {\n    position: relative;\n  }\n</style>\n";
 
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
 	}
 
 	// Add CSS to hide title if SectionShowTitle is false
@@ -181,7 +181,7 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
       {\n    position: absolute;\n    
       top: 5px;\n    left: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
       .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .columnFramesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .columnFramesWrapper {\n    position: relative;\n  }\n</style>\n";
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
 	}
 
 	// Parse content for h1 and h2 headings to create cards

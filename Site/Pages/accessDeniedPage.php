@@ -23,7 +23,7 @@ $userName = $_SESSION['currentUserFirstName'] ?? 'User';
 
 $content = "
 <div style=\"text-align: center; padding: 40px 20px;\">
-    <div style=\"font-size: 72px; color: #f44336; margin-bottom: 20px;\">🚫</div>
+    <div style=\"font-size: 72px; color: #f44336; margin-bottom: 20px;\">ðŸš«</div>
     <h2 style=\"color: #f44336; margin-bottom: 20px;\">Access Denied</h2>
     <p style=\"font-size: 18px; color: #555; margin-bottom: 30px;\">
         Sorry, you don't have permission to access this page.

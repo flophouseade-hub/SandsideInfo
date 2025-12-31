@@ -44,7 +44,7 @@ print("<div style=\"max-width: 800px; margin: 0 auto; padding: 40px 20px;\">");
 
 $content = "
 <div style=\"text-align: center; padding: 40px 20px;\">
-    <div style=\"font-size: 72px; color: #ff9800; margin-bottom: 20px;\">⚠️</div>
+    <div style=\"font-size: 72px; color: #ff9800; margin-bottom: 20px;\">âš ï¸</div>
     <h2 style=\"color: #ff9800; margin-bottom: 20px;\">Something Went Wrong</h2>
     <p style=\"font-size: 18px; color: #555; margin-bottom: 30px;\">
         We're sorry for the inconvenience.

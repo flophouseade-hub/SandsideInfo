@@ -174,7 +174,7 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
     .$divClass .boxesAndShadowsSection:hover .sectionEditButton {\n    opacity: 1;\n  }\n  
     .$divClass .boxesAndShadowsSection {\n    position: relative;\n  }\n</style>\n";
 
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
 	}
 
 	// Parse content for h1 and h2 headings to create boxes

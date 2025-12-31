@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["resetPasswordButton"])
 				$headers = "From: noreply@sandside.info";
 
 				if (mail($to, $subject, $message, $headers)) {
-					$feedbackMessage = "<p class=\"formFeedbackSuccess\">✓ We have sent you an email to $inputUserEmail with instructions to reset your password.</p>";
+					$feedbackMessage = "<p class=\"formFeedbackSuccess\">âœ“ We have sent you an email to $inputUserEmail with instructions to reset your password.</p>";
 					$inputError = false;
 
 					// Clear form fields on success
