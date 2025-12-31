@@ -223,14 +223,14 @@ print '<div class="stats-box" style="width: 90%; margin: 0 auto 20px auto;">
 $query = "SELECT 
     login_log_tb.LogID,
     login_log_tb.UserID,
-    CONCAT(UsersDB.FirstName, ' ', UsersDB.LastName) as UserName,
+    CONCAT(users_tb.FirstName, ' ', users_tb.LastName) as UserName,
     login_log_tb.Email,
     login_log_tb.LoginTime,
     login_log_tb.IPAddress,
     login_log_tb.LoginStatus,
     login_log_tb.FailReason
 FROM login_log_tb
-LEFT JOIN UsersDB ON login_log_tb.UserID = UsersDB.UsersID
+LEFT JOIN users_tb ON login_log_tb.UserID = users_tb.UsersID
 $whereClause
 ORDER BY login_log_tb.LoginTime DESC
 LIMIT ?";
