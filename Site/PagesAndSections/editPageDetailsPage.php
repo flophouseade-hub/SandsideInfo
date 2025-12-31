@@ -320,18 +320,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 			}
 
 			// Also update pages_on_site_tb session if it exists
-			if (isset($_SESSION["pages_on_site_tb"][$pageToEditID])) {
+			if (isset($_SESSION["pagesOnSite"][$pageToEditID])) {
 				$_SESSION["pagesOnSite"][$pageToEditID]["PageName"] = $editPageName;
-				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageDescription"] = $editPageDescription;
-				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageImageIDRef"] = $editPageImageIDRef;
-				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageColour"] = $editPageColour;
-				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageGroup"] = $editPageGroup;
-				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageMakerEditOnly"] = $editPageMakerEditOnly;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageDescription"] = $editPageDescription;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageImageIDRef"] = $editPageImageIDRef;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageColour"] = $editPageColour;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageGroup"] = $editPageGroup;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageMakerEditOnly"] = $editPageMakerEditOnly;
 				if ($editPageType != "builtInPage") {
-					$_SESSION["pages_on_site_tb"][$pageToEditID]["PageAccess"] = $editPageAccess;
+					$_SESSION["pagesOnSite"][$pageToEditID]["PageAccess"] = $editPageAccess;
 				}
 				if ($editPageType != "sectionsPage" && $editPageType != "blockMenu") {
-					$_SESSION["pages_on_site_tb"][$pageToEditID]["PageContentRefs"] = $editPageContentRefs;
+					$_SESSION["pagesOnSite"][$pageToEditID]["PageContentRefs"] = $editPageContentRefs;
 				}
 			}
 
@@ -456,9 +456,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 	$editPageAccess = $_SESSION["pagesOnSite"][$pageToEditID]["PageAccess"];
 	$editPageColour = $_SESSION["pagesOnSite"][$pageToEditID]["PageColour"];
 	$editPageLink = $_SESSION["pagesOnSite"][$pageToEditID]["PageLink"];
-	$editPageGroup = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageGroup"];
-	$editPageMakerEditOnly = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageMakerEditOnly"] ?? 1;
-	$editPageMakerID = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageMakerID"] ?? 0;
+	$editPageGroup = $_SESSION["pagesOnSite"][$pageToEditID]["PageGroup"];
+	$editPageMakerEditOnly = $_SESSION["pagesOnSite"][$pageToEditID]["PageMakerEditOnly"] ?? 1;
+	$editPageMakerID = $_SESSION["pagesOnSite"][$pageToEditID]["PageMakerID"] ?? 0;
 
 	$feedbackMessage = "";
 }
@@ -792,8 +792,8 @@ if ($showContentRefs && $editPageType == "blockMenu") {
 		$menuLinksList .= "<ul id='currentMenuLinksList' style='list-style: none; padding: 0; margin: 10px 0;'>";
 		foreach ($currentMenuLinks as $menuLink) {
 			$linkedPageID = $menuLink["LinkedPageID"];
-			$linkedPageName = isset($_SESSION["pages_on_site_tb"][$linkedPageID])
-				? htmlspecialchars($_SESSION["pages_on_site_tb"][$linkedPageID]["PageName"], ENT_QUOTES, "UTF-8")
+			$linkedPageName = isset($_SESSION["pagesOnSite"][$linkedPageID])
+				? htmlspecialchars($_SESSION["pagesOnSite"][$linkedPageID]["PageName"], ENT_QUOTES, "UTF-8")
 				: "Unknown Page";
 			$menuLinksList .= "<li draggable='true' style='padding: 8px; margin: 4px 0; background-color: #f8f9fa; border-left: 3px solid #007bff; display: flex; justify-content: space-between; align-items: center; cursor: move;' data-page-id='$linkedPageID'>";
 			$menuLinksList .= "<span><strong>ID $linkedPageID:</strong> $linkedPageName</span>";
@@ -858,7 +858,7 @@ $formAndContentString .= "
 
 if ($editPageType != "builtInPage") {
 	// Use stored PageLink from session
-	$viewPageLink = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageLink"];
+	$viewPageLink = $_SESSION["pagesOnSite"][$pageToEditID]["PageLink"];
 
 	$formAndContentString .= "
       <a href=\"$viewPageLink\" class=\"formButtonSecondary\" target=\"_blank\" style=\"margin-right: 10px;\">
@@ -1184,7 +1184,7 @@ if ($editPageType == "blockMenu") {
 	// Get unique page types and groups for filter dropdowns
 	$pageTypes = [];
 	$pageGroups = [];
-	foreach ($_SESSION["pages_on_site_tb"] as $pageDetails) {
+	foreach ($_SESSION["pagesOnSite"] as $pageDetails) {
 		if (isset($pageDetails["PageType"]) && !empty($pageDetails["PageType"])) {
 			$pageTypes[$pageDetails["PageType"]] = true;
 		}
@@ -1199,7 +1199,7 @@ if ($editPageType == "blockMenu") {
 
 	// Filter pages based on selected filters
 	$filteredPages = [];
-	foreach ($_SESSION["pages_on_site_tb"] as $pageID => $pageDetails) {
+	foreach ($_SESSION["pagesOnSite"] as $pageID => $pageDetails) {
 		// Skip Access Denied and 404 Error pages
 		if ($pageID == 73 || $pageID == 74) {
 			continue;

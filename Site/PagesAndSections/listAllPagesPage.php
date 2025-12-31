@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["deletePageButton"])) {
 					$feedbackMessage = "<p style=\"color:green; font-weight: bold; margin-left: 20px;\">Page '$pageToDeleteName' (ID: $pageToDeleteID) deleted successfully.</p>";
 
 					// Remove from session array
-					unset($_SESSION["pages_on_site_tb"][$pageToDeleteID]);
+					unset($_SESSION["pagesOnSite"][$pageToDeleteID]);
 
 					// Reload the pages array to ensure consistency
 					include "../phpCode/pagesAndImagesArrays.php";
@@ -162,7 +162,7 @@ $allPageTypes = [];
 $allPageAccess = [];
 $allPageGroups = [];
 
-foreach ($_SESSION["pages_on_site_tb"] as $pageDetails) {
+foreach ($_SESSION["pagesOnSite"] as $pageDetails) {
 	if (!empty($pageDetails["PageType"]) && !in_array($pageDetails["PageType"], $allPageTypes)) {
 		$allPageTypes[] = $pageDetails["PageType"];
 	}
@@ -179,21 +179,21 @@ sort($allPageAccess);
 sort($allPageGroups);
 
 // Get the page details for this page from the array:
-$pageName = $_SESSION["pages_on_site_tb"][$thisPageID]["PageName"];
-$pageDescription = $_SESSION["pages_on_site_tb"][$thisPageID]["PageDescription"];
-$pageImageRef = $_SESSION["pages_on_site_tb"][$thisPageID]["PageImageIDRef"];
-$pageType = $_SESSION["pages_on_site_tb"][$thisPageID]["PageType"];
-$pageContentRefs = $_SESSION["pages_on_site_tb"][$thisPageID]["PageContentRefs"];
-$pageAccess = $_SESSION["pages_on_site_tb"][$thisPageID]["PageAccess"];
-$pageColour = $_SESSION["pages_on_site_tb"][$thisPageID]["PageColour"];
-$pageLocalMenu = $_SESSION["pages_on_site_tb"][$thisPageID]["PageLocalMenu"];
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"];
+$pageDescription = $_SESSION["pagesOnSite"][$thisPageID]["PageDescription"];
+$pageImageRef = $_SESSION["pagesOnSite"][$thisPageID]["PageImageIDRef"];
+$pageType = $_SESSION["pagesOnSite"][$thisPageID]["PageType"];
+$pageContentRefs = $_SESSION["pagesOnSite"][$thisPageID]["PageContentRefs"];
+$pageAccess = $_SESSION["pagesOnSite"][$thisPageID]["PageAccess"];
+$pageColour = $_SESSION["pagesOnSite"][$thisPageID]["PageColour"];
+$pageLocalMenu = $_SESSION["pagesOnSite"][$thisPageID]["PageLocalMenu"];
 
 // Make the array local for easier access
-$pages_on_site_tb = $_SESSION["pages_on_site_tb"];
+$pages_on_site_tb = $_SESSION["pagesOnSite"];
 
 // Apply filters if specified
 $filteredPages = [];
-foreach ($_SESSION["pages_on_site_tb"] as $pageID => $pageDetails) {
+foreach ($_SESSION["pagesOnSite"] as $pageID => $pageDetails) {
 	$include = true;
 
 	// Filter by Type

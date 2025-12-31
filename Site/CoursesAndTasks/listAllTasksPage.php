@@ -42,7 +42,7 @@ if (isset($_GET["deleteTaskID"]) && isset($_GET["confirm"]) && $_GET["confirm"] 
 }
 
 // Get the page details for this page from the array
-$pageName = $_SESSION["pages_on_site_tb"][$thisPageID]["PageName"] ?? "List All Tasks";
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "List All Tasks";
 
 // Connect to database and get unique groups and creators for filter dropdowns
 $connection = connectToDatabase();
