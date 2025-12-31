@@ -15,12 +15,12 @@ if (!$result) {
 }
 
 // Fetch all page data into an array
-$_SESSION["pages_on_site_tb"] = [];
+$_SESSION["pagesOnSite"] = [];
 $count = 0;
 while ($row = mysqli_fetch_assoc($result)) {
 	$count = $count + 1;
 	$pageID = $row["PageID"];
-	$_SESSION["pages_on_site_tb"][$pageID] = $row;
+	$_SESSION["pagesOnSite"][$pageID] = $row;
 }
 
 // Fetch all image data into an array
@@ -230,14 +230,14 @@ $sectionStyleOptionArray = [
 ];
 
 // Get the page details for this page from the array:
-$pageName = $_SESSION["pages_on_site_tb"][$thisPageID]["PageName"];
-$pageDescription = $_SESSION["pages_on_site_tb"][$thisPageID]["PageDescription"];
-$pageImageRef = $_SESSION["pages_on_site_tb"][$thisPageID]["PageImageIDRef"];
-$pageType = $_SESSION["pages_on_site_tb"][$thisPageID]["PageType"];
-// $pageContentRefs = $_SESSION['pages_on_site_tb'][$thisPageID]['PageContentRefs'];
-$pageAccess = $_SESSION["pages_on_site_tb"][$thisPageID]["PageAccess"];
-$pageColour = $_SESSION["pages_on_site_tb"][$thisPageID]["PageColour"];
-$pageLocalMenu = $_SESSION["pages_on_site_tb"][$thisPageID]["PageLocalMenu"];
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"];
+$pageDescription = $_SESSION["pagesOnSite"][$thisPageID]["PageDescription"];
+$pageImageRef = $_SESSION["pagesOnSite"][$thisPageID]["PageImageIDRef"];
+$pageType = $_SESSION["pagesOnSite"][$thisPageID]["PageType"];
+// $pageContentRefs = $_SESSION['pagesOnSite'][$thisPageID]['PageContentRefs'];
+$pageAccess = $_SESSION["pagesOnSite"][$thisPageID]["PageAccess"];
+$pageColour = $_SESSION["pagesOnSite"][$thisPageID]["PageColour"];
+$pageLocalMenu = $_SESSION["pagesOnSite"][$thisPageID]["PageLocalMenu"];
 
 // -----------------------------------------------
 // Check page access permissions

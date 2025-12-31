@@ -305,8 +305,8 @@ $connection->close();
 
 // Get page details from session
 include "../phpCode/pagesAndImagesArrays.php";
-$pageName = $_SESSION["pages_on_site_tb"][$thisPageID]["PageName"] ?? "Edit Section";
-$pageAccess = $_SESSION["pages_on_site_tb"][$thisPageID]["PageAccess"] ?? "staff";
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "Edit Section";
+$pageAccess = $_SESSION["pagesOnSite"][$thisPageID]["PageAccess"] ?? "staff";
 
 if (accessLevelCheck($pageAccess) == false) {
 	die("Access denied");
@@ -379,7 +379,7 @@ if (count($pagesWithThisSection) > 0) {
 	foreach ($pagesWithThisSection as $page) {
 		$pageNameSafe = htmlspecialchars($page["PageName"], ENT_QUOTES, "UTF-8");
 		$pageID = (int) $page["PageID"];
-		$pageLink = $_SESSION["pages_on_site_tb"][$pageID]["PageLink"] ?? "#";
+		$pageLink = $_SESSION["pagesOnSite"][$pageID]["PageLink"] ?? "#";
 		$pageLinks[] = "<a href=\"$pageLink\" style=\"color: #0066cc; text-decoration: none;\">$pageNameSafe (ID: $pageID)</a>";
 	}
 	$pagesDisplayString = "This section appears on: " . implode(", ", $pageLinks);

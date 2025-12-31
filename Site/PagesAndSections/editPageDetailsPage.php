@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 			$contentRefArray = explode(",", $editPageContentRefs);
 			foreach ($contentRefArray as $contentRef) {
 				$contentRef = trim($contentRef);
-				if (!empty($contentRef) && !array_key_exists($contentRef, $_SESSION["pages_on_site_tb"])) {
+				if (!empty($contentRef) && !array_key_exists($contentRef, $_SESSION["pagesOnSite"])) {
 					$feedbackMessage .= "<p>There is no page with ID $contentRef.</p>";
 					$inputOK = false;
 				}
@@ -303,6 +303,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 		if ($stmt->execute()) {
 			$feedbackMessage = "<p style=\"color: #28a745; font-weight: bold;\">✓ Page details updated successfully. Page ID: $pageToEditID</p>";
 
+			// Update session data for this page
+			if (isset($_SESSION["pagesOnSite"][$pageToEditID])) {
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageName"] = $editPageName;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageDescription"] = $editPageDescription;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageImageIDRef"] = $editPageImageIDRef;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageColour"] = $editPageColour;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageGroup"] = $editPageGroup;
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageMakerEditOnly"] = $editPageMakerEditOnly;
+				if ($editPageType != "builtInPage") {
+					$_SESSION["pagesOnSite"][$pageToEditID]["PageAccess"] = $editPageAccess;
+				}
+				if ($editPageType != "sectionsPage" && $editPageType != "blockMenu") {
+					$_SESSION["pagesOnSite"][$pageToEditID]["PageContentRefs"] = $editPageContentRefs;
+				}
+			}
+
+			// Also update pages_on_site_tb session if it exists
+			if (isset($_SESSION["pages_on_site_tb"][$pageToEditID])) {
+				$_SESSION["pagesOnSite"][$pageToEditID]["PageName"] = $editPageName;
+				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageDescription"] = $editPageDescription;
+				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageImageIDRef"] = $editPageImageIDRef;
+				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageColour"] = $editPageColour;
+				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageGroup"] = $editPageGroup;
+				$_SESSION["pages_on_site_tb"][$pageToEditID]["PageMakerEditOnly"] = $editPageMakerEditOnly;
+				if ($editPageType != "builtInPage") {
+					$_SESSION["pages_on_site_tb"][$pageToEditID]["PageAccess"] = $editPageAccess;
+				}
+				if ($editPageType != "sectionsPage" && $editPageType != "blockMenu") {
+					$_SESSION["pages_on_site_tb"][$pageToEditID]["PageContentRefs"] = $editPageContentRefs;
+				}
+			}
+
 			// For sectionsPage, also update page_sections_tb
 			if ($editPageType == "sectionsPage" && isset($_POST["selectedSections"])) {
 				// Delete existing sections for this page
@@ -416,14 +448,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editPageDetailsButton"
 	$pageToEditID = $_GET["editPageID"];
 	// Get the details for this page we want to edit from the session array:
 
-	$editPageName = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageName"];
-	$editPageDescription = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageDescription"];
-	$editPageImageIDRef = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageImageIDRef"];
-	$editPageContentRefs = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageContentRefs"];
-	$editPageType = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageType"];
-	$editPageAccess = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageAccess"];
-	$editPageColour = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageColour"];
-	$editPageLink = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageLink"];
+	$editPageName = $_SESSION["pagesOnSite"][$pageToEditID]["PageName"];
+	$editPageDescription = $_SESSION["pagesOnSite"][$pageToEditID]["PageDescription"];
+	$editPageImageIDRef = $_SESSION["pagesOnSite"][$pageToEditID]["PageImageIDRef"];
+	$editPageContentRefs = $_SESSION["pagesOnSite"][$pageToEditID]["PageContentRefs"];
+	$editPageType = $_SESSION["pagesOnSite"][$pageToEditID]["PageType"];
+	$editPageAccess = $_SESSION["pagesOnSite"][$pageToEditID]["PageAccess"];
+	$editPageColour = $_SESSION["pagesOnSite"][$pageToEditID]["PageColour"];
+	$editPageLink = $_SESSION["pagesOnSite"][$pageToEditID]["PageLink"];
 	$editPageGroup = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageGroup"];
 	$editPageMakerEditOnly = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageMakerEditOnly"] ?? 1;
 	$editPageMakerID = $_SESSION["pages_on_site_tb"][$pageToEditID]["PageMakerID"] ?? 0;
