@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 function insertPageHeader($pageID)
 {
 	//extract page details from session variables
@@ -14,10 +14,8 @@ function insertPageHeader($pageID)
 		$pageColour = "#" . $pageColour;
 	}
 
-	$outputString = "
-<html>
+	$outputString = "<html>
 <head style=\"width: 100%\">
-
 <meta charset=\"utf-8\">
 <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
@@ -33,14 +31,6 @@ function insertPageHeader($pageID)
 	$outputString .= "<body style=\"width: 100%\">
 <!-- General Styles for Header and Footer -->
 <link href=\"../styleSheets/headerAndFooterStyles.css\"rel=\"stylesheet\" type=\"text/css\">
-
-<!-- For Menus 
-<link href=\"../styleSheets/blockMenuStyles.css\"rel=\"stylesheet\" type=\"text/css\">
-
-<link href=\"../styleSheets/sectionsPageStyles.css\"rel=\"stylesheet\" type=\"text/css\"> -->
-
-<!-- For Forms 
-<link href=\"../styleSheets/formPageFormatting.css\"rel=\"stylesheet\" type=\"text/css\">-->
 
   <!-- Header -->
   <header class=\"header\" style=\"width: 100%\">
@@ -183,6 +173,11 @@ function insertPageLocalMenu($pageID)
 		$outputString .= " <a href=\"../LoginOrOut/loginPage.php\">Log in</a> |";
 	}
 
+	$outputString .= "</div>";
+	print $outputString;
+	return;
+}
+
 function insertPageTitleAndClass($title, $titleClass, $pageID)
 {
 	if (isset($_SESSION["pagesOnSite"][$pageID]["PageColour"])) {
@@ -262,7 +257,6 @@ function insertPageTitleAndClass($title, $titleClass, $pageID)
 	return;
 }
 
-
 function insertPageSectionOneColumnByRefID($refID, $showTitle = true)
 {
 	// Connect to the database
@@ -300,8 +294,8 @@ function insertMenuChoiceCard($linkID)
 	$linkColour = $_SESSION["pagesOnSite"][$linkID]["PageColour"];
 
 	// Get the image for the block and put in a default if there is no image
-	if ($linkImageIDRef != 0 && isset($_SESSION["image_library_tb"][$linkImageIDRef])) {
-		$imageForBlock = $_SESSION["image_library_tb"][$linkImageIDRef]["ImageLink"];
+	if ($linkImageIDRef != 0 && isset($_SESSION["imageLibrary"][$linkImageIDRef])) {
+		$imageForBlock = $_SESSION["imageLibrary"][$linkImageIDRef]["ImageLink"];
 	} else {
 		$imageForBlock = "../uploadedImages/Question Marks Pretty.jpg";
 	}

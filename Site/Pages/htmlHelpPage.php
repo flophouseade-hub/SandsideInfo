@@ -1,14 +1,16 @@
 <?php
 $thisPageID = 49; // Choose an unused page ID - you may need to adjust this
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // Print the page
 insertPageHeader($pageID);
-insertPageLocalMenu($thisPageID); 
+insertPageLocalMenu($thisPageID);
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
-
-$output="
+// insert style for main content area
+print '<link rel="stylesheet" href="../styleSheets/sectionsPageStyles.css">';
+$output = "
+<div class=\"mainContent\">
       <h2>Basic Text Formatting</h2>
       <p>You can use these HTML tags to format text in sections and content areas:</p>
       <ul>
@@ -26,7 +28,7 @@ $output="
         <li>For internal pages: <code>&lt;a href=\"../Pages/pageName.php\"&gt;Page Name&lt;/a&gt;</code></li>
       </ul>";
 
-      $output2 = "<h2>Lists</h2>
+$output2 = "<h2>Lists</h2>
       <p>Create bullet point lists:</p>
       <pre><code>&lt;ul&gt;
   &lt;li&gt;First item&lt;/li&gt;
@@ -52,7 +54,7 @@ $output="
       </ul>
       <p>You can use h5 and h6 as well</p>";
 
-      $output3= "<h2>Paragraphs and Line Breaks</h2>
+$output3 = "<h2>Paragraphs and Line Breaks</h2>
       <ul>
         <li><strong>&lt;p&gt;text&lt;/p&gt;</strong> - Wraps text in a paragraph (adds spacing)</li>
         <li><strong>&lt;br/&gt;</strong> - Single line break without paragraph spacing</li>
@@ -62,7 +64,7 @@ $output="
       <p>While images are usually managed through the Image Library, you can also add them directly:</p>
       <pre><code>&lt;img src=\"../images/imageName.jpg\" alt=\"Description\" style=\"max-width: 100%;\"&gt;</code></pre>";
 
-      $output4= "<h2>Special Characters</h2>
+$output4 = "<h2>Special Characters</h2>
       <p>To display HTML characters literally, use these codes:</p>
       <ul>
         <li><strong>&amp;lt;</strong> - Displays &lt; (less than)</li>
@@ -77,7 +79,7 @@ $output="
 &lt;p style=\"background-color: yellow;\"&gt;Highlighted text&lt;/p&gt;
 &lt;p style=\"text-align: center;\"&gt;Centered text&lt;/p&gt;</code></pre>";
 
-  $footerOutput="<h2>Important Notes</h2>
+$footerOutput = "<h2>Important Notes</h2>
       <ul>
         <li>Always close your HTML tags properly</li>
         <li>Test your HTML in a section before making it live</li>
@@ -96,6 +98,7 @@ printColumnFramesSection($output3, "", "HTML Help", $thisPageID);
 printColumnFramesSection($output4, "", "HTML Help", $thisPageID);
 
 printColumnFramesSection($footerOutput, "", "HTML Help", $thisPageID);
+print "</div>\n";
 
 insertPageFooter($thisPageID);
 ?>

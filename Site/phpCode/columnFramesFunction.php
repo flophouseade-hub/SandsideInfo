@@ -17,18 +17,18 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
 		print "<style>\n
     .$divClass {
     --chosen-color: $sectionColour;
-    --chosen-color-lighter: {$colourCombo['lighter']};
-    --chosen-color-Comp1: {$colourCombo['splitComp1']};
-    --chosen-color-Comp2: {$colourCombo['splitComp2']};
-    --chosen-color-Comp2-lighter: {$colourCombo['splitComp2Lighter']};
-    --chosen-color-Comp1-lighter: {$colourCombo['splitComp1Lighter']};
-  }
-  </style>\n");
+    --chosen-color-lighter: {$colourCombo["lighter"]};
+    --chosen-color-Comp1: {$colourCombo["splitComp1"]};
+    --chosen-color-Comp2: {$colourCombo["splitComp2"]};
+    --chosen-color-Comp2-lighter: {$colourCombo["splitComp2Lighter"]};
+    --chosen-color-Comp1-lighter: {$colourCombo["splitComp1Lighter"]};
     }
-    
-    // Always print structural CSS regardless of color settings
-    print("<style>\n
-    .$divClass .columnFramesCardGrid {
+  </style>\n";
+	}
+
+	// Always print structural CSS regardless of color settings
+	print "<style>\n
+  .$divClass .columnFramesCardGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
@@ -127,34 +127,11 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
   flex-direction: column;
   flex-grow: 1;
   background-color: var(--chosen-color-lighter);
-}
-.columnFramesCardBody p {
-font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
-}
-
-.$divClass .columnFramesCardBody figure.insertedImage{
-  margin-right: 0px;
-}
-
-.$divClass .columnFramesCardBody img{
-  margin: auto;
-  max-width: 100%;
-}
-
-  </style>\n");
-
-    // Add CSS to hide title if SectionShowTitle is false
-    if (!$sectionShowTitle) {
-        print("<style>\n  .$divClass .columnFramesTitleBar { display: none; }\n</style>\n");
-    }
-
-    // Add floating edit button for editors/admins
-    $editButton = '';
-    if (accessLevelCheck("pageEditor") === true) {
-        print("<style>\n  .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    left: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .columnFramesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .columnFramesWrapper {\n    position: relative;\n  }\n</style>\n");
-        $editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
-    }
+  }
+  .columnFramesCardBody p {
+  font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+  }
 
   .$divClass .columnFramesCardBody figure.insertedImage{
     margin-right: 0px;
@@ -164,7 +141,32 @@ font-size: 14px;
     margin: auto;
     max-width: 100%;
   }
+  .$divClass .columnFramesCardBody figure.insertedImage{
+    margin-right: 0px;
+  }
+
+  .$divClass .columnFramesCardBody img{
+    margin: auto;
+    max-width: 100%;
+  }
   </style>\n";
+
+	// Add CSS to hide title if SectionShowTitle is false
+	if (!$sectionShowTitle) {
+		print "<style>\n  .$divClass .columnFramesTitleBar { display: none; }\n</style>\n";
+	}
+
+	// Add floating edit button for editors/admins
+	$editButton = "";
+	if (accessLevelCheck("pageEditor") === true) {
+		print "<style>\n  
+        .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    left: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
+        .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  
+        .$divClass .columnFramesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  
+        .$divClass .columnFramesWrapper {\n    position: relative;\n  }\n</style>\n";
+
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️ Edit</a>";
+	}
 
 	// Add CSS to hide title if SectionShowTitle is false
 	if (!$sectionShowTitle) {
