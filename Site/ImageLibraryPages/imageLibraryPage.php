@@ -18,14 +18,16 @@ if (isset($_POST["filterGroup"])) {
 
 // Collect all unique image groups from the session
 $imageGroups = [];
-foreach ($_SESSION["image_library_tb"] as $imageID => $imageDetails) {
-	$group =
-		isset($imageDetails["ImageGroup"]) && !empty($imageDetails["ImageGroup"])
-			? $imageDetails["ImageGroup"]
-			: "Uncategorized";
+if (isset($_SESSION["imageLibrary"]) && is_array($_SESSION["imageLibrary"])) {
+	foreach ($_SESSION["imageLibrary"] as $imageID => $imageDetails) {
+		$group =
+			isset($imageDetails["ImageGroup"]) && !empty($imageDetails["ImageGroup"])
+				? $imageDetails["ImageGroup"]
+				: "Uncategorized";
 
-	if (!in_array($group, $imageGroups)) {
-		$imageGroups[] = $group;
+		if (!in_array($group, $imageGroups)) {
+			$imageGroups[] = $group;
+		}
 	}
 }
 
@@ -37,7 +39,7 @@ insertPageHeader($pageID);
 insertPageLocalMenu($thisPageID);
 
 // Add the card CSS
-print '<link rel="stylesheet" href="../styleSheets/image_library_tbStyles.css">';
+print '<link rel="stylesheet" href="../styleSheets/imageLibraryStyles.css">';
 
 // Add inline styles for the filter form
 print '<style>
@@ -157,7 +159,7 @@ if (isset($_GET["deleteStatus"])) {
 
 // Display the top button container with filter and action buttons
 print '<div class="topButtonContainer">';
-print '<a href="../image_library_tbPages/uploadImageToSite.php" class="actionButton">Add New Image</a>';
+print '<a href="../ImageLibraryPages/uploadImageToSite.php" class="actionButton">Add New Image</a>';
 
 // Display the filter form
 print '<div class="filterForm">';
@@ -181,7 +183,7 @@ print '<a href="../PagesAndSections/listAllPagesPage.php" class="actionButton">L
 print "</div>"; // Close topButtonContainer
 
 // Count total images and filtered images
-$totalImages = count($_SESSION["image_library_tb"]);
+$totalImages = isset($_SESSION["imageLibrary"]) ? count($_SESSION["imageLibrary"]) : 0;
 $displayedImages = 0;
 
 // Show filter info if a group is selected
@@ -195,21 +197,23 @@ if (!empty($selectedGroup)) {
 print '<div class="cardGrid"><div class="grid">';
 
 // Loop through all images in the session and display them as cards
-foreach ($_SESSION["image_library_tb"] as $imageID => $imageDetails) {
-	$imageGroup =
-		isset($imageDetails["ImageGroup"]) && !empty($imageDetails["ImageGroup"])
-			? $imageDetails["ImageGroup"]
-			: "Uncategorized";
+if (isset($_SESSION["imageLibrary"]) && is_array($_SESSION["imageLibrary"])) {
+	foreach ($_SESSION["imageLibrary"] as $imageID => $imageDetails) {
+		$imageGroup =
+			isset($imageDetails["ImageGroup"]) && !empty($imageDetails["ImageGroup"])
+				? $imageDetails["ImageGroup"]
+				: "Uncategorized";
 
-	// Apply filter if a group is selected
-	if (!empty($selectedGroup) && $imageGroup !== $selectedGroup) {
-		continue; // Skip this image if it doesn't match the selected group
+		// Apply filter if a group is selected
+		if (!empty($selectedGroup) && $imageGroup !== $selectedGroup) {
+			continue; // Skip this image if it doesn't match the selected group
+		}
+
+		$displayedImages++;
+
+		// Use the insertimage_library_tbCard function
+		insertimage_library_tbCard($imageID);
 	}
-
-	$displayedImages++;
-
-	// Use the insertimage_library_tbCard function
-	insertimage_library_tbCard($imageID);
 }
 
 // Close the grid

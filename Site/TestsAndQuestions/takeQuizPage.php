@@ -27,7 +27,7 @@ if (!$connection) {
 }
 
 // Fetch quiz data
-$quizQuery = "SELECT * FROM QuizzesDB WHERE QuizID = ? AND QuizActive = 1";
+$quizQuery = "SELECT * FROM quizzes_tb WHERE QuizID = ? AND QuizActive = 1";
 $stmtQuiz = $connection->prepare($quizQuery);
 $stmtQuiz->bind_param("i", $quizID);
 $stmtQuiz->execute();
@@ -42,7 +42,7 @@ $stmtQuiz->close();
 
 // Check attempt limits
 $attemptQuery = "SELECT COUNT(*) as attemptCount, MAX(AttemptNumber) as maxAttempt 
-                 FROM QuizAttemptsDB 
+                 FROM quiz_attempts_tb 
                  WHERE QuizID = ? AND UserEmail = ?";
 $stmtAttempt = $connection->prepare($attemptQuery);
 $stmtAttempt->bind_param("is", $quizID, $userEmail);
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuiz"])) {
 	$attemptEndTime = date("Y-m-d H:i:s");
 
 	// Insert attempt record
-	$insertAttemptQuery = "INSERT INTO QuizAttemptsDB (QuizID, UserEmail, AttemptStartTime, AttemptEndTime, AttemptNumber, AttemptStatus) 
+	$insertAttemptQuery = "INSERT INTO quiz_attempts_tb (QuizID, UserEmail, AttemptStartTime, AttemptEndTime, AttemptNumber, AttemptStatus) 
                            VALUES (?, ?, ?, ?, ?, 'completed')";
 	$stmtInsertAttempt = $connection->prepare($insertAttemptQuery);
 	$stmtInsertAttempt->bind_param(
@@ -147,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuiz"])) {
 		$passed = $scorePercentage >= $quizData["PassingScore"] ? 1 : 0;
 
 		// Update attempt with score
-		$updateAttemptQuery = "UPDATE QuizAttemptsDB SET Score = ?, Passed = ? WHERE AttemptID = ?";
+		$updateAttemptQuery = "UPDATE quiz_attempts_tb SET Score = ?, Passed = ? WHERE AttemptID = ?";
 		$stmtUpdateAttempt = $connection->prepare($updateAttemptQuery);
 		$stmtUpdateAttempt->bind_param("dii", $scorePercentage, $passed, $attemptID);
 		$stmtUpdateAttempt->execute();

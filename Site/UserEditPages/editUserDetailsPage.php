@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateUserDetailsButto
 		} else {
 			// Verify the class exists in the database
 			$connection = connectToDatabase();
-			$checkClassQuery = "SELECT ClassID FROM classes WHERE ClassID = ?";
+			$checkClassQuery = "SELECT ClassID FROM classes_tb WHERE ClassID = ?";
 			$stmtCheck = $connection->prepare($checkClassQuery);
 			$stmtCheck->bind_param("i", $editUserClassID);
 			$stmtCheck->execute();
@@ -207,11 +207,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateUserDetailsButto
 // Fetch classes from database for dropdown
 // -----------------------------------------------
 $connection = connectToDatabase();
-$classesQuery = "SELECT ClassID, ClassName FROM classes ORDER BY ClassName ASC";
+$classesQuery = "SELECT ClassID, ClassName FROM classes_tb ORDER BY ClassName ASC";
 $classesResult = mysqli_query($connection, $classesQuery);
 
 if (!$classesResult) {
-	$errorMsg = urlencode("Failed to load classes: " . mysqli_error($connection));
+	$errorMsg = urlencode("Failed to load classes_tb: " . mysqli_error($connection));
 	mysqli_close($connection);
 	header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
 	exit();

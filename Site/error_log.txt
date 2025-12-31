@@ -324,3 +324,750 @@
 [2025-12-31 09:06:58] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\PagesAndSections\listAllPagesPage.php:148 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
 [2025-12-31 09:07:05] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\PagesAndSections\addNewSectionPage.php:108 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
 [2025-12-31 09:07:05] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\PagesAndSections\addNewSectionPage.php:108 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
+[2025-12-31 10:58:04] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\config.php:18 - mysqli_connect(): php_network_getaddresses: getaddrinfo for db5017024343.hosting-data.io failed: No such host is known. 
+[2025-12-31 10:58:51] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\ImageLibraryPages\imageLibraryPage.php:21 - Undefined array key "image_library_tb"
+[2025-12-31 10:58:51] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\ImageLibraryPages\imageLibraryPage.php:21 - foreach() argument must be of type array|object, null given
+[2025-12-31 10:58:51] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\ImageLibraryPages\imageLibraryPage.php:184 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:21] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:344 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:345 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Undefined array key "image_library_tb"
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:00:22] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\phpCode\insertFunctions.php:346 - Trying to access array offset on null
+[2025-12-31 11:12:10] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:15 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
+[2025-12-31 11:12:10] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:15 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
+[2025-12-31 11:13:06] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:15 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
+[2025-12-31 11:13:06] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:15 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
+[2025-12-31 11:14:49] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
+[2025-12-31 11:14:49] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
+[2025-12-31 11:16:01] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
+[2025-12-31 11:16:01] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
+[2025-12-31 11:19:30] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
+[2025-12-31 11:19:30] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
+[2025-12-31 11:19:37] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
+[2025-12-31 11:19:37] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')
+[2025-12-31 11:20:47] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(../phpCode/pagesAndImagesArrays.php): Failed to open stream: No such file or directory
+[2025-12-31 11:20:47] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\UserEditPages\listAllUsersPage.php:10 - include(): Failed opening '../phpCode/pagesAndImagesArrays.php' for inclusion (include_path='.;D:/laragon/etc/php/pear')

@@ -1,7 +1,7 @@
 <?php
 $thisPageID = 33;
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // Initialize error tracking variables
 $inputError = false;
@@ -13,92 +13,99 @@ $inputPassword = "";
 // Process the login form after the user has entered their details
 //---------------------------------------------------------------
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Get the Post variables
-  $inputEmail = $_POST['fvInputEmail'] ?? "";
-  $inputPassword = $_POST['fvInputPassword'] ?? "";
-  
-  // Reset POST variables
-  $_POST = array();
-  
-  // Validate email format
-  if (!filter_var($inputEmail, FILTER_VALIDATE_EMAIL)) {
-    $inputError = true;
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Invalid email format. Please check what you have entered.</p>";
-  }
-  
-  // Validate password length
-  if (strlen($inputPassword) < 8) {
-    $inputError = true;
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Password must be at least 8 characters long.</p>";
-  }
-  
-  // If validation passes, check database
-  if ($inputError === false) {
-    // Connect to the database
-    $connection = connectToDatabase();
-    
-    // Prepare the SQL statement
-    $stmt = $connection->prepare('SELECT UsersID, FirstName, LastName, LogOnStatus, UsersPassword, SchoolStatus FROM UsersDB WHERE Email = ?');
-    $stmt->bind_param('s', $inputEmail);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    // Get the users data if possible
-    $numberOfRows = $result->num_rows;
-    
-    if ($numberOfRows > 1) {
-      $inputError = true;
-      $feedbackMessage .= "<p class=\"formFeedbackError\">Multiple users found with that email address. Please contact the administrator.</p>";
-    } elseif ($numberOfRows < 1) {
-      $inputError = true;
-      $feedbackMessage .= "<p class=\"formFeedbackError\">Email not found. Did you register with your school email address or your personal email?</p>";
-      // Log failed login with user ID 0 for email not found
-      logUserLogin(0, $inputEmail, 'failed', 'Email not found');
-    } elseif ($numberOfRows == 1) {
-      $users = $result->fetch_assoc();
-      $ID = $users['UsersID'];
-      $Fname = $users['FirstName'];
-      $Lname = $users['LastName'];
-      $LogOnStatus = $users['LogOnStatus'];
-      $passwordInDB = $users['UsersPassword'];
-      $userSchoolStatus = $users['SchoolStatus'];
-      
-      // Compare hashed passwords
-      if (password_verify($inputPassword, $passwordInDB)) {
-        // Start session and store user data
-        $_SESSION['currentUserFirstName'] = $Fname;
-        $_SESSION['currentUserLastName'] = $Lname;
-        $_SESSION['currentUserEmail'] = $inputEmail;
-        $_SESSION['currentUserID'] = $ID;
-        $_SESSION['currentUserLogOnStatus'] = $LogOnStatus;
-        $_SESSION['currentUserPassword'] = $passwordInDB;
-        $_SESSION['currentUserSchoolStatus'] = $userSchoolStatus;
-        
-        // Log successful login
-        logUserLogin($ID, $inputEmail, 'success');
-        
-        // User is now logged in
-        $feedbackMessage = "<p class=\"formFeedbackSuccess\">âœ“ Login successful. Redirecting to Main Menu...</p>";
-        $stmt->close();
-        $connection->close();
-        header("refresh:2;url=../Pages/blockMenuPage.php?pageID=1");
-        exit();
-      } else {
-        $inputError = true;
-        $feedbackMessage .= "<p class=\"formFeedbackError\">Your password does not appear correct.</p>";
-        // Log failed login attempt
-        if (isset($ID)) {
-          logUserLogin($ID, $inputEmail, 'failed', 'Invalid password');
-        }
-      }
-    } else {
-      $inputError = true;
-      $feedbackMessage .= "<p class=\"formFeedbackError\">There is an unexpected issue with your login attempt. Please contact the administrator.</p>";
-    }
-    
-    $stmt->close();
-    $connection->close();
-  }
+	// Get the Post variables
+	$inputEmail = $_POST["fvInputEmail"] ?? "";
+	$inputPassword = $_POST["fvInputPassword"] ?? "";
+
+	// Reset POST variables
+	$_POST = [];
+
+	// Validate email format
+	if (!filter_var($inputEmail, FILTER_VALIDATE_EMAIL)) {
+		$inputError = true;
+		$feedbackMessage .=
+			"<p class=\"formFeedbackError\">Invalid email format. Please check what you have entered.</p>";
+	}
+
+	// Validate password length
+	if (strlen($inputPassword) < 8) {
+		$inputError = true;
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Password must be at least 8 characters long.</p>";
+	}
+
+	// If validation passes, check database
+	if ($inputError === false) {
+		// Connect to the database
+		$connection = connectToDatabase();
+
+		// Prepare the SQL statement
+		$stmt = $connection->prepare(
+			"SELECT UsersID, FirstName, LastName, LogOnStatus, UsersPassword, SchoolStatus FROM users_tb WHERE Email = ?",
+		);
+		$stmt->bind_param("s", $inputEmail);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		// Get the users data if possible
+		$numberOfRows = $result->num_rows;
+
+		if ($numberOfRows > 1) {
+			$inputError = true;
+			$feedbackMessage .=
+				"<p class=\"formFeedbackError\">Multiple users found with that email address. Please contact the administrator.</p>";
+		} elseif ($numberOfRows < 1) {
+			$inputError = true;
+			$feedbackMessage .=
+				"<p class=\"formFeedbackError\">Email not found. Did you register with your school email address or your personal email?</p>";
+			// Log failed login with user ID 0 for email not found
+			logUserLogin(0, $inputEmail, "failed", "Email not found");
+		} elseif ($numberOfRows == 1) {
+			$users = $result->fetch_assoc();
+			$ID = $users["UsersID"];
+			$Fname = $users["FirstName"];
+			$Lname = $users["LastName"];
+			$LogOnStatus = $users["LogOnStatus"];
+			$passwordInDB = $users["UsersPassword"];
+			$userSchoolStatus = $users["SchoolStatus"];
+
+			// Compare hashed passwords
+			if (password_verify($inputPassword, $passwordInDB)) {
+				// Start session and store user data
+				$_SESSION["currentUserFirstName"] = $Fname;
+				$_SESSION["currentUserLastName"] = $Lname;
+				$_SESSION["currentUserEmail"] = $inputEmail;
+				$_SESSION["currentUserID"] = $ID;
+				$_SESSION["currentUserLogOnStatus"] = $LogOnStatus;
+				$_SESSION["currentUserPassword"] = $passwordInDB;
+				$_SESSION["currentUserSchoolStatus"] = $userSchoolStatus;
+
+				// Log successful login
+				logUserLogin($ID, $inputEmail, "success");
+
+				// User is now logged in
+				$feedbackMessage =
+					"<p class=\"formFeedbackSuccess\">âœ“ Login successful. Redirecting to Main Menu...</p>";
+				$stmt->close();
+				$connection->close();
+				header("refresh:2;url=../Pages/blockMenuPage.php?pageID=1");
+				exit();
+			} else {
+				$inputError = true;
+				$feedbackMessage .= "<p class=\"formFeedbackError\">Your password does not appear correct.</p>";
+				// Log failed login attempt
+				if (isset($ID)) {
+					logUserLogin($ID, $inputEmail, "failed", "Invalid password");
+				}
+			}
+		} else {
+			$inputError = true;
+			$feedbackMessage .=
+				"<p class=\"formFeedbackError\">There is an unexpected issue with your login attempt. Please contact the administrator.</p>";
+		}
+
+		$stmt->close();
+		$connection->close();
+	}
 }
 
 //-----------------------------------------------------------------
@@ -109,22 +116,22 @@ insertPageHeader($thisPageID);
 insertPageLocalMenu($thisPageID);
 
 // Add the form formatting CSS
-print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
+print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
 
 insertPageTitleAndClass("Login Page", "blockMenuPageTitle", $thisPageID);
 
 // Display feedback message
 if (!empty($feedbackMessage)) {
-    print("<div class=\"formFeedback\">$feedbackMessage</div>");
+	print "<div class=\"formFeedback\">$feedbackMessage</div>";
 }
 
 // Sanitize email for display
-$inputEmailSafe = htmlspecialchars($inputEmail, ENT_QUOTES, 'UTF-8');
+$inputEmailSafe = htmlspecialchars($inputEmail, ENT_QUOTES, "UTF-8");
 
 // Build the main form
-print("<div class=\"formPageWrapper\">");
+print "<div class=\"formPageWrapper\">";
 
-print("
+print "
 <div class=\"formInfoBox\">
     <p>Please enter your email address and password to access the staff site.</p>
 </div>
@@ -186,9 +193,9 @@ function togglePasswordVisibility() {
     }
 }
 </script>
-");
+";
 
-print("</div>");
+print "</div>";
 
 insertPageFooter($thisPageID);
 ?>

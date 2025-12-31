@@ -10,7 +10,7 @@
 -- Main tables
 ALTER TABLE SectionDB RENAME TO section_tb;
 ALTER TABLE ImageLibrary RENAME TO image_library_tb;
-ALTER TABLE UsersDB RENAME TO users_tb;
+ALTER TABLE users_tb RENAME TO users_tb;
 ALTER TABLE ErrorLog RENAME TO error_log_tb;
 ALTER TABLE Students RENAME TO students_tb;
 ALTER TABLE classes RENAME TO classes_tb;  -- Note: keeping plural 'classes'

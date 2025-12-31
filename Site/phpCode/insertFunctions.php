@@ -137,7 +137,11 @@ function insertPageLocalMenu($pageID)
 				$filename = basename(parse_url($pageLink, PHP_URL_PATH));
 
 				// Exclude pages whose filename starts with "edit" or "update"
-				if (stripos($filename, "edit") !== 0 && stripos($filename, "update") !== 0) {
+				if (
+					stripos($filename, "edit") !== 0 &&
+					stripos($filename, "update") !== 0 &&
+					stripos($filename, "assign") !== 0
+				) {
 					$menuItems[$checkPageID] = [
 						"name" => $pageName,
 						"link" => $pageLink,
@@ -337,13 +341,13 @@ function insertMenuChoiceCard($linkID)
 
 function insertimage_library_tbCard($imageID)
 {
-	$imageCaption = $_SESSION["image_library_tb"][$imageID]["ImageCaption"];
-	$imageDescription = $_SESSION["image_library_tb"][$imageID]["ImageDescription"];
-	$imageLink = $_SESSION["image_library_tb"][$imageID]["ImageLink"];
+	$imageCaption = $_SESSION["imageLibrary"][$imageID]["ImageCaption"];
+	$imageDescription = $_SESSION["imageLibrary"][$imageID]["ImageDescription"];
+	$imageLink = $_SESSION["imageLibrary"][$imageID]["ImageLink"];
 	$imageGroup =
-		isset($_SESSION["image_library_tb"][$imageID]["ImageGroup"]) &&
-		!empty($_SESSION["image_library_tb"][$imageID]["ImageGroup"])
-			? $_SESSION["image_library_tb"][$imageID]["ImageGroup"]
+		isset($_SESSION["imageLibrary"][$imageID]["ImageGroup"]) &&
+		!empty($_SESSION["imageLibrary"][$imageID]["ImageGroup"])
+			? $_SESSION["imageLibrary"][$imageID]["ImageGroup"]
 			: "Uncategorized";
 
 	// If the user is an editor or admin, show edit link and image ID

@@ -24,7 +24,7 @@ if (isset($_GET["deleteQuizID"]) && isset($_GET["confirm"]) && $_GET["confirm"] 
 		}
 
 		// Check if quiz has any attempts
-		$checkQuery = "SELECT COUNT(*) as count FROM QuizAttemptsDB WHERE QuizID = ?";
+		$checkQuery = "SELECT COUNT(*) as count FROM quiz_attempts_tb WHERE QuizID = ?";
 		$stmt = $connection->prepare($checkQuery);
 		$stmt->bind_param("i", $deleteQuizID);
 		$stmt->execute();
@@ -39,7 +39,7 @@ if (isset($_GET["deleteQuizID"]) && isset($_GET["confirm"]) && $_GET["confirm"] 
 				" recorded attempt(s). Consider archiving it instead.</p>";
 		} else {
 			// Delete the quiz (questions will be unlinked automatically due to CASCADE)
-			$deleteQuery = "DELETE FROM QuizzesDB WHERE QuizID = ?";
+			$deleteQuery = "DELETE FROM quizzes_tb WHERE QuizID = ?";
 			$stmt = $connection->prepare($deleteQuery);
 			$stmt->bind_param("i", $deleteQuizID);
 
@@ -164,7 +164,7 @@ print "</form>
 // Build query with optional filters using the QuizSummaryView
 $query = "SELECT q.QuizID, q.QuizName, q.CourseID, q.PassingScore, q.TimeLimit, q.QuizActive, 
           COALESCE(qs.TotalQuestions, 0) as TotalQuestions, COALESCE(qs.TotalPoints, 0) as TotalPoints
-          FROM QuizzesDB q
+          FROM quizzes_tb q
           LEFT JOIN QuizSummaryView qs ON q.QuizID = qs.QuizID
           WHERE 1=1";
 

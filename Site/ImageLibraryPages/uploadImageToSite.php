@@ -18,7 +18,7 @@ $inputError = false;
 
 // Collect all unique image groups from the session
 $imageGroups = [];
-foreach ($_SESSION["image_library_tb"] as $imageID => $imageDetails) {
+foreach ($_SESSION["imageLibrary"] as $imageID => $imageDetails) {
 	$group =
 		isset($imageDetails["ImageGroup"]) && !empty($imageDetails["ImageGroup"]) ? $imageDetails["ImageGroup"] : "";
 	if (!empty($group) && !in_array($group, $imageGroups)) {

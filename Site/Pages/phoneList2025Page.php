@@ -1,24 +1,24 @@
 <?php
 $thisPageID = 3;
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
-if ($_SESSION['currentUserLogOnStatus'] != null) {
-    // Get the data from the database
-    $con = connectToDatabase();
-    if (!$con) {
-        die("Connection Error");
-    }
+if ($_SESSION["currentUserLogOnStatus"] != null) {
+	// Get the data from the database
+	$con = connectToDatabase();
+	if (!$con) {
+		die("Connection Error");
+	}
 
-    $query = "SELECT * from PhoneGroups WHERE 1 order by groupOrder ";
-    $resultPhoneGroup = mysqli_query($con, $query);
+	$query = "SELECT * from phone_groups_tb WHERE 1 order by groupOrder ";
+	$resultPhoneGroup = mysqli_query($con, $query);
 
-    insertPageHeader($thisPageID);
-insertPageLocalMenu($thisPageID);
-    insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
+	insertPageHeader($thisPageID);
+	insertPageLocalMenu($thisPageID);
+	insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
-    // Add CSS for phone list layout
-    print("<style>
+	// Add CSS for phone list layout
+	print "<style>
         .phoneBoxWrapper {
             max-width: 1200px;
             margin: 0 auto;
@@ -68,63 +68,63 @@ insertPageLocalMenu($thisPageID);
             max-width: 1200px;
             margin: 15px auto 0 auto;
         }
-    </style>");
+    </style>";
 
-    print("<div class=\"WordSection1\">
+	print "<div class=\"WordSection1\">
         <div class=\"phoneListDescription\">
             <p>$pageDescription</p>
         </div>
-        <div class=\"phoneBoxWrapper\">");
+        <div class=\"phoneBoxWrapper\">";
 
-    $count = 0;
-    print("<div class=\"gallery\">");
-    
-    while ($row = mysqli_fetch_assoc($resultPhoneGroup)) {
-        $groupID = $row['GroupID'];
-        $colorCode = $row['Colour'];
-        
-        $count++;
+	$count = 0;
+	print "<div class=\"gallery\">";
 
-        echo ("<div class=\"phoneBox\">");
-        echo ("<table bgcolor=\"" . $colorCode . "\" border=\"1\">");
-        echo ("<tr>");
-        echo ("<td><strong>" . $row['GroupName'] . " (" . $groupID . ")</strong></td>");
-        echo ("<td><strong>Number</strong></td>");
-        echo ("</tr>");
-        
-        // Use prepared statement to prevent SQL injection
-        $stmt = $con->prepare("SELECT location, number FROM PhoneNumbers WHERE GroupID = ? ORDER BY location");
-        $stmt->bind_param('i', $groupID);
-        $stmt->execute();
-        $resultPhoneNum = $stmt->get_result();
-        
-        while ($rowPhoneNum = $resultPhoneNum->fetch_assoc()) {
-            echo '<tr>';
-            echo '<td>' . htmlspecialchars($rowPhoneNum['location'], ENT_QUOTES, 'UTF-8') . '</td>';
-            echo '<td>' . htmlspecialchars($rowPhoneNum['number'], ENT_QUOTES, 'UTF-8') . '</td>';
-            echo '</tr>';
-        }
-        
-        $stmt->close();
-        
-        echo ("</table>");
-        echo ("</div>"); // Close phoneBox
-    }
+	while ($row = mysqli_fetch_assoc($resultPhoneGroup)) {
+		$groupID = $row["GroupID"];
+		$colorCode = $row["Colour"];
 
-    echo "</div>"; // Close gallery
+		$count++;
 
-    print("</div>
+		echo "<div class=\"phoneBox\">";
+		echo "<table bgcolor=\"" . $colorCode . "\" border=\"1\">";
+		echo "<tr>";
+		echo "<td><strong>" . $row["GroupName"] . " (" . $groupID . ")</strong></td>";
+		echo "<td><strong>Number</strong></td>";
+		echo "</tr>";
+
+		// Use prepared statement to prevent SQL injection
+		$stmt = $con->prepare("SELECT location, number FROM phone_numbers_tb WHERE GroupID = ? ORDER BY location");
+		$stmt->bind_param("i", $groupID);
+		$stmt->execute();
+		$resultPhoneNum = $stmt->get_result();
+
+		while ($rowPhoneNum = $resultPhoneNum->fetch_assoc()) {
+			echo "<tr>";
+			echo "<td>" . htmlspecialchars($rowPhoneNum["location"], ENT_QUOTES, "UTF-8") . "</td>";
+			echo "<td>" . htmlspecialchars($rowPhoneNum["number"], ENT_QUOTES, "UTF-8") . "</td>";
+			echo "</tr>";
+		}
+
+		$stmt->close();
+
+		echo "</table>";
+		echo "</div>"; // Close phoneBox
+	}
+
+	echo "</div>"; // Close gallery
+
+	print "</div>
         <div class=\"phoneListFooter\">
             <p>This list was updated on 6/8/24. Some numbers have changed since last year. </p>
             <p>Let Ade know if there are any errors or problems. </p>
         </div>
-        </div>");
+        </div>";
 
-    mysqli_close($con);
+	mysqli_close($con);
 
-    insertPageFooter($thisPageID);
+	insertPageFooter($thisPageID);
 } else {
-    header("Location:../LoginOrOut/loginPage.php");
-    exit;
+	header("Location:../LoginOrOut/loginPage.php");
+	exit();
 }
 ?>

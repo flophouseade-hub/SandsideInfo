@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS QuestionOptionsDB (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================
--- 3. QuizzesDB - Store quiz/assessment definitions
+-- 3. quizzes_tb - Store quiz/assessment definitions
 -- =====================================================
-CREATE TABLE IF NOT EXISTS QuizzesDB (
+CREATE TABLE IF NOT EXISTS quizzes_tb (
     QuizID INT AUTO_INCREMENT PRIMARY KEY,
     QuizName VARCHAR(255) NOT NULL,
     QuizDescription TEXT DEFAULT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS QuizQuestionsDB (
     QuizID INT NOT NULL,
     QuestionID INT NOT NULL,
     QuestionOrder INT DEFAULT 1 COMMENT 'Display order in the quiz',
-    FOREIGN KEY (QuizID) REFERENCES QuizzesDB(QuizID) ON DELETE CASCADE,
+    FOREIGN KEY (QuizID) REFERENCES quizzes_tb(QuizID) ON DELETE CASCADE,
     FOREIGN KEY (QuestionID) REFERENCES QuestionsDB(QuestionID) ON DELETE CASCADE,
     UNIQUE KEY unique_quiz_question (QuizID, QuestionID),
     INDEX idx_quiz (QuizID),
@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS QuizQuestionsDB (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================
--- 5. QuizAttemptsDB - Track each user's quiz attempts
+-- 5. quiz_attempts_tb - Track each user's quiz attempts
 -- =====================================================
-CREATE TABLE IF NOT EXISTS QuizAttemptsDB (
+CREATE TABLE IF NOT EXISTS quiz_attempts_tb (
     AttemptID INT AUTO_INCREMENT PRIMARY KEY,
     QuizID INT NOT NULL,
     UserEmail VARCHAR(255) NOT NULL COMMENT 'User taking the quiz',
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS QuizAttemptsDB (
     Passed TINYINT(1) DEFAULT 0 COMMENT '1=passed, 0=failed',
     AttemptStatus ENUM('in-progress', 'completed', 'abandoned') DEFAULT 'in-progress',
     AttemptNumber INT DEFAULT 1 COMMENT 'Which attempt number this is for this user',
-    FOREIGN KEY (QuizID) REFERENCES QuizzesDB(QuizID) ON DELETE CASCADE,
+    FOREIGN KEY (QuizID) REFERENCES quizzes_tb(QuizID) ON DELETE CASCADE,
     INDEX idx_quiz_user (QuizID, UserEmail),
     INDEX idx_user (UserEmail),
     INDEX idx_status (AttemptStatus),
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS QuizAnswersDB (
     IsCorrect TINYINT(1) DEFAULT 0 COMMENT '1=correct, 0=incorrect',
     PointsAwarded INT DEFAULT 0,
     AnswerTime DATETIME DEFAULT NULL COMMENT 'When this question was answered',
-    FOREIGN KEY (AttemptID) REFERENCES QuizAttemptsDB(AttemptID) ON DELETE CASCADE,
+    FOREIGN KEY (AttemptID) REFERENCES quiz_attempts_tb(AttemptID) ON DELETE CASCADE,
     FOREIGN KEY (QuestionID) REFERENCES QuestionsDB(QuestionID) ON DELETE CASCADE,
     UNIQUE KEY unique_attempt_question (AttemptID, QuestionID),
     INDEX idx_attempt (AttemptID)
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS CertificatesDB (
     CertificateStatus ENUM('active', 'revoked', 'expired') DEFAULT 'active',
     IssuedBy VARCHAR(255) DEFAULT NULL,
     CertificatePDFPath VARCHAR(500) DEFAULT NULL COMMENT 'Path to generated PDF certificate',
-    FOREIGN KEY (QuizAttemptID) REFERENCES QuizAttemptsDB(AttemptID) ON DELETE RESTRICT,
+    FOREIGN KEY (QuizAttemptID) REFERENCES quiz_attempts_tb(AttemptID) ON DELETE RESTRICT,
     INDEX idx_user (UserEmail),
     INDEX idx_course (CourseID),
     INDEX idx_code (CertificateCode),
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS QuizFeedbackDB (
     Rating INT DEFAULT NULL COMMENT 'Rating 1-5',
     FeedbackText TEXT DEFAULT NULL,
     FeedbackTime DATETIME NOT NULL,
-    FOREIGN KEY (QuizID) REFERENCES QuizzesDB(QuizID) ON DELETE CASCADE,
+    FOREIGN KEY (QuizID) REFERENCES quizzes_tb(QuizID) ON DELETE CASCADE,
     INDEX idx_quiz (QuizID),
     INDEX idx_user (UserEmail)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -191,7 +191,7 @@ INSERT INTO QuestionOptionsDB (QuestionID, OptionText, IsCorrect, OptionOrder) V
 (@q2_id, 'False', 1, 2);
 
 -- Sample Quiz
-INSERT INTO QuizzesDB (QuizName, QuizDescription, PassingScore, TimeLimit, AllowRetakes, ShowCorrectAnswers, QuizMadeBy, QuizMadeTime)
+INSERT INTO quizzes_tb (QuizName, QuizDescription, PassingScore, TimeLimit, AllowRetakes, ShowCorrectAnswers, QuizMadeBy, QuizMadeTime)
 VALUES (
     'Sample General Knowledge Quiz',
     'A basic quiz to test general knowledge.',
@@ -227,7 +227,7 @@ SELECT
     q.QuizActive,
     COUNT(qq.QuestionID) as TotalQuestions,
     SUM(qst.QuestionPoints) as TotalPoints
-FROM QuizzesDB q
+FROM quizzes_tb q
 LEFT JOIN QuizQuestionsDB qq ON q.QuizID = qq.QuizID
 LEFT JOIN QuestionsDB qst ON qq.QuestionID = qst.QuestionID
 GROUP BY q.QuizID;
@@ -246,8 +246,8 @@ SELECT
     qa.AttemptNumber,
     qa.AttemptStatus,
     CONCAT(qa.PointsEarned, '/', qa.PointsTotal) as PointsSummary
-FROM QuizAttemptsDB qa
-JOIN QuizzesDB q ON qa.QuizID = q.QuizID
+FROM quiz_attempts_tb qa
+JOIN quizzes_tb q ON qa.QuizID = q.QuizID
 ORDER BY qa.AttemptStartTime DESC;
 
 -- =====================================================

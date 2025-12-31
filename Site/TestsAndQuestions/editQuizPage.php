@@ -24,7 +24,7 @@ if (!$connection) {
 }
 
 // Fetch existing quiz data
-$query = "SELECT * FROM QuizzesDB WHERE QuizID = ?";
+$query = "SELECT * FROM quizzes_tb WHERE QuizID = ?";
 $stmt = $connection->prepare($query);
 $stmt->bind_param("i", $editQuizID);
 $stmt->execute();
@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateQuiz"])) {
 		$maxAttemptsValue = empty($inputMaxAttempts) ? null : intval($inputMaxAttempts);
 
 		$updateQuery =
-			"UPDATE QuizzesDB SET QuizName = ?, QuizDescription = ?, CourseID = ?, PassingScore = ?, TimeLimit = ?, AllowRetakes = ?, MaxAttempts = ?, ShowCorrectAnswers = ?, RandomizeQuestions = ?, RandomizeOptions = ?, QuizActive = ?, QuizModifiedTime = ? WHERE QuizID = ?";
+			"UPDATE quizzes_tb SET QuizName = ?, QuizDescription = ?, CourseID = ?, PassingScore = ?, TimeLimit = ?, AllowRetakes = ?, MaxAttempts = ?, ShowCorrectAnswers = ?, RandomizeQuestions = ?, RandomizeOptions = ?, QuizActive = ?, QuizModifiedTime = ? WHERE QuizID = ?";
 		$stmtUpdate = $connection->prepare($updateQuery);
 		$stmtUpdate->bind_param(
 			"ssidiiiiiiisi",

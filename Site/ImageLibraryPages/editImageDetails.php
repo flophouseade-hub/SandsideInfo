@@ -143,9 +143,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateImageButton"])) 
 	// If validation passes, update the database
 	if ($inputOK === true) {
 		// Update the session array with the new details
-		$_SESSION["image_library_tb"][$imageForThisPageID]["ImageCaption"] = $newImageCaption;
-		$_SESSION["image_library_tb"][$imageForThisPageID]["ImageDescription"] = $newImageDescription;
-		$_SESSION["image_library_tb"][$imageForThisPageID]["ImageGroup"] = $newImageGroup;
+		$_SESSION["imageLibrary"][$imageForThisPageID]["ImageCaption"] = $newImageCaption;
+		$_SESSION["imageLibrary"][$imageForThisPageID]["ImageDescription"] = $newImageDescription;
+		$_SESSION["imageLibrary"][$imageForThisPageID]["ImageGroup"] = $newImageGroup;
 
 		// Connect to the database
 		$connection = connectToDatabase();
@@ -183,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateImageButton"])) 
 	$imageForThisPageID = $_GET["editImageID"];
 
 	// Check that the image array exists
-	if (!isset($_SESSION["image_library_tb"][$imageForThisPageID])) {
+	if (!isset($_SESSION["imageLibrary"][$imageForThisPageID])) {
 		die("Image not found. Please contact the administrator.");
 	}
 
@@ -191,14 +191,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateImageButton"])) 
 }
 
 // Get the image details from the image library array
-$imageCaption = $_SESSION["image_library_tb"][$imageForThisPageID]["ImageCaption"];
-$imageLink = $_SESSION["image_library_tb"][$imageForThisPageID]["ImageLink"];
-$imageDescription = $_SESSION["image_library_tb"][$imageForThisPageID]["ImageDescription"];
-$imageGroup = $_SESSION["image_library_tb"][$imageForThisPageID]["ImageGroup"] ?? "";
+$imageCaption = $_SESSION["imageLibrary"][$imageForThisPageID]["ImageCaption"];
+$imageLink = $_SESSION["imageLibrary"][$imageForThisPageID]["ImageLink"];
+$imageDescription = $_SESSION["imageLibrary"][$imageForThisPageID]["ImageDescription"];
+$imageGroup = $_SESSION["imageLibrary"][$imageForThisPageID]["ImageGroup"] ?? "";
 
 // Collect all unique image groups from the session
 $imageGroups = [];
-foreach ($_SESSION["image_library_tb"] as $imageID => $imageDetails) {
+foreach ($_SESSION["imageLibrary"] as $imageID => $imageDetails) {
 	$group =
 		isset($imageDetails["ImageGroup"]) && !empty($imageDetails["ImageGroup"]) ? $imageDetails["ImageGroup"] : "";
 	if (!empty($group) && !in_array($group, $imageGroups)) {

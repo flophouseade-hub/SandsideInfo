@@ -26,8 +26,8 @@ if (!$connection) {
 
 // Fetch attempt data
 $attemptQuery = "SELECT qa.*, q.QuizName, q.QuizDescription, q.PassingScore, q.ShowCorrectAnswers
-                 FROM QuizAttemptsDB qa
-                 JOIN QuizzesDB q ON qa.QuizID = q.QuizID
+                 FROM quiz_attempts_tb qa
+                 JOIN quizzes_tb q ON qa.QuizID = q.QuizID
                  WHERE qa.AttemptID = ? AND qa.UserEmail = ?";
 $stmtAttempt = $connection->prepare($attemptQuery);
 $stmtAttempt->bind_param("is", $attemptID, $userEmail);
@@ -235,8 +235,8 @@ print "
 // Check if retakes are allowed
 $connection = connectToDatabase();
 $retakeQuery = "SELECT q.AllowRetakes, q.MaxAttempts, COUNT(qa.AttemptID) as totalAttempts
-                FROM QuizzesDB q
-                LEFT JOIN QuizAttemptsDB qa ON q.QuizID = qa.QuizID AND qa.UserEmail = ?
+                FROM quizzes_tb q
+                LEFT JOIN quiz_attempts_tb qa ON q.QuizID = qa.QuizID AND qa.UserEmail = ?
                 WHERE q.QuizID = ?
                 GROUP BY q.QuizID";
 $stmtRetake = $connection->prepare($retakeQuery);

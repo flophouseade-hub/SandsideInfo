@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuiz"])) {
 			$maxAttemptsValue = empty($inputMaxAttempts) ? null : intval($inputMaxAttempts);
 
 			$insertQuery =
-				"INSERT INTO QuizzesDB (QuizName, QuizDescription, CourseID, PassingScore, TimeLimit, AllowRetakes, MaxAttempts, ShowCorrectAnswers, RandomizeQuestions, RandomizeOptions, QuizMadeBy, QuizMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				"INSERT INTO quizzes_tb (QuizName, QuizDescription, CourseID, PassingScore, TimeLimit, AllowRetakes, MaxAttempts, ShowCorrectAnswers, RandomizeQuestions, RandomizeOptions, QuizMadeBy, QuizMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			$stmt = $connection->prepare($insertQuery);
 			$stmt->bind_param(
 				"ssidiiiiiiis",

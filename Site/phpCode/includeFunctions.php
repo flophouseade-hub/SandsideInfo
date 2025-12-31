@@ -134,7 +134,7 @@ function sanitizeInput($inputString)
 }
 
 /**
- * Log user login attempts to the LoginLog table
+ * Log user login attempts to the login_log_tb table
  *
  * @param int $userID The user's ID
  * @param string $email The user's email address
@@ -154,7 +154,7 @@ function logUserLogin($userID, $email, $status = "success", $failReason = null)
 
 	// Prepare the insert statement
 	$stmt = $connection->prepare(
-		'INSERT INTO LoginLog (UserID, Email, LoginTime, IPAddress, UserAgent, LoginStatus, FailReason) 
+		'INSERT INTO login_log_tb (UserID, Email, LoginTime, IPAddress, UserAgent, LoginStatus, FailReason) 
      VALUES (?, ?, NOW(), ?, ?, ?, ?)',
 	);
 

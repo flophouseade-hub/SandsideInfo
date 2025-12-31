@@ -1,20 +1,20 @@
 <?php
-$thisPageID = 104; 
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+$thisPageID = 104;
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // Check if user is logged in and has admin rights
-if (!isset($_SESSION['currentUserID']) || $_SESSION['currentUserLogOnStatus'] !== 'fullAdmin') {
-    header("Location: ../Pages/accessDeniedPage.php");
-    exit();
+if (!isset($_SESSION["currentUserID"]) || $_SESSION["currentUserLogOnStatus"] !== "fullAdmin") {
+	header("Location: ../Pages/accessDeniedPage.php");
+	exit();
 }
 
 // Get filter parameters
-$filterUserID = $_GET['userID'] ?? null;
-$filterEmail = $_GET['email'] ?? null;
-$filterStatus = $_GET['status'] ?? null;
-$filterDays = $_GET['days'] ?? 30; // Default to last 30 days
-$limit = $_GET['limit'] ?? 100; // Default to 100 records
+$filterUserID = $_GET["userID"] ?? null;
+$filterEmail = $_GET["email"] ?? null;
+$filterStatus = $_GET["status"] ?? null;
+$filterDays = $_GET["days"] ?? 30; // Default to last 30 days
+$limit = $_GET["limit"] ?? 100; // Default to 100 records
 
 // Print page header
 insertPageHeader($thisPageID);
@@ -22,8 +22,8 @@ insertPageLocalMenu($thisPageID);
 insertPageTitleAndClass("Login Activity Log", "blockMenuPageTitle", 0);
 
 // Add CSS for the table
-print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
-print('<style>
+print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
+print '<style>
 .login-log-table {
     width: 100%;
     border-collapse: collapse;
@@ -100,34 +100,46 @@ print('<style>
     color: #7f8c8d;
     margin-top: 5px;
 }
-</style>');
+</style>';
 
 // Display filter form
-print('<div class="filter-form" style="width: 90%; margin: 0 auto 20px auto;">
+print '<div class="filter-form" style="width: 90%; margin: 0 auto 20px auto;">
     <form method="GET" action="">
         <label>User ID:</label>
-        <input type="number" name="userID" value="' . htmlspecialchars($filterUserID ?? '', ENT_QUOTES) . '" placeholder="User ID">
+        <input type="number" name="userID" value="' .
+	htmlspecialchars($filterUserID ?? "", ENT_QUOTES) .
+	'" placeholder="User ID">
         
         <label>Email:</label>
-        <input type="text" name="email" value="' . htmlspecialchars($filterEmail ?? '', ENT_QUOTES) . '" placeholder="email@example.com">
+        <input type="text" name="email" value="' .
+	htmlspecialchars($filterEmail ?? "", ENT_QUOTES) .
+	'" placeholder="email@example.com">
         
         <label>Status:</label>
         <select name="status">
             <option value="">All</option>
-            <option value="success"' . ($filterStatus === 'success' ? ' selected' : '') . '>Success</option>
-            <option value="failed"' . ($filterStatus === 'failed' ? ' selected' : '') . '>Failed</option>
+            <option value="success"' .
+	($filterStatus === "success" ? " selected" : "") .
+	'>Success</option>
+            <option value="failed"' .
+	($filterStatus === "failed" ? " selected" : "") .
+	'>Failed</option>
         </select>
         
         <label>Last Days:</label>
-        <input type="number" name="days" value="' . htmlspecialchars($filterDays, ENT_QUOTES) . '" min="1" max="365" style="width: 80px;">
+        <input type="number" name="days" value="' .
+	htmlspecialchars($filterDays, ENT_QUOTES) .
+	'" min="1" max="365" style="width: 80px;">
         
         <label>Limit:</label>
-        <input type="number" name="limit" value="' . htmlspecialchars($limit, ENT_QUOTES) . '" min="10" max="1000" step="10" style="width: 80px;">
+        <input type="number" name="limit" value="' .
+	htmlspecialchars($limit, ENT_QUOTES) .
+	'" min="10" max="1000" step="10" style="width: 80px;">
         
         <button type="submit">Apply Filters</button>
-        <button type="button" onclick="window.location.href=\'viewLoginLog.php\'">Clear</button>
+        <button type="button" onclick="window.location.href=\'viewlogin_log_tb.php\'">Clear</button>
     </form>
-</div>');
+</div>';
 
 // Connect to database
 $connection = connectToDatabase();
@@ -135,32 +147,32 @@ $connection = connectToDatabase();
 // Build the WHERE clause based on filters
 $whereConditions = [];
 $params = [];
-$paramTypes = '';
+$paramTypes = "";
 
 if ($filterUserID) {
-    $whereConditions[] = "LoginLog.UserID = ?";
-    $params[] = $filterUserID;
-    $paramTypes .= 'i';
+	$whereConditions[] = "login_log_tb.UserID = ?";
+	$params[] = $filterUserID;
+	$paramTypes .= "i";
 }
 
 if ($filterEmail) {
-    $whereConditions[] = "LoginLog.Email LIKE ?";
-    $params[] = '%' . $filterEmail . '%';
-    $paramTypes .= 's';
+	$whereConditions[] = "login_log_tb.Email LIKE ?";
+	$params[] = "%" . $filterEmail . "%";
+	$paramTypes .= "s";
 }
 
 if ($filterStatus) {
-    $whereConditions[] = "LoginLog.LoginStatus = ?";
-    $params[] = $filterStatus;
-    $paramTypes .= 's';
+	$whereConditions[] = "login_log_tb.LoginStatus = ?";
+	$params[] = $filterStatus;
+	$paramTypes .= "s";
 }
 
 // Add date filter
-$whereConditions[] = "LoginLog.LoginTime >= DATE_SUB(NOW(), INTERVAL ? DAY)";
+$whereConditions[] = "login_log_tb.LoginTime >= DATE_SUB(NOW(), INTERVAL ? DAY)";
 $params[] = $filterDays;
-$paramTypes .= 'i';
+$paramTypes .= "i";
 
-$whereClause = count($whereConditions) > 0 ? 'WHERE ' . implode(' AND ', $whereConditions) : '';
+$whereClause = count($whereConditions) > 0 ? "WHERE " . implode(" AND ", $whereConditions) : "";
 
 // Get statistics
 $statsQuery = "SELECT 
@@ -168,11 +180,11 @@ $statsQuery = "SELECT
     SUM(CASE WHEN LoginStatus = 'success' THEN 1 ELSE 0 END) as successful_logins,
     SUM(CASE WHEN LoginStatus = 'failed' THEN 1 ELSE 0 END) as failed_logins,
     COUNT(DISTINCT UserID) as unique_users
-FROM LoginLog $whereClause";
+FROM login_log_tb $whereClause";
 
 $stmtStats = $connection->prepare($statsQuery);
 if ($paramTypes) {
-    $stmtStats->bind_param($paramTypes, ...$params);
+	$stmtStats->bind_param($paramTypes, ...$params);
 }
 $stmtStats->execute();
 $statsResult = $stmtStats->get_result();
@@ -180,57 +192,65 @@ $stats = $statsResult->fetch_assoc();
 $stmtStats->close();
 
 // Display statistics
-print('<div class="stats-box" style="width: 90%; margin: 0 auto 20px auto;">
+print '<div class="stats-box" style="width: 90%; margin: 0 auto 20px auto;">
     <div class="stat-item">
-        <div class="stat-value">' . $stats['total_logins'] . '</div>
+        <div class="stat-value">' .
+	$stats["total_logins"] .
+	'</div>
         <div class="stat-label">Total Logins</div>
     </div>
     <div class="stat-item">
-        <div class="stat-value" style="color: #27ae60;">' . $stats['successful_logins'] . '</div>
+        <div class="stat-value" style="color: #27ae60;">' .
+	$stats["successful_logins"] .
+	'</div>
         <div class="stat-label">Successful</div>
     </div>
     <div class="stat-item">
-        <div class="stat-value" style="color: #e74c3c;">' . $stats['failed_logins'] . '</div>
+        <div class="stat-value" style="color: #e74c3c;">' .
+	$stats["failed_logins"] .
+	'</div>
         <div class="stat-label">Failed</div>
     </div>
     <div class="stat-item">
-        <div class="stat-value">' . $stats['unique_users'] . '</div>
+        <div class="stat-value">' .
+	$stats["unique_users"] .
+	'</div>
         <div class="stat-label">Unique Users</div>
     </div>
-</div>');
+</div>';
 
 // Fetch login log data with user information
 $query = "SELECT 
-    LoginLog.LogID,
-    LoginLog.UserID,
+    login_log_tb.LogID,
+    login_log_tb.UserID,
     CONCAT(UsersDB.FirstName, ' ', UsersDB.LastName) as UserName,
-    LoginLog.Email,
-    LoginLog.LoginTime,
-    LoginLog.IPAddress,
-    LoginLog.LoginStatus,
-    LoginLog.FailReason
-FROM LoginLog
-LEFT JOIN UsersDB ON LoginLog.UserID = UsersDB.UsersID
+    login_log_tb.Email,
+    login_log_tb.LoginTime,
+    login_log_tb.IPAddress,
+    login_log_tb.LoginStatus,
+    login_log_tb.FailReason
+FROM login_log_tb
+LEFT JOIN UsersDB ON login_log_tb.UserID = UsersDB.UsersID
 $whereClause
-ORDER BY LoginLog.LoginTime DESC
+ORDER BY login_log_tb.LoginTime DESC
 LIMIT ?";
 
 $params[] = $limit;
-$paramTypes .= 'i';
+$paramTypes .= "i";
 
 $stmt = $connection->prepare($query);
 if ($paramTypes) {
-    $stmt->bind_param($paramTypes, ...$params);
+	$stmt->bind_param($paramTypes, ...$params);
 }
 $stmt->execute();
 $result = $stmt->get_result();
 
 // Display the table
-print('<div class="section1" style="width: 90%; margin: 0 auto 40px auto;">');
-print('<h3>Recent Login Activity (showing ' . $result->num_rows . ' records)</h3>');
+print '<div class="section1" style="width: 90%; margin: 0 auto 40px auto;">';
+print "<h3>Recent Login Activity (showing " . $result->num_rows . " records)</h3>";
 
 if ($result->num_rows > 0) {
-    print('<table class="login-log-table">
+	print '<table class="login-log-table">
         <thead>
             <tr>
                 <th>Date/Time</th>
@@ -241,29 +261,45 @@ if ($result->num_rows > 0) {
                 <th>IP Address</th>
             </tr>
         </thead>
-        <tbody>');
-    
-    while ($row = $result->fetch_assoc()) {
-        $statusClass = $row['LoginStatus'] === 'success' ? 'status-success' : 'status-failed';
-        $userName = $row['UserName'] ?: 'Unknown User';
-        $failReason = $row['FailReason'] ? htmlspecialchars($row['FailReason']) : '-';
-        
-        print('<tr>
-            <td>' . date('Y-m-d H:i:s', strtotime($row['LoginTime'])) . '</td>
-            <td>' . htmlspecialchars($userName) . ' (ID: ' . $row['UserID'] . ')</td>
-            <td>' . htmlspecialchars($row['Email']) . '</td>
-            <td class="' . $statusClass . '">' . ucfirst($row['LoginStatus']) . '</td>
-            <td>' . $failReason . '</td>
-            <td>' . htmlspecialchars($row['IPAddress'] ?: 'N/A') . '</td>
-        </tr>');
-    }
-    
-    print('</tbody></table>');
+        <tbody>';
+
+	while ($row = $result->fetch_assoc()) {
+		$statusClass = $row["LoginStatus"] === "success" ? "status-success" : "status-failed";
+		$userName = $row["UserName"] ?: "Unknown User";
+		$failReason = $row["FailReason"] ? htmlspecialchars($row["FailReason"]) : "-";
+
+		print '<tr>
+            <td>' .
+			date("Y-m-d H:i:s", strtotime($row["LoginTime"])) .
+			'</td>
+            <td>' .
+			htmlspecialchars($userName) .
+			" (ID: " .
+			$row["UserID"] .
+			')</td>
+            <td>' .
+			htmlspecialchars($row["Email"]) .
+			'</td>
+            <td class="' .
+			$statusClass .
+			'">' .
+			ucfirst($row["LoginStatus"]) .
+			'</td>
+            <td>' .
+			$failReason .
+			'</td>
+            <td>' .
+			htmlspecialchars($row["IPAddress"] ?: "N/A") .
+			'</td>
+        </tr>';
+	}
+
+	print "</tbody></table>";
 } else {
-    print('<p>No login records found for the selected criteria.</p>');
+	print "<p>No login records found for the selected criteria.</p>";
 }
 
-print('</div>');
+print "</div>";
 
 $stmt->close();
 $connection->close();
