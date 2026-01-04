@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["registerButton"])) {
 
 			// Insert new user with temporary password
 			$insertQuery =
-				"INSERT INTO users_tb (FirstName, LastName, Email, UsersPassword, LogOnStatus, SchoolStatus, AssociatedClassID) VALUES (?, ?, ?, ?, 'staff', 'staff', NULL)";
+				"INSERT INTO users_tb (FirstName, LastName, Email, UsersPassword, LogOnStatus, SchoolStatus, AssociatedClassID) VALUES (?, ?, ?, ?, 'staff', 'staff', 0)";
 			$stmtInsert = $connection->prepare($insertQuery);
 			$stmtInsert->bind_param("ssss", $inputFirstName, $inputLastName, $inputUserEmail, $hashedPassword);
 
@@ -95,10 +95,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["registerButton"])) {
 				$message .= "Sandside Lodge Staff Site";
 				$headers = "From: noreply@sandside.info";
 
-				mail($to, $subject, $message, $headers);
+				// Attempt to send email
+				$emailSent = mail($to, $subject, $message, $headers);
 
-				$feedbackMessage =
-					"<p class=\"formFeedbackSuccess\">âœ“ Registration successful! Check your email for password setup instructions.</p>";
+				if ($emailSent) {
+					$feedbackMessage =
+						"<p class=\"formFeedbackSuccess\">Registration successful! Check your email for password setup instructions.</p>";
+				} else {
+					// Email failed - still show success but warn about email issue
+					$feedbackMessage = "<p class=\"formFeedbackSuccess\">Registration successful!</p>";
+					$feedbackMessage .=
+						"<p class=\"formFeedbackWarning\">Note: Email could not be sent. Please contact an administrator or visit the password reset page manually. This may be because you are on a local development environment without email capabilities.</p>";
+				}
 
 				// Clear input values on success
 				$inputFirstName = "";
@@ -139,7 +147,7 @@ if ($registrationSuccess === true) {
 	print "<div class=\"formPageWrapper\">";
 	print "
     <div class=\"formBlueInfoBox\">
-      <p style=\"font-weight: bold; font-size: 18px; margin-top: 0;\">âœ“ Registration Complete!</p>
+      <p style=\"font-weight: bold; font-size: 18px; margin-top: 0;\">Registration Complete!</p>
       <p style=\"margin: 10px 0;\"><strong>Name:</strong> $inputFirstName $inputLastName</p>
       <p style=\"margin: 10px 0;\"><strong>Email:</strong> $inputUserEmail</p>
       <hr style=\"border: none; border-top: 1px solid #90caf9; margin: 15px 0;\">
@@ -183,7 +191,7 @@ print "<div class=\"formPageWrapper\">";
 
 print "
 <div class=\"formInfoBox\">
-    <p><strong>ðŸ“§ Email Verification Required</strong></p>
+    <p><strong>Email Verification Required</strong></p>
     <p>After registration, you'll receive an email with instructions to set your password and verify your account.</p>
 </div>
 
