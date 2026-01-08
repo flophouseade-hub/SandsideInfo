@@ -628,7 +628,7 @@ print "
   <p>$formInstruction</p>
   <p><strong>Page ID:</strong> $pageToEditID | <strong>Page Type:</strong> $formTypeOptionText</p>
 </div>
-<div class=\"formMessageBox\">
+<div class=\"formBlueInfoBox\">
   $feedbackMessage 
 </div>
 ";

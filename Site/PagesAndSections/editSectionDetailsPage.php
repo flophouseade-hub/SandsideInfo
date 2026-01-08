@@ -395,7 +395,7 @@ print "
 <p>$pagesDisplayString</p>
    <p>The bottom of the page contains a reference guide for HTML and custom tags you can use in the section content.</p>
 </div>
-<div class=\"formMessageBox\">
+<div class=\"formBlueInfoBox\">
  $feedbackMessage
 </div>
 
@@ -514,20 +514,20 @@ function handleGroupSelection() {
 }
 </script>
 ";
-print "<div class=\"formInfoBox\">
+print "<div class=\"formBlueInfoBox\">
   <p><strong>Below is a preview of how your section will appear on the page.</strong></p><p>Beneath that is some HTML advice which you can copy and paste into your section content if you wish.</p>
 </div>";
 
 print "</div>"; // Close formPageWrapper
 
 // Temporarily populate session data for preview rendering
-$_SESSION["section_tb"][$editSectionID]["SectionTitle"] = $sectionTitle;
-$_SESSION["section_tb"][$editSectionID]["SectionContent"] = $sectionContent;
-$_SESSION["section_tb"][$editSectionID]["SectionColour"] = $sectionColour;
-$_SESSION["section_tb"][$editSectionID]["SectionStyle"] = $sectionStyle;
-$_SESSION["section_tb"][$editSectionID]["SectionGroup"] = $sectionGroup;
-$_SESSION["section_tb"][$editSectionID]["SectionColourSameAsPage"] = false; // Always show section colour in preview
-$_SESSION["section_tb"][$editSectionID]["SectionShowTitle"] = $sectionShowTitle;
+$_SESSION["sectionDB"][$editSectionID]["SectionTitle"] = $sectionTitle;
+$_SESSION["sectionDB"][$editSectionID]["SectionContent"] = $sectionContent;
+$_SESSION["sectionDB"][$editSectionID]["SectionColour"] = $sectionColour;
+$_SESSION["sectionDB"][$editSectionID]["SectionStyle"] = $sectionStyle;
+$_SESSION["sectionDB"][$editSectionID]["SectionGroup"] = $sectionGroup;
+$_SESSION["sectionDB"][$editSectionID]["SectionColourSameAsPage"] = false; // Always show section colour in preview
+$_SESSION["sectionDB"][$editSectionID]["SectionShowTitle"] = $sectionShowTitle;
 
 // Display the current section content as a preview
 insertPageSectionOneColumn($sectionContent, $sectionTitle, $editSectionID);

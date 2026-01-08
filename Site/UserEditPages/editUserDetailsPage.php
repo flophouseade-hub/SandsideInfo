@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateUserDetailsButto
 		);
 
 		if ($stmt->execute()) {
-			$feedbackMessage = "<p class=\"formFeedbackSuccess\">âœ“ User details updated successfully.</p>";
+			$feedbackMessage = "<p class=\"formFeedbackSuccess\">✓ User details updated successfully.</p>";
 
 			// Update password if a new one was provided
 			if ($passwordUpdate === true) {
@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateUserDetailsButto
 
 				if ($stmtPwd->execute()) {
 					$feedbackMessage =
-						"<p class=\"formFeedbackSuccess\">âœ“ User details and password updated successfully.</p>";
+						"<p class=\"formFeedbackSuccess\">✓ User details and password updated successfully.</p>";
 				} else {
 					$feedbackMessage .=
 						"<p class=\"formFeedbackError\">User details updated but password update failed: " .
@@ -235,11 +235,6 @@ print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
-// Display feedback message
-if (!empty($feedbackMessage)) {
-	print "<div class=\"formFeedback\">$feedbackMessage</div>";
-}
-
 // Generate LogOnStatus dropdown
 $logOnStatusOptions = "";
 $logOnStatuses = [
@@ -288,6 +283,11 @@ $editUserEmailSafe = htmlspecialchars($editUserEmail, ENT_QUOTES, "UTF-8");
 
 // Build the main form
 print "<div class=\"formPageWrapper\">";
+
+// Display feedback message
+if (!empty($feedbackMessage)) {
+	print "<div class=\"formBlueInfoBox\">$feedbackMessage</div>";
+}
 
 print "
 <div class=\"formInfoBox\">

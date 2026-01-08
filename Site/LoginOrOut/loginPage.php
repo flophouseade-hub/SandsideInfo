@@ -83,8 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				logUserLogin($ID, $inputEmail, "success");
 
 				// User is now logged in
-				$feedbackMessage =
-					"<p class=\"formFeedbackSuccess\">âœ“ Login successful. Redirecting to Main Menu...</p>";
+				$feedbackMessage = "<p class=\"formFeedbackSuccess\">✓ogin successful. Redirecting to Main Menu...</p>";
 				$stmt->close();
 				$connection->close();
 				header("refresh:2;url=../Pages/blockMenuPage.php?pageID=1");
@@ -120,22 +119,19 @@ print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
 
 insertPageTitleAndClass("Login Page", "blockMenuPageTitle", $thisPageID);
 
-// Display feedback message
-if (!empty($feedbackMessage)) {
-	print "<div class=\"formFeedback\">$feedbackMessage</div>";
-}
-
 // Sanitize email for display
 $inputEmailSafe = htmlspecialchars($inputEmail, ENT_QUOTES, "UTF-8");
 
 // Build the main form
 print "<div class=\"formPageWrapper\">";
 
-print "
-<div class=\"formInfoBox\">
-    <p>Please enter your email address and password to access the staff site.</p>
-</div>
+// Display feedback message
+if (empty($feedbackMessage)) {
+	$feedbackMessage = "<p>Please enter your email address and password to access the staff site.</p>";
+}
+print "<div class=\"formBlueInfoBox\">$feedbackMessage</div>";
 
+print "
 <form action=\"../LoginOrOut/loginPage.php\" method=\"POST\">
     <div class=\"formContainer\">
         <h3>Staff Login</h3>
@@ -169,10 +165,8 @@ print "
             <button type=\"submit\" class=\"formButtonPrimary\">
                 Login
             </button>
-        </div>
-        
-        <div style=\"text-align: center; margin-top: 15px;\">
-            <a href=\"forgotPasswordPage.php\" style=\"color: #2196F3; text-decoration: none;\">Forgot your password?</a>
+           
+            <a href=\"forgotPasswordPage.php\" class=\"formButtonSecondary\">Forgot your password?</a>
         </div>
     </div>
 </form>

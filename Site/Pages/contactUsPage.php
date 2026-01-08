@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contactUsButton"])) {
 		$adminEmailSent = mail($to, $subject, $message, $headers);
 
 		if ($userEmailSent && $adminEmailSent) {
-			$successMessage = "<p style='color: green; font-weight: bold;'>âœ“ Thank you, $firstName! Your message has been sent successfully.</p>";
+			$successMessage = "<p style='color: green; font-weight: bold;'>✓ Thank you, $firstName! Your message has been sent successfully.</p>";
 			// Clear form fields on success
 			$firstName = "";
 			$email = "";
@@ -125,20 +125,19 @@ insertPageHeader($pageID);
 insertPageLocalMenu($thisPageID);
 
 // Add the form formatting CSS
-print '<link rel="stylesheet" href="../css/formPageFormatting.css">';
+print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
 // Display feedback messages
 if (!empty($successMessage)) {
-	print "<div style=\"max-width: 80%; margin: 20px auto;\">$successMessage</div>";
+	$feedbackMessage= "<div style=\"max-width: 80%; margin: 20px auto;\">$successMessage</div>";
 }
 
 if ($inputError === true && !empty($errorMessage)) {
-	print "<div style=\"max-width: 80%; margin: 20px auto;\">
-        <p style='color: red; font-weight: bold;'>âš  There were problems with your submission:</p>
-        <p style='color: red;'>$errorMessage</p>
-    </div>";
+	$feedbackMessage .= "
+        <p style='color: red; font-weight: bold;'>There were problems with your submission:</p>
+        <p style='color: red;'>$errorMessage</p>";
 }
 
 // Page description
@@ -148,11 +147,15 @@ $pageDescription =
 
 print "<div style=\"max-width: 900px; margin: 0 auto; padding: 20px;\">";
 
-print "
+if (!empty($feedbackMessage)){
+print "<div class=\"formBlueInfoBox\">$feedbackMessage</div>";
+} else {print "<div class=\"formBlueInfoBox\">$pageDescription</div>";}
+
+/* print "
 <div style=\"padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 30px;\">
     <p style=\"color: #555; font-size: 15px; line-height: 1.6;\">$pageDescription</p>
-</div>
-
+</div> */
+print"
 <form action=\"contactUsPage.php\" method=\"POST\">
     <div style=\"padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;\">
         <h3 style=\"margin-top: 0;\">Contact Form</h3>

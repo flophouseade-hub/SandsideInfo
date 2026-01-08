@@ -1,19 +1,19 @@
 <?php
 $thisPageID = 67;
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // Check access level - only pageEditor and fullAdmin can edit tasks
 if (accessLevelCheck("pageEditor") == false) {
-  $errorMsg = urlencode("Access denied. You must be a page editor or administrator to edit tasks.");
-  header("Location: ../Pages/accessDeniedPage.php?message=$errorMsg");
-  exit;
+	$errorMsg = urlencode("Access denied. You must be a page editor or administrator to edit tasks.");
+	header("Location: ../Pages/accessDeniedPage.php?message=$errorMsg");
+	exit();
 }
 
 // Get the page details for this page from the array
-$pageName = $_SESSION['pagesOnSite'][$thisPageID]['PageName'] ?? "Edit Task";
-$pageType = $_SESSION['pagesOnSite'][$thisPageID]['PageType'];
-$pageAccess = $_SESSION['pagesOnSite'][$thisPageID]['PageAccess'];
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "Edit Task";
+$pageType = $_SESSION["pagesOnSite"][$thisPageID]["PageType"];
+$pageAccess = $_SESSION["pagesOnSite"][$thisPageID]["PageAccess"];
 
 // Initialize variables
 $inputError = false;
@@ -32,229 +32,245 @@ $taskLastEditTime = "";
 // -----------------------------------------------
 // Process form submission
 // -----------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateTaskButton'])) {
-  $inputTaskName = $_POST['fvTaskName'] ?? "";
-  $inputTaskDescription = $_POST['fvTaskDescription'] ?? "";
-  $inputTaskResource = $_POST['fvTaskResource'] ?? "";
-  $inputTaskColour = $_POST['fvTaskColour'] ?? "";
-  $taskForThisPageID = $_POST['fvTaskForThisPageID'] ?? "";
-  $taskMadeBy = $_POST['fvTaskMadeBy'] ?? "";
-  $taskMadeTime = $_POST['fvTaskMadeTime'] ?? "";
-  
-  // Handle task group - check if using existing or creating new
-  $taskGroupExisting = $_POST['fvTaskGroupExisting'] ?? "";
-  $taskGroupNew = $_POST['fvTaskGroupNew'] ?? "";
-  
-  // Determine which group to use
-  if ($taskGroupExisting === '_new_' && !empty($taskGroupNew)) {
-    $inputTaskGroup = trim($taskGroupNew);
-  } elseif (!empty($taskGroupExisting) && $taskGroupExisting !== '_new_') {
-    $inputTaskGroup = $taskGroupExisting;
-  } else {
-    $inputTaskGroup = "";
-  }
-  
-  // Reset POST variables
-  $_POST = array();
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateTaskButton"])) {
+	$inputTaskName = $_POST["fvTaskName"] ?? "";
+	$inputTaskDescription = $_POST["fvTaskDescription"] ?? "";
+	$inputTaskResource = $_POST["fvTaskResource"] ?? "";
+	$inputTaskColour = $_POST["fvTaskColour"] ?? "";
+	$taskForThisPageID = $_POST["fvTaskForThisPageID"] ?? "";
+	$taskMadeBy = $_POST["fvTaskMadeBy"] ?? "";
+	$taskMadeTime = $_POST["fvTaskMadeTime"] ?? "";
 
-  // Validate Task ID
-  if (!validatePositiveInteger($taskForThisPageID)) {
-    $inputError = true;
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Invalid Task ID.</p>";
-  }
+	// Handle task group - check if using existing or creating new
+	$taskGroupExisting = $_POST["fvTaskGroupExisting"] ?? "";
+	$taskGroupNew = $_POST["fvTaskGroupNew"] ?? "";
 
-  // Validate Task Name
-  $checkTaskName = validateBasicTextInput($inputTaskName);
-  if ($checkTaskName !== true) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Task Name: $checkTaskName</p>";
-    $inputError = true;
-  }
-  if (!validateLettersNumbersSpacesAndPunctuation($inputTaskName)) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Task Name contains invalid characters.</p>";
-    $inputError = true;
-  }
-  if (strlen($inputTaskName) < 3) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Task Name must be at least 3 characters long.</p>";
-    $inputError = true;
-  }
-  
-  // Validate Task Description
-  $checkTaskDescription = validateBasicTextInput($inputTaskDescription);
-  if ($checkTaskDescription !== true) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Task Description: $checkTaskDescription</p>";
-    $inputError = true;
-  }
-  if (!validateLettersNumbersSpacesAndPunctuation($inputTaskDescription)) {
-    $feedbackMessage .= "<p class=\"formFeedbackError\">Task Description contains invalid characters.</p>";
-    $inputError = true;
-  }
-  
-  // Validate Task Group (optional - can be empty)
-  if (!empty($inputTaskGroup)) {
-    if (!validateLettersNumbersSpacesAndPunctuation($inputTaskGroup)) {
-      $feedbackMessage .= "<p class=\"formFeedbackError\">Task Group contains invalid characters.</p>";
-      $inputError = true;
-    }
-  }
-  
-  // Validate Task Colour (optional - can be empty)
-  if (!empty($inputTaskColour)) {
-    if (!validateColourCode($inputTaskColour)) {
-      $feedbackMessage .= "<p class=\"formFeedbackError\">Task Colour must be a valid hex color code (e.g., #FF5733).</p>";
-      $inputError = true;
-    }
-  }
-  
-  // Validate Task Resource (optional - must be from resource_library_tb if provided)
-  if (!empty($inputTaskResource)) {
-    if (!validatePositiveInteger($inputTaskResource)) {
-      $feedbackMessage .= "<p class=\"formFeedbackError\">Invalid Resource ID selected.</p>";
-      $inputError = true;
-    }
-  }
+	// Determine which group to use
+	if ($taskGroupExisting === "_new_" && !empty($taskGroupNew)) {
+		$inputTaskGroup = trim($taskGroupNew);
+	} elseif (!empty($taskGroupExisting) && $taskGroupExisting !== "_new_") {
+		$inputTaskGroup = $taskGroupExisting;
+	} else {
+		$inputTaskGroup = "";
+	}
 
-  // If validation passes, update the database
-  if ($inputError === false) {
-    // Get current user's name from session for TaskLastEditBy
-    $currentUserFirstName = $_SESSION['currentUserFirstName'] ?? "Unknown";
-    $currentUserLastName = $_SESSION['currentUserLastName'] ?? "User";
-    $taskLastEditBy = $currentUserFirstName . " " . $currentUserLastName;
-    
-    // Get current timestamp for TaskLastEditTime
-    $taskLastEditTime = date('Y-m-d H:i:s');
-    
-    // Connect to the database
-    $connection = connectToDatabase();
+	// Reset POST variables
+	$_POST = [];
 
-    // Check if another task with the same name exists (excluding current task)
-    $checkNameQuery = "SELECT TaskID FROM tasks_tb WHERE TaskName = ? AND TaskID != ?";
-    $stmtCheck = $connection->prepare($checkNameQuery);
-    $stmtCheck->bind_param('si', $inputTaskName, $taskForThisPageID);
-    $stmtCheck->execute();
-    $resultCheck = $stmtCheck->get_result();
-    
-    if ($resultCheck->num_rows > 0) {
-      $inputError = true;
-      $feedbackMessage .= "<p class=\"formFeedbackError\">A task with this name already exists. Please use a different name.</p>";
-    } else {
-      // Update the task details including TaskLastEditBy and TaskLastEditTime
-      $updateQuery = "UPDATE tasks_tb SET TaskName = ?, TaskDescription = ?, TaskResource = ?, TaskGroup = ?, TaskColour = ?, TaskLastEditBy = ?, TaskLastEditTime = ? WHERE TaskID = ?";
-      $stmt = $connection->prepare($updateQuery);
-      $stmt->bind_param("sssssssi", $inputTaskName, $inputTaskDescription, $inputTaskResource, $inputTaskGroup, $inputTaskColour, $taskLastEditBy, $taskLastEditTime, $taskForThisPageID);
+	// Validate Task ID
+	if (!validatePositiveInteger($taskForThisPageID)) {
+		$inputError = true;
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Invalid Task ID.</p>";
+	}
 
-      if ($stmt->execute()) {
-        $feedbackMessage = "<p class=\"formFeedbackSuccess\">✓ Task details updated successfully.</p>";
-        
-        // Update local variables to reflect the changes
-        $taskName = $inputTaskName;
-        $taskDescription = $inputTaskDescription;
-        $taskResource = $inputTaskResource;
-        $taskGroup = $inputTaskGroup;
-        $taskColour = $inputTaskColour;
-      } else {
-        $errorMsg = urlencode("Could not update task: " . $stmt->error);
-        $stmt->close();
-        $stmtCheck->close();
-        mysqli_close($connection);
-        header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
-        exit;
-      }
+	// Validate Task Name
+	$checkTaskName = validateBasicTextInput($inputTaskName);
+	if ($checkTaskName !== true) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Task Name: $checkTaskName</p>";
+		$inputError = true;
+	}
+	if (!validateLettersNumbersSpacesAndPunctuation($inputTaskName)) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Task Name contains invalid characters.</p>";
+		$inputError = true;
+	}
+	if (strlen($inputTaskName) < 3) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Task Name must be at least 3 characters long.</p>";
+		$inputError = true;
+	}
 
-      $stmt->close();
-    }
-    
-    $stmtCheck->close();
-    $connection->close();
-  }
+	// Validate Task Description
+	$checkTaskDescription = validateBasicTextInput($inputTaskDescription);
+	if ($checkTaskDescription !== true) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Task Description: $checkTaskDescription</p>";
+		$inputError = true;
+	}
+	if (!validateLettersNumbersSpacesAndPunctuation($inputTaskDescription)) {
+		$feedbackMessage .= "<p class=\"formFeedbackError\">Task Description contains invalid characters.</p>";
+		$inputError = true;
+	}
+
+	// Validate Task Group (optional - can be empty)
+	if (!empty($inputTaskGroup)) {
+		if (!validateLettersNumbersSpacesAndPunctuation($inputTaskGroup)) {
+			$feedbackMessage .= "<p class=\"formFeedbackError\">Task Group contains invalid characters.</p>";
+			$inputError = true;
+		}
+	}
+
+	// Validate Task Colour (optional - can be empty)
+	if (!empty($inputTaskColour)) {
+		if (!validateColourCode($inputTaskColour)) {
+			$feedbackMessage .=
+				"<p class=\"formFeedbackError\">Task Colour must be a valid hex color code (e.g., #FF5733).</p>";
+			$inputError = true;
+		}
+	}
+
+	// Validate Task Resource (optional - must be from resource_library_tb if provided)
+	if (!empty($inputTaskResource)) {
+		if (!validatePositiveInteger($inputTaskResource)) {
+			$feedbackMessage .= "<p class=\"formFeedbackError\">Invalid Resource ID selected.</p>";
+			$inputError = true;
+		}
+	}
+
+	// If validation passes, update the database
+	if ($inputError === false) {
+		// Get current user's name from session for TaskLastEditBy
+		$currentUserFirstName = $_SESSION["currentUserFirstName"] ?? "Unknown";
+		$currentUserLastName = $_SESSION["currentUserLastName"] ?? "User";
+		$taskLastEditBy = $currentUserFirstName . " " . $currentUserLastName;
+
+		// Get current timestamp for TaskLastEditTime
+		$taskLastEditTime = date("Y-m-d H:i:s");
+
+		// Connect to the database
+		$connection = connectToDatabase();
+
+		// Check if another task with the same name exists (excluding current task)
+		$checkNameQuery = "SELECT TaskID FROM tasks_tb WHERE TaskName = ? AND TaskID != ?";
+		$stmtCheck = $connection->prepare($checkNameQuery);
+		$stmtCheck->bind_param("si", $inputTaskName, $taskForThisPageID);
+		$stmtCheck->execute();
+		$resultCheck = $stmtCheck->get_result();
+
+		if ($resultCheck->num_rows > 0) {
+			$inputError = true;
+			$feedbackMessage .=
+				"<p class=\"formFeedbackError\">A task with this name already exists. Please use a different name.</p>";
+		} else {
+			// Update the task details including TaskLastEditBy and TaskLastEditTime
+			$updateQuery =
+				"UPDATE tasks_tb SET TaskName = ?, TaskDescription = ?, TaskResource = ?, TaskGroup = ?, TaskColour = ?, TaskLastEditBy = ?, TaskLastEditTime = ? WHERE TaskID = ?";
+			$stmt = $connection->prepare($updateQuery);
+			$stmt->bind_param(
+				"sssssssi",
+				$inputTaskName,
+				$inputTaskDescription,
+				$inputTaskResource,
+				$inputTaskGroup,
+				$inputTaskColour,
+				$taskLastEditBy,
+				$taskLastEditTime,
+				$taskForThisPageID,
+			);
+
+			if ($stmt->execute()) {
+				$feedbackMessage = "<p class=\"formFeedbackSuccess\">✓ Task details updated successfully.</p>";
+
+				// Update local variables to reflect the changes
+				$taskName = $inputTaskName;
+				$taskDescription = $inputTaskDescription;
+				$taskResource = $inputTaskResource;
+				$taskGroup = $inputTaskGroup;
+				$taskColour = $inputTaskColour;
+			} else {
+				$errorMsg = urlencode("Could not update task: " . $stmt->error);
+				$stmt->close();
+				$stmtCheck->close();
+				mysqli_close($connection);
+				header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
+				exit();
+			}
+
+			$stmt->close();
+		}
+
+		$stmtCheck->close();
+		$connection->close();
+	}
 } else {
-  // -----------------------------------------------
-  // First time loading - get task details from database
-  // -----------------------------------------------
-  $taskForThisPageID = $_GET['editTaskID'] ?? 0;
-  
-  if (!validatePositiveInteger($taskForThisPageID)) {
-    $errorMsg = urlencode("Invalid Task ID");
-    header("Location: ../Pages/errorLandingPage.php?error=validation&message=$errorMsg");
-    exit;
-  }
-  
-  // Connect to database and get task details
-  $connection = connectToDatabase();
-  
-  $query = "SELECT TaskName, TaskDescription, TaskResource, TaskGroup, TaskColour, TaskMadeBy, TaskMadeTime, TaskLastEditBy, TaskLastEditTime FROM tasks_tb WHERE TaskID = ?";
-  $stmt = $connection->prepare($query);
-  $stmt->bind_param('i', $taskForThisPageID);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  
-  if ($result->num_rows === 0) {
-    $stmt->close();
-    mysqli_close($connection);
-    $errorMsg = urlencode("Task not found with ID: $taskForThisPageID");
-    header("Location: ../Pages/errorLandingPage.php?error=notfound&message=$errorMsg");
-    exit;
-  }
-  
-  $row = $result->fetch_assoc();
-  $taskName = $row['TaskName'];
-  $taskDescription = $row['TaskDescription'];
-  $taskResource = $row['TaskResource'];
-  $taskGroup = $row['TaskGroup'];
-  $taskColour = $row['TaskColour'];
-  $taskMadeBy = $row['TaskMadeBy'];
-  $taskMadeTime = $row['TaskMadeTime'];
-  $taskLastEditBy = $row['TaskLastEditBy'];
-  $taskLastEditTime = $row['TaskLastEditTime'];
-  
-  $stmt->close();
-  $connection->close();
-  
-  $feedbackMessage = "";
+	// -----------------------------------------------
+	// First time loading - get task details from database
+	// -----------------------------------------------
+	$taskForThisPageID = $_GET["editTaskID"] ?? 0;
+
+	if (!validatePositiveInteger($taskForThisPageID)) {
+		$errorMsg = urlencode("Invalid Task ID");
+		header("Location: ../Pages/errorLandingPage.php?error=validation&message=$errorMsg");
+		exit();
+	}
+
+	// Connect to database and get task details
+	$connection = connectToDatabase();
+
+	$query =
+		"SELECT TaskName, TaskDescription, TaskResource, TaskGroup, TaskColour, TaskMadeBy, TaskMadeTime, TaskLastEditBy, TaskLastEditTime FROM tasks_tb WHERE TaskID = ?";
+	$stmt = $connection->prepare($query);
+	$stmt->bind_param("i", $taskForThisPageID);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	if ($result->num_rows === 0) {
+		$stmt->close();
+		mysqli_close($connection);
+		$errorMsg = urlencode("Task not found with ID: $taskForThisPageID");
+		header("Location: ../Pages/errorLandingPage.php?error=notfound&message=$errorMsg");
+		exit();
+	}
+
+	$row = $result->fetch_assoc();
+	$taskName = $row["TaskName"];
+	$taskDescription = $row["TaskDescription"];
+	$taskResource = $row["TaskResource"];
+	$taskGroup = $row["TaskGroup"];
+	$taskColour = $row["TaskColour"];
+	$taskMadeBy = $row["TaskMadeBy"];
+	$taskMadeTime = $row["TaskMadeTime"];
+	$taskLastEditBy = $row["TaskLastEditBy"];
+	$taskLastEditTime = $row["TaskLastEditTime"];
+
+	$stmt->close();
+	$connection->close();
+
+	$feedbackMessage = "";
 }
 
 // Fetch existing task groups from database for dropdown
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT TaskGroup FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' ORDER BY TaskGroup ASC";
+$groupQuery =
+	"SELECT DISTINCT TaskGroup FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' ORDER BY TaskGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {
-    $errorMsg = urlencode("Failed to load task groups: " . mysqli_error($connection));
-    mysqli_close($connection);
-    header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
-    exit;
+	$errorMsg = urlencode("Failed to load task groups: " . mysqli_error($connection));
+	mysqli_close($connection);
+	header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
+	exit();
 }
 
-$existingGroups = array();
+$existingGroups = [];
 while ($groupRow = mysqli_fetch_assoc($groupResult)) {
-    $existingGroups[] = $groupRow['TaskGroup'];
+	$existingGroups[] = $groupRow["TaskGroup"];
 }
 
 // Fetch all tasks with their groups and colours for colour dropdown
-$colourQuery = "SELECT TaskName, TaskGroup, TaskColour FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' AND TaskColour IS NOT NULL AND TaskColour != '' ORDER BY TaskGroup, TaskName";
+$colourQuery =
+	"SELECT TaskName, TaskGroup, TaskColour FROM tasks_tb WHERE TaskGroup IS NOT NULL AND TaskGroup != '' AND TaskColour IS NOT NULL AND TaskColour != '' ORDER BY TaskGroup, TaskName";
 $colourResult = mysqli_query($connection, $colourQuery);
 
 if (!$colourResult) {
-    $errorMsg = urlencode("Failed to load task colours: " . mysqli_error($connection));
-    mysqli_close($connection);
-    header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
-    exit;
+	$errorMsg = urlencode("Failed to load task colours: " . mysqli_error($connection));
+	mysqli_close($connection);
+	header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
+	exit();
 }
 
-$taskColoursByGroup = array();
+$taskColoursByGroup = [];
 while ($colourRow = mysqli_fetch_assoc($colourResult)) {
-    $group = $colourRow['TaskGroup'];
-    $colour = $colourRow['TaskColour'];
-    $taskNameforColour = $colourRow['TaskName'];
-    
-    if (!isset($taskColoursByGroup[$group])) {
-        $taskColoursByGroup[$group] = array();
-    }
-    
-    // Store colour with task name for display
-    $taskColoursByGroup[$group][] = array(
-        'colour' => $colour,
-        'taskName' => $taskNameforColour 
-    );
+	$group = $colourRow["TaskGroup"];
+	$colour = $colourRow["TaskColour"];
+	$taskNameforColour = $colourRow["TaskName"];
+
+	if (!isset($taskColoursByGroup[$group])) {
+		$taskColoursByGroup[$group] = [];
+	}
+
+	// Store colour with task name for display
+	$taskColoursByGroup[$group][] = [
+		"colour" => $colour,
+		"taskName" => $taskNameforColour,
+	];
 }
 
 // Fetch all resources from resource_library_tb
@@ -262,20 +278,20 @@ $resourceQuery = "SELECT LinkedResourceID, LRName, LRGroup FROM resource_library
 $resourceResult = mysqli_query($connection, $resourceQuery);
 
 if (!$resourceResult) {
-    $errorMsg = urlencode("Failed to load resources: " . mysqli_error($connection));
-    mysqli_close($connection);
-    header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
-    exit;
+	$errorMsg = urlencode("Failed to load resources: " . mysqli_error($connection));
+	mysqli_close($connection);
+	header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
+	exit();
 }
 
-$allResources = array();
-$resourceGroups = array();
+$allResources = [];
+$resourceGroups = [];
 while ($resourceRow = mysqli_fetch_assoc($resourceResult)) {
-    $allResources[] = $resourceRow;
-    $group = $resourceRow['LRGroup'] ?? 'Ungrouped';
-    if (!in_array($group, $resourceGroups)) {
-        $resourceGroups[] = $group;
-    }
+	$allResources[] = $resourceRow;
+	$group = $resourceRow["LRGroup"] ?? "Ungrouped";
+	if (!in_array($group, $resourceGroups)) {
+		$resourceGroups[] = $group;
+	}
 }
 
 mysqli_close($connection);
@@ -284,84 +300,89 @@ mysqli_close($connection);
 // Build the page
 // -----------------------------------------------
 insertPageHeader($pageID);
-insertPageLocalMenu($thisPageID); 
+insertPageLocalMenu($thisPageID);
 
 // Add the form formatting CSS
-print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
-print('<link rel="stylesheet" href="../styleSheets/taskCardFormatting.css">');
+print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
+print '<link rel="stylesheet" href="../styleSheets/taskCardFormatting.css">';
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
-// Display feedback message
-if (!empty($feedbackMessage)) {
-    print("<div class=\"formFeedback\">$feedbackMessage</div>");
-}
-
 // Sanitize values for display
-$taskNameSafe = htmlspecialchars($taskName, ENT_QUOTES, 'UTF-8');
-$taskDescriptionSafe = htmlspecialchars($taskDescription, ENT_QUOTES, 'UTF-8');
-$taskResourceSafe = htmlspecialchars($taskResource, ENT_QUOTES, 'UTF-8');
-$taskGroupSafe = htmlspecialchars($taskGroup, ENT_QUOTES, 'UTF-8');
-$taskColourSafe = htmlspecialchars($taskColour, ENT_QUOTES, 'UTF-8');
-$taskMadeBySafe = htmlspecialchars($taskMadeBy, ENT_QUOTES, 'UTF-8');
-$taskMadeTimeSafe = htmlspecialchars($taskMadeTime, ENT_QUOTES, 'UTF-8');
-$taskLastEditBySafe = htmlspecialchars($taskLastEditBy, ENT_QUOTES, 'UTF-8');
-$taskLastEditTimeSafe = htmlspecialchars($taskLastEditTime, ENT_QUOTES, 'UTF-8');
+$taskNameSafe = htmlspecialchars($taskName, ENT_QUOTES, "UTF-8");
+$taskDescriptionSafe = htmlspecialchars($taskDescription, ENT_QUOTES, "UTF-8");
+$taskResourceSafe = htmlspecialchars($taskResource, ENT_QUOTES, "UTF-8");
+$taskGroupSafe = htmlspecialchars($taskGroup, ENT_QUOTES, "UTF-8");
+$taskColourSafe = htmlspecialchars($taskColour, ENT_QUOTES, "UTF-8");
+$taskMadeBySafe = htmlspecialchars($taskMadeBy, ENT_QUOTES, "UTF-8");
+$taskMadeTimeSafe = htmlspecialchars($taskMadeTime, ENT_QUOTES, "UTF-8");
+$taskLastEditBySafe = htmlspecialchars($taskLastEditBy, ENT_QUOTES, "UTF-8");
+$taskLastEditTimeSafe = htmlspecialchars($taskLastEditTime, ENT_QUOTES, "UTF-8");
 
 // Set default colour if empty
 if (empty($taskColourSafe)) {
-  $taskColourSafe = "#808080";
+	$taskColourSafe = "#808080";
 }
 
 // Get resource details for preview if one is assigned
 $resourceLinkPreview = "";
 $resourceNamePreview = "";
 if (!empty($taskResourceSafe)) {
-    $connection = connectToDatabase();
-    $resourceQuery = "SELECT LRLink, LRName FROM resource_library_tb WHERE LinkedResourceID = ?";
-    $stmtResource = $connection->prepare($resourceQuery);
-    $stmtResource->bind_param('i', $taskResourceSafe);
-    $stmtResource->execute();
-    $resourceResult = $stmtResource->get_result();
-    
-    if ($resourceResult->num_rows > 0) {
-        $resourceRow = $resourceResult->fetch_assoc();
-        $resourceLinkPreview = htmlspecialchars($resourceRow['LRLink'], ENT_QUOTES, 'UTF-8');
-        $resourceNamePreview = htmlspecialchars($resourceRow['LRName'], ENT_QUOTES, 'UTF-8');
-    }
-    
-    $stmtResource->close();
-    $connection->close();
+	$connection = connectToDatabase();
+	$resourceQuery = "SELECT LRLink, LRName FROM resource_library_tb WHERE LinkedResourceID = ?";
+	$stmtResource = $connection->prepare($resourceQuery);
+	$stmtResource->bind_param("i", $taskResourceSafe);
+	$stmtResource->execute();
+	$resourceResult = $stmtResource->get_result();
+
+	if ($resourceResult->num_rows > 0) {
+		$resourceRow = $resourceResult->fetch_assoc();
+		$resourceLinkPreview = htmlspecialchars($resourceRow["LRLink"], ENT_QUOTES, "UTF-8");
+		$resourceNamePreview = htmlspecialchars($resourceRow["LRName"], ENT_QUOTES, "UTF-8");
+	}
+
+	$stmtResource->close();
+	$connection->close();
 }
 
 // Build existing groups dropdown
 $groupOptionsHTML = "";
 foreach ($existingGroups as $group) {
-    $selected = ($taskGroup == $group) ? 'selected' : '';
-    $groupOptionsHTML .= "<option value=\"" . htmlspecialchars($group, ENT_QUOTES, 'UTF-8') . "\" $selected>" . htmlspecialchars($group, ENT_QUOTES, 'UTF-8') . "</option>";
+	$selected = $taskGroup == $group ? "selected" : "";
+	$groupOptionsHTML .=
+		"<option value=\"" .
+		htmlspecialchars($group, ENT_QUOTES, "UTF-8") .
+		"\" $selected>" .
+		htmlspecialchars($group, ENT_QUOTES, "UTF-8") .
+		"</option>";
 }
 
 // Build resource groups filter dropdown
 $resourceGroupFilterHTML = "";
 sort($resourceGroups);
 foreach ($resourceGroups as $resGroup) {
-    $resourceGroupFilterHTML .= "<option value=\"" . htmlspecialchars($resGroup, ENT_QUOTES, 'UTF-8') . "\">" . htmlspecialchars($resGroup, ENT_QUOTES, 'UTF-8') . "</option>";
+	$resourceGroupFilterHTML .=
+		"<option value=\"" .
+		htmlspecialchars($resGroup, ENT_QUOTES, "UTF-8") .
+		"\">" .
+		htmlspecialchars($resGroup, ENT_QUOTES, "UTF-8") .
+		"</option>";
 }
 
 // Build all resources dropdown with data attributes for filtering
 $resourceOptionsHTML = "";
 foreach ($allResources as $resource) {
-    $resourceID = $resource['LinkedResourceID'];
-    $resourceName = htmlspecialchars($resource['LRName'], ENT_QUOTES, 'UTF-8');
-    $resourceGroup = htmlspecialchars($resource['LRGroup'] ?? 'Ungrouped', ENT_QUOTES, 'UTF-8');
-    $selected = ($taskResource == $resourceID) ? 'selected' : '';
-    $resourceOptionsHTML .= "<option value=\"$resourceID\" data-group=\"$resourceGroup\" $selected>$resourceName ($resourceGroup)</option>";
+	$resourceID = $resource["LinkedResourceID"];
+	$resourceName = htmlspecialchars($resource["LRName"], ENT_QUOTES, "UTF-8");
+	$resourceGroup = htmlspecialchars($resource["LRGroup"] ?? "Ungrouped", ENT_QUOTES, "UTF-8");
+	$selected = $taskResource == $resourceID ? "selected" : "";
+	$resourceOptionsHTML .= "<option value=\"$resourceID\" data-group=\"$resourceGroup\" $selected>$resourceName ($resourceGroup)</option>";
 }
 
 // Build resource button HTML for preview
 $resourceButtonHTML = "";
 if (!empty($resourceLinkPreview)) {
-    $resourceButtonHTML = "
+	$resourceButtonHTML = "
     <div class=\"task-resource-container\">
         <a href=\"$resourceLinkPreview\" target=\"_blank\" class=\"resourceButton\" style=\"background-color: $taskColourSafe;\" title=\"Open: $resourceNamePreview\">
             <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">
@@ -373,9 +394,14 @@ if (!empty($resourceLinkPreview)) {
 }
 
 // Build the main form
-print("<div class=\"formPageWrapper\">");
+print "<div class=\"formPageWrapper\">";
 
-print("
+// Display feedback message
+if (!empty($feedbackMessage)) {
+	print "<div class=\"formBlueInfoBox\">$feedbackMessage</div>";
+}
+
+print "
 <div class=\"formInfoBox\">
     <p>Update the details for this task. A preview of how the user will see this task is shown below.</p>
 </div>
@@ -487,34 +513,38 @@ print("
 <div class=\"formNoteBox\">
     <p><strong>Note:</strong> Task ID: $taskForThisPageID | Editing: $taskNameSafe | Changes take effect immediately after saving.</p>
 </div>
-");
+";
 
 // Display metadata for pageEditors and fullAdmins
-if ($_SESSION['currentUserLogOnStatus'] == 'pageEditor' || $_SESSION['currentUserLogOnStatus'] == 'fullAdmin') {
-    // Build last edit display
-    $lastEditInfo = "";
-    if (!empty($taskLastEditBy) && !empty($taskLastEditTime)) {
-        $lastEditInfo = "
+if ($_SESSION["currentUserLogOnStatus"] == "pageEditor" || $_SESSION["currentUserLogOnStatus"] == "fullAdmin") {
+	// Build last edit display
+	$lastEditInfo = "";
+	if (!empty($taskLastEditBy) && !empty($taskLastEditTime)) {
+		$lastEditInfo = "
         <p style=\"margin: 5px 0;\"><strong>Last Edited:</strong> $taskLastEditTimeSafe by $taskLastEditBySafe</p>";
-    } else {
-        $lastEditInfo = "
+	} else {
+		$lastEditInfo = "
         <p style=\"margin: 5px 0;\"><strong>Last Edited:</strong> Not edited</p>";
-    }
-    
-    print("
+	}
+
+	print "
     <div class=\"formNoteBox\" style=\"background-color: #f5f5f5; border-left: 4px solid #757575;\">
         <p style=\"margin: 0 0 10px 0;\"><strong>Task Metadata</strong></p>
         <p style=\"margin: 5px 0;\"><strong>Created:</strong> $taskMadeTimeSafe by $taskMadeBySafe</p>
         $lastEditInfo
     </div>
-    ");
+    ";
 }
 
-print("
+print "
 <script>
 // Store task colours by group for dynamic dropdown
-var taskColoursByGroup = " . json_encode($taskColoursByGroup) . ";
-var currentTaskGroup = " . json_encode($taskGroup) . ";
+var taskColoursByGroup = " .
+	json_encode($taskColoursByGroup) .
+	";
+var currentTaskGroup = " .
+	json_encode($taskGroup) .
+	";
 
 // Initialize colour dropdown on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -710,9 +740,9 @@ function clearResourceFilter() {
     filterResourcesByGroup();
 }
 </script>
-");
+";
 
-print("</div>");
+print "</div>";
 
 insertPageFooter($thisPageID);
 ?>

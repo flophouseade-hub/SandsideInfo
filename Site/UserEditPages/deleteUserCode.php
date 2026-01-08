@@ -1,12 +1,6 @@
 <?php
-// Start a seesion if one is not already started
-if (session_status() == PHP_SESSION_NONE) {
-	session_start();
-}
-$errorMessage = "";
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 //die("Here $_GET[deleteUserID]");
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
 	$deleteUserID = $_GET["deleteUserID"];

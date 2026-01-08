@@ -107,7 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["resetPasswordButton"])
 				$headers = "From: noreply@sandside.info";
 
 				if (mail($to, $subject, $message, $headers)) {
-					$feedbackMessage = "<p class=\"formFeedbackSuccess\">âœ“ We have sent you an email to $inputUserEmail with instructions to reset your password.</p>";
+					$feedbackMessage = "
+					<p class=\"formFeedbackSuccess\"><strong>✓ Success!</strong> We have sent you an email to $inputUserEmail with instructions to reset your password.</p>";
 					$inputError = false;
 
 					// Clear form fields on success
@@ -144,11 +145,6 @@ print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
-// Display feedback message
-if (!empty($feedbackMessage)) {
-	print "<div class=\"formFeedback\">$feedbackMessage</div>";
-}
-
 // Sanitize values for display
 $inputFirstNameSafe = htmlspecialchars($inputFirstName, ENT_QUOTES, "UTF-8");
 $inputLastNameSafe = htmlspecialchars($inputLastName, ENT_QUOTES, "UTF-8");
@@ -157,11 +153,20 @@ $inputUserEmailSafe = htmlspecialchars($inputUserEmail, ENT_QUOTES, "UTF-8");
 // Build the main form
 print "<div class=\"formPageWrapper\">";
 
-print "
+// Display feedback message
+if (empty($feedbackMessage)) {
+	$feedbackMessage =
+		"<p>Fill in the details below and we'll send you an email with a link to reset your password. The link will expire in 4 hours.</p>";
+}
+
+print "<div class=\"formBlueInfoBox\">$feedbackMessage</div>";
+
+/* print "
 <div class=\"formInfoBox\">
     <p>Fill in the details below and we'll send you an email with a link to reset your password. The link will expire in 4 hours.</p>
-</div>
+</div>"; */
 
+print "
 <form action=\"forgotPasswordPage.php\" method=\"POST\">
     <div class=\"formContainer\">
         <h3>Password Reset Request</h3>

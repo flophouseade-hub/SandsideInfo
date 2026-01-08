@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["registerButton"])) {
 
 				if ($emailSent) {
 					$feedbackMessage =
-						"<p class=\"formFeedbackSuccess\">Registration successful! Check your email for password setup instructions.</p>";
+						"<p class=\"formFeedbackSuccess\">Registration successful! 2 Check your email for password setup instructions.</p>";
 				} else {
 					// Email failed - still show success but warn about email issue
 					$feedbackMessage = "<p class=\"formFeedbackSuccess\">Registration successful!</p>";
@@ -108,11 +108,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["registerButton"])) {
 						"<p class=\"formFeedbackWarning\">Note: Email could not be sent. Please contact an administrator or visit the password reset page manually. This may be because you are on a local development environment without email capabilities.</p>";
 				}
 
-				// Clear input values on success
-				$inputFirstName = "";
-				$inputLastName = "";
-				$inputUserEmail = "";
-				$inputRegistrationCode = "";
+				// Don't clear input values - we need them to display on success message
+				// Input values will be cleared on next page load anyway
 			} else {
 				$errorMsg = urlencode("Could not register user: " . $stmtInsert->error);
 				$stmtInsert->close();
@@ -176,8 +173,9 @@ if ($registrationSuccess === true) {
 }
 
 // Display feedback message if there are errors
-if (!empty($feedbackMessage)) {
-	print "<div class=\"formFeedback\">$feedbackMessage</div>";
+if (empty($feedbackMessage)) {
+	$feedbackMessage = "<p><strong>Email Verification Required</strong></p>
+    <p>After registration, you'll receive an email with instructions to set your password and hence verify your account.</p>";
 }
 
 // Sanitize values for display
@@ -190,9 +188,8 @@ $inputRegistrationCodeSafe = htmlspecialchars($inputRegistrationCode, ENT_QUOTES
 print "<div class=\"formPageWrapper\">";
 
 print "
-<div class=\"formInfoBox\">
-    <p><strong>Email Verification Required</strong></p>
-    <p>After registration, you'll receive an email with instructions to set your password and verify your account.</p>
+<div class=\"formBlueInfoBox\">
+    $feedbackMessage
 </div>
 
 <form action=\"../LoginOrOut/registerNewUserPage.php\" method=\"POST\">

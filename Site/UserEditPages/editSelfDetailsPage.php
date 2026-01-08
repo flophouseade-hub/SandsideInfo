@@ -160,10 +160,7 @@ print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
-// Display feedback message
-if (!empty($feedbackMessage)) {
-    print("<div class=\"formFeedback\">$feedbackMessage</div>");
-}
+
 
 // Generate School Status dropdown from pageStarterPHP.php array
 $schoolStatusOptions = "";
@@ -180,10 +177,16 @@ $editUserEmailSafe = htmlspecialchars($editUserEmail, ENT_QUOTES, 'UTF-8');
 // Build the main form
 print("<div class=\"formPageWrapper\">");
 
+// Display feedback message
+if (!empty($feedbackMessage)) {
+    print("<div class=\"formBlueInfoBox\">$feedbackMessage</div>");
+}else{
+    print("<div class=\"formBlueInfoBox\">
+        <p>Edit your account details below. Fields marked with * are required. <br>Leave password fields blank to keep your current password.</p>
+    </div>");
+}
+
 print("
-<div class=\"formInfoBox\">
-    <p>Edit your account details below. Fields marked with * are required. Leave password fields blank to keep your current password.</p>
-</div>
 
 <form action=\"editSelfDetailsPage.php\" method=\"POST\">
     <div class=\"formContainer\">

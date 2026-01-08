@@ -14,7 +14,7 @@ $studentData = null;
 
 // Get student ID from URL
 if (!isset($_GET["editStudentID"]) || !is_numeric($_GET["editStudentID"])) {
-	header("Location: listAllstudents_tbPage.php");
+	header("Location: listAllstudentsPage.php");
 	exit();
 }
 
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateStudent"])) {
 			$feedbackMessage = "<p style='color: red;'>ERROR: Could not connect to database.</p>";
 		} else {
 			// Check if UPN already exists for a different student
-			$checkQuery = "SELECT StudentID FROM students_tb_tb WHERE UPN = ? AND StudentID != ?";
+			$checkQuery = "SELECT StudentID FROM students_tb WHERE UPN = ? AND StudentID != ?";
 			$stmt = $connection->prepare($checkQuery);
 			$stmt->bind_param("si", $upn, $studentID);
 			$stmt->execute();
@@ -64,12 +64,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateStudent"])) {
 			} else {
 				// Update student
 				$updateQuery =
-					"UPDATE students_tb_tb SET FirstName = ?, LastName = ?, UPN = ?, Sex = ?, ClassID = ? WHERE StudentID = ?";
+					"UPDATE students_tb SET FirstName = ?, LastName = ?, UPN = ?, Sex = ?, ClassID = ? WHERE StudentID = ?";
 				$stmt = $connection->prepare($updateQuery);
 				$stmt->bind_param("ssssii", $firstName, $lastName, $upn, $sex, $classID, $studentID);
 
 				if ($stmt->execute()) {
-					header("Location: listAllstudents_tbPage.php");
+					header("Location: listAllstudentsPage.php");
 					exit();
 				} else {
 					$feedbackMessage =
@@ -95,7 +95,8 @@ if (!$connection) {
 	die("ERROR: Could not connect to database");
 }
 
-$query = "SELECT s.*, c.classname FROM students_tb s LEFT JOIN classes c ON s.ClassID = c.ClassID WHERE s.StudentID = ?";
+$query =
+	"SELECT s.*, c.classname FROM students_tb s LEFT JOIN classes_tb c ON s.ClassID = c.ClassID WHERE s.StudentID = ?";
 $stmt = $connection->prepare($query);
 $stmt->bind_param("i", $editStudentID);
 $stmt->execute();
@@ -106,14 +107,14 @@ if ($result->num_rows > 0) {
 } else {
 	$stmt->close();
 	$connection->close();
-	header("Location: listAllstudents_tbPage.php");
+	header("Location: listAllstudentsPage.php");
 	exit();
 }
 
 $stmt->close();
 
 // Fetch all classes for dropdown
-$classQuery = "SELECT ClassID, classname, colour, classOrder FROM classes ORDER BY classOrder, classname";
+$classQuery = "SELECT ClassID, classname, colour, classOrder FROM classes_tb ORDER BY classOrder, classname";
 $classResult = mysqli_query($connection, $classQuery);
 $allClasses = [];
 while ($row = mysqli_fetch_assoc($classResult)) {
@@ -198,7 +199,7 @@ print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
             
             <div class="formButtonContainer">
                 <button type="submit" name="updateStudent" class="formButtonPrimary">Update Student</button>
-                <a href="listAllstudents_tbPage.php" class="formButtonSecondary">Cancel</a>
+                <a href="listAllstudentsPage.php" class="formButtonSecondary">Cancel</a>
             </div>
             
         </form>

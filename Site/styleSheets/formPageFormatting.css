@@ -217,8 +217,9 @@
 	font-weight: bold;
 }
 
-.formFeedbackError {
-	color: red;
+.formFeedbackError,
+.formBlueInfoBox p.formFeedbackError {
+	color: rgb(220, 17, 17);
 }
 
 /* Note Box - appears at bottom of forms */

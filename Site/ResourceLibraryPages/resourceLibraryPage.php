@@ -116,7 +116,7 @@ foreach ($resource_library_tbArray as $documentRef) {
 		$shortDescription = $documentDescription;
 	}
 
-	$editLink = "../resource_library_tbPages/editAResourcePage.php?resourceID=$documentID";
+	$editLink = "../ResourceLibraryPages/editAResourcePage.php?resourceID=$documentID";
 
 	// Handle empty group
 	$displayGroup = !empty($documentGroup) ? $documentGroup : "No group assigned";

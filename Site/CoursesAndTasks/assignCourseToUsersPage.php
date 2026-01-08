@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 
 	try {
 		// Get all tasks for this course
-		$tasksQuery = "SELECT CTTaskID FROM Coursetasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder";
+		$tasksQuery = "SELECT CTTaskID FROM course_tasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder";
 		$stmtTasks = $connection->prepare($tasksQuery);
 		$stmtTasks->bind_param("i", $courseForThisPageID);
 		$stmtTasks->execute();
@@ -217,8 +217,8 @@ $courseColour = $rowCourse["CourseColour"];
 
 $stmtCourse->close();
 
-// Get all tasks associated with this course from Coursetasks_tb, ordered by CTTaskOrder
-$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM Coursetasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
+// Get all tasks associated with this course from course_tasks_tb, ordered by CTTaskOrder
+$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM course_tasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
 $stmtTasks = $connection->prepare($queryTasks);
 $stmtTasks->bind_param("i", $courseForThisPageID);
 $stmtTasks->execute();
@@ -503,12 +503,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
+print "<div class=\"formPageWrapper\" style=\"max-width: 900px; margin: 0 auto;\">";
 // Display feedback message if exists
 if (!empty($feedbackMessage)) {
-	print "<div class=\"formFeedback\" style=\"max-width: 900px; margin: 0 auto;\">$feedbackMessage</div>";
+	print "<div class=\"formBlueInfoBox\" style=\"max-width: 900px; margin: 0 auto;\">$feedbackMessage</div>";
 }
-
-print "<div class=\"formPageWrapper\" style=\"max-width: 900px; margin: 0 auto;\">";
 
 // Custom course title block
 print "

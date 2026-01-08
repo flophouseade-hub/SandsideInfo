@@ -10,6 +10,7 @@ require_once "columnFramesFunction.php";
 require_once "alternateBoxesFunction.php";
 require_once "spaceOnLeftFunction.php";
 require_once "insertFunctions.php";
+require_once "config.php";
 
 // Error logging function
 function logError($errorType, $errorMessage, $fileName = "", $lineNumber = 0, $userId = null)

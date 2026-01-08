@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addStudent"])) {
 			$feedbackMessage = "<p style='color: red;'>ERROR: Could not connect to database.</p>";
 		} else {
 			// Check if UPN already exists
-			$checkQuery = "SELECT StudentID FROM students_tb_tb WHERE UPN = ?";
+			$checkQuery = "SELECT StudentID FROM students_tb WHERE UPN = ?";
 			$stmt = $connection->prepare($checkQuery);
 			$stmt->bind_param("s", $upn);
 			$stmt->execute();
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addStudent"])) {
 			} else {
 				// Insert new student
 				$insertQuery =
-					"INSERT INTO students_tb_tb (FirstName, LastName, UPN, Sex, ClassID) VALUES (?, ?, ?, ?, ?)";
+					"INSERT INTO students_tb (FirstName, LastName, UPN, Sex, ClassID) VALUES (?, ?, ?, ?, ?)";
 				$stmt = $connection->prepare($insertQuery);
 				$stmt->bind_param("ssssi", $firstName, $lastName, $upn, $sex, $classID);
 

@@ -81,7 +81,7 @@ if (!empty($deletionMessage)) {
 	print "<div style=\"max-width: 95%; margin: 20px auto;\">$deletionMessage</div>";
 }
 
-// Add Course button above table
+// Add New Course button above table
 print "<div style='margin: 20px auto; max-width: 95%; text-align: right;'>";
 print "<button type='button' onclick=\"location.href='addNewCoursePage.php'\" style='padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;'>+ Add New Course</button>";
 print "</div>";
@@ -93,7 +93,7 @@ if (!empty($filterGroup)) {
 }
 
 // Build the table content
-$tableContent = "
+print "
 <div class=\"listAllTable\" style=\"max-width: 95%; margin: 20px auto;\">
 <table>
   <thead>

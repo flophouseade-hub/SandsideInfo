@@ -1,11 +1,11 @@
 <?php
 $thisPageID = 69;
-include('../phpCode/includeFunctions.php');
-include('../phpCode/pageStarterPHP.php');
+include "../phpCode/includeFunctions.php";
+include "../phpCode/pageStarterPHP.php";
 
 // Check access level - only pageEditor and fullAdmin can edit course tasks
 if (accessLevelCheck("pageEditor") == false) {
-  die("Access denied. You must be a page editor or administrator to edit course tasks.");
+	die("Access denied. You must be a page editor or administrator to edit course tasks.");
 }
 
 // Initialize variables
@@ -17,132 +17,134 @@ $feedbackMessage = "";
 $inputError = false;
 
 // Get the course ID from the URL parameter
-$courseForThisPageID = $_GET['editCourseID'] ?? 0;
+$courseForThisPageID = $_GET["editCourseID"] ?? 0;
 
 if (!validatePositiveInteger($courseForThisPageID)) {
-  die("Invalid Course ID. Please contact the administrator.");
+	die("Invalid Course ID. Please contact the administrator.");
 }
 
 // -----------------------------------------------
 // Handle form submission for adding/removing tasks
 // -----------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateCourseTasksButton'])) {
-  $selectedTasks = $_POST['selectedTasks'] ?? array();
-  
-  // Reset POST variables
-  $_POST = array();
-  
-  // Connect to database
-  $connection = connectToDatabase();
-  if (!$connection) {
-    die("ERROR: Could not connect to database: " . mysqli_connect_error());
-  }
-  
-  mysqli_begin_transaction($connection);
-  
-  try {
-    // Get current tasks in course
-    $currentTasksQuery = "SELECT CTTaskID FROM Coursetasks_tb WHERE CTCourseID = ?";
-    $stmtCurrent = $connection->prepare($currentTasksQuery);
-    $stmtCurrent->bind_param('i', $courseForThisPageID);
-    $stmtCurrent->execute();
-    $resultCurrent = $stmtCurrent->get_result();
-    
-    $currentTaskIDs = array();
-    while ($rowCurrent = $resultCurrent->fetch_assoc()) {
-      $currentTaskIDs[] = $rowCurrent['CTTaskID'];
-    }
-    $stmtCurrent->close();
-    
-    // Validate all selected task IDs
-    $validSelectedTasks = array();
-    foreach ($selectedTasks as $taskId) {
-      if (validatePositiveInteger($taskId)) {
-        $validSelectedTasks[] = $taskId;
-      }
-    }
-    
-    // Determine tasks to add and remove
-    $tasksToAdd = array_diff($validSelectedTasks, $currentTaskIDs);
-    $tasksToRemove = array_diff($currentTaskIDs, $validSelectedTasks);
-    
-    $addedCount = 0;
-    $removedCount = 0;
-    
-    // Remove unchecked tasks
-    if (count($tasksToRemove) > 0) {
-      $deleteQuery = "DELETE FROM Coursetasks_tb WHERE CTCourseID = ? AND CTTaskID = ?";
-      $stmtDelete = $connection->prepare($deleteQuery);
-      
-      if (!$stmtDelete) {
-        throw new Exception('Failed to prepare delete statement: ' . $connection->error);
-      }
-      
-      foreach ($tasksToRemove as $taskId) {
-        $stmtDelete->bind_param('ii', $courseForThisPageID, $taskId);
-        if ($stmtDelete->execute()) {
-          $removedCount++;
-        }
-      }
-      
-      $stmtDelete->close();
-    }
-    
-    // Add newly checked tasks
-    if (count($tasksToAdd) > 0) {
-      // Get the current maximum order for this course
-      $maxOrderQuery = "SELECT MAX(CTTaskOrder) as MaxOrder FROM Coursetasks_tb WHERE CTCourseID = ?";
-      $stmtMax = $connection->prepare($maxOrderQuery);
-      $stmtMax->bind_param('i', $courseForThisPageID);
-      $stmtMax->execute();
-      $resultMax = $stmtMax->get_result();
-      $rowMax = $resultMax->fetch_assoc();
-      $nextOrder = ($rowMax['MaxOrder'] ?? 0) + 1;
-      $stmtMax->close();
-      
-      // Prepare insert statement
-      $insertQuery = "INSERT INTO Coursetasks_tb (CTCourseID, CTTaskID, CTTaskOrder) VALUES (?, ?, ?)";
-      $stmtInsert = $connection->prepare($insertQuery);
-      
-      if (!$stmtInsert) {
-        throw new Exception('Failed to prepare insert statement: ' . $connection->error);
-      }
-      
-      foreach ($tasksToAdd as $taskId) {
-        $stmtInsert->bind_param('iii', $courseForThisPageID, $taskId, $nextOrder);
-        if ($stmtInsert->execute()) {
-          $addedCount++;
-          $nextOrder++;
-        }
-      }
-      
-      $stmtInsert->close();
-    }
-    
-    mysqli_commit($connection);
-    
-    // Build feedback message
-    $messages = array();
-    if ($addedCount > 0) {
-      $messages[] = "<span style=\"color: green;\">Added $addedCount task(s)</span>";
-    }
-    if ($removedCount > 0) {
-      $messages[] = "<span style=\"color: orange;\">Removed $removedCount task(s)</span>";
-    }
-    
-    if (count($messages) > 0) {
-      $feedbackMessage = "<p style=\"font-weight: bold;\">" . implode(" | ", $messages) . "</p>";
-    } else {
-      $feedbackMessage = "<p style=\"color: #666; font-weight: bold;\">No changes were made.</p>";
-    }
-    
-  } catch (Exception $e) {
-    mysqli_rollback($connection);
-    $feedbackMessage = "<p style=\"color: red; font-weight: bold;\">Error updating tasks: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
-    $inputError = true;
-  }
-  
-  $connection->close();
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateCourseTasksButton"])) {
+	$selectedTasks = $_POST["selectedTasks"] ?? [];
+
+	// Reset POST variables
+	$_POST = [];
+
+	// Connect to database
+	$connection = connectToDatabase();
+	if (!$connection) {
+		die("ERROR: Could not connect to database: " . mysqli_connect_error());
+	}
+
+	mysqli_begin_transaction($connection);
+
+	try {
+		// Get current tasks in course
+		$currentTasksQuery = "SELECT CTTaskID FROM course_tasks_tb WHERE CTCourseID = ?";
+		$stmtCurrent = $connection->prepare($currentTasksQuery);
+		$stmtCurrent->bind_param("i", $courseForThisPageID);
+		$stmtCurrent->execute();
+		$resultCurrent = $stmtCurrent->get_result();
+
+		$currentTaskIDs = [];
+		while ($rowCurrent = $resultCurrent->fetch_assoc()) {
+			$currentTaskIDs[] = $rowCurrent["CTTaskID"];
+		}
+		$stmtCurrent->close();
+
+		// Validate all selected task IDs
+		$validSelectedTasks = [];
+		foreach ($selectedTasks as $taskId) {
+			if (validatePositiveInteger($taskId)) {
+				$validSelectedTasks[] = $taskId;
+			}
+		}
+
+		// Determine tasks to add and remove
+		$tasksToAdd = array_diff($validSelectedTasks, $currentTaskIDs);
+		$tasksToRemove = array_diff($currentTaskIDs, $validSelectedTasks);
+
+		$addedCount = 0;
+		$removedCount = 0;
+
+		// Remove unchecked tasks
+		if (count($tasksToRemove) > 0) {
+			$deleteQuery = "DELETE FROM course_tasks_tb WHERE CTCourseID = ? AND CTTaskID = ?";
+			$stmtDelete = $connection->prepare($deleteQuery);
+
+			if (!$stmtDelete) {
+				throw new Exception("Failed to prepare delete statement: " . $connection->error);
+			}
+
+			foreach ($tasksToRemove as $taskId) {
+				$stmtDelete->bind_param("ii", $courseForThisPageID, $taskId);
+				if ($stmtDelete->execute()) {
+					$removedCount++;
+				}
+			}
+
+			$stmtDelete->close();
+		}
+
+		// Add newly checked tasks
+		if (count($tasksToAdd) > 0) {
+			// Get the current maximum order for this course
+			$maxOrderQuery = "SELECT MAX(CTTaskOrder) as MaxOrder FROM course_tasks_tb WHERE CTCourseID = ?";
+			$stmtMax = $connection->prepare($maxOrderQuery);
+			$stmtMax->bind_param("i", $courseForThisPageID);
+			$stmtMax->execute();
+			$resultMax = $stmtMax->get_result();
+			$rowMax = $resultMax->fetch_assoc();
+			$nextOrder = ($rowMax["MaxOrder"] ?? 0) + 1;
+			$stmtMax->close();
+
+			// Prepare insert statement
+			$insertQuery = "INSERT INTO course_tasks_tb (CTCourseID, CTTaskID, CTTaskOrder) VALUES (?, ?, ?)";
+			$stmtInsert = $connection->prepare($insertQuery);
+
+			if (!$stmtInsert) {
+				throw new Exception("Failed to prepare insert statement: " . $connection->error);
+			}
+
+			foreach ($tasksToAdd as $taskId) {
+				$stmtInsert->bind_param("iii", $courseForThisPageID, $taskId, $nextOrder);
+				if ($stmtInsert->execute()) {
+					$addedCount++;
+					$nextOrder++;
+				}
+			}
+
+			$stmtInsert->close();
+		}
+
+		mysqli_commit($connection);
+
+		// Build feedback message
+		$messages = [];
+		if ($addedCount > 0) {
+			$messages[] = "<span style=\"color: green;\">Added $addedCount task(s)</span>";
+		}
+		if ($removedCount > 0) {
+			$messages[] = "<span style=\"color: orange;\">Removed $removedCount task(s)</span>";
+		}
+
+		if (count($messages) > 0) {
+			$feedbackMessage = "<p style=\"font-weight: bold;\">" . implode(" | ", $messages) . "</p>";
+		} else {
+			$feedbackMessage = "<p style=\"color: #666; font-weight: bold;\">No changes were made.</p>";
+		}
+	} catch (Exception $e) {
+		mysqli_rollback($connection);
+		$feedbackMessage =
+			"<p style=\"color: red; font-weight: bold;\">Error updating tasks: " .
+			htmlspecialchars($e->getMessage(), ENT_QUOTES, "UTF-8") .
+			"</p>";
+		$inputError = true;
+	}
+
+	$connection->close();
 }
 
 // -----------------------------------------------
@@ -151,128 +153,129 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateCourseTasksButto
 // Connect to database and get course details
 $connection = connectToDatabase();
 if (!$connection) {
-  die("ERROR: Could not connect to database: " . mysqli_connect_error());
+	die("ERROR: Could not connect to database: " . mysqli_connect_error());
 }
 
 // Get course details
 $queryCourse = "SELECT CourseName, CourseDescription, CourseColour FROM courses_tb WHERE CourseID = ?";
 $stmtCourse = $connection->prepare($queryCourse);
-$stmtCourse->bind_param('i', $courseForThisPageID);
+$stmtCourse->bind_param("i", $courseForThisPageID);
 $stmtCourse->execute();
 $resultCourse = $stmtCourse->get_result();
 
 if ($resultCourse->num_rows === 0) {
-  $stmtCourse->close();
-  $connection->close();
-  die("Course not found. Please contact the administrator.");
+	$stmtCourse->close();
+	$connection->close();
+	die("Course not found. Please contact the administrator.");
 }
 
 $rowCourse = $resultCourse->fetch_assoc();
-$courseName = $rowCourse['CourseName'];
-$courseDescription = $rowCourse['CourseDescription'];
-$courseColour = $rowCourse['CourseColour'];
+$courseName = $rowCourse["CourseName"];
+$courseDescription = $rowCourse["CourseDescription"];
+$courseColour = $rowCourse["CourseColour"];
 
 $stmtCourse->close();
 
-// Get all tasks associated with this course from Coursetasks_tb, ordered by CTTaskOrder
-$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM Coursetasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
+// Get all tasks associated with this course from course_tasks_tb, ordered by CTTaskOrder
+$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM course_tasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
 $stmtTasks = $connection->prepare($queryTasks);
-$stmtTasks->bind_param('i', $courseForThisPageID);
+$stmtTasks->bind_param("i", $courseForThisPageID);
 $stmtTasks->execute();
 $resultTasks = $stmtTasks->get_result();
 
 // Collect task IDs with their order
-$taskIDs = array();
-$taskOrders = array();
+$taskIDs = [];
+$taskOrders = [];
 while ($rowTask = $resultTasks->fetch_assoc()) {
-  $taskIDs[] = $rowTask['CTTaskID'];
-  $taskOrders[$rowTask['CTTaskID']] = $rowTask['CTTaskOrder'];
+	$taskIDs[] = $rowTask["CTTaskID"];
+	$taskOrders[$rowTask["CTTaskID"]] = $rowTask["CTTaskOrder"];
 }
 
 $stmtTasks->close();
 
 // Get full task details for each task ID
-$tasksArray = array();
+$tasksArray = [];
 if (count($taskIDs) > 0) {
-  // Build IN clause for query
-  $placeholders = implode(',', array_fill(0, count($taskIDs), '?'));
-  $queryTaskDetails = "SELECT TaskID, TaskName, TaskDescription, TaskColour FROM tasks_tb WHERE TaskID IN ($placeholders)";
-  $stmtTaskDetails = $connection->prepare($queryTaskDetails);
-  
-  // Bind parameters dynamically
-  $types = str_repeat('i', count($taskIDs));
-  $stmtTaskDetails->bind_param($types, ...$taskIDs);
-  $stmtTaskDetails->execute();
-  $resultTaskDetails = $stmtTaskDetails->get_result();
-  
-  // Create associative array for easy lookup
-  $taskDetailsMap = array();
-  while ($rowTaskDetails = $resultTaskDetails->fetch_assoc()) {
-    $taskDetailsMap[$rowTaskDetails['TaskID']] = $rowTaskDetails;
-  }
-  
-  // Build tasks array in the correct order
-  foreach ($taskIDs as $taskID) {
-    if (isset($taskDetailsMap[$taskID])) {
-      $tasksArray[] = array(
-        'TaskID' => $taskID,
-        'TaskName' => $taskDetailsMap[$taskID]['TaskName'],
-        'TaskDescription' => $taskDetailsMap[$taskID]['TaskDescription'],
-        'TaskColour' => $taskDetailsMap[$taskID]['TaskColour'],
-        'TaskOrder' => $taskOrders[$taskID]
-      );
-    }
-  }
-  
-  $stmtTaskDetails->close();
+	// Build IN clause for query
+	$placeholders = implode(",", array_fill(0, count($taskIDs), "?"));
+	$queryTaskDetails = "SELECT TaskID, TaskName, TaskDescription, TaskColour FROM tasks_tb WHERE TaskID IN ($placeholders)";
+	$stmtTaskDetails = $connection->prepare($queryTaskDetails);
+
+	// Bind parameters dynamically
+	$types = str_repeat("i", count($taskIDs));
+	$stmtTaskDetails->bind_param($types, ...$taskIDs);
+	$stmtTaskDetails->execute();
+	$resultTaskDetails = $stmtTaskDetails->get_result();
+
+	// Create associative array for easy lookup
+	$taskDetailsMap = [];
+	while ($rowTaskDetails = $resultTaskDetails->fetch_assoc()) {
+		$taskDetailsMap[$rowTaskDetails["TaskID"]] = $rowTaskDetails;
+	}
+
+	// Build tasks array in the correct order
+	foreach ($taskIDs as $taskID) {
+		if (isset($taskDetailsMap[$taskID])) {
+			$tasksArray[] = [
+				"TaskID" => $taskID,
+				"TaskName" => $taskDetailsMap[$taskID]["TaskName"],
+				"TaskDescription" => $taskDetailsMap[$taskID]["TaskDescription"],
+				"TaskColour" => $taskDetailsMap[$taskID]["TaskColour"],
+				"TaskOrder" => $taskOrders[$taskID],
+			];
+		}
+	}
+
+	$stmtTaskDetails->close();
 }
 
 // Get all available tasks from tasks_tb with TaskGroup
-$queryAllTasks = "SELECT TaskID, TaskName, TaskDescription, TaskColour, TaskGroup FROM tasks_tb ORDER BY TaskGroup, TaskName";
+$queryAllTasks =
+	"SELECT TaskID, TaskName, TaskDescription, TaskColour, TaskGroup FROM tasks_tb ORDER BY TaskGroup, TaskName";
 $resultAllTasks = mysqli_query($connection, $queryAllTasks);
 
-$allTasksArray = array();
+$allTasksArray = [];
 if ($resultAllTasks) {
-  while ($rowAllTask = mysqli_fetch_assoc($resultAllTasks)) {
-    $allTasksArray[] = array(
-      'TaskID' => $rowAllTask['TaskID'],
-      'TaskName' => $rowAllTask['TaskName'],
-      'TaskDescription' => $rowAllTask['TaskDescription'],
-      'TaskColour' => $rowAllTask['TaskColour'],
-      'TaskGroup' => $rowAllTask['TaskGroup'],
-      'InCourse' => in_array($rowAllTask['TaskID'], $taskIDs)
-    );
-  }
+	while ($rowAllTask = mysqli_fetch_assoc($resultAllTasks)) {
+		$allTasksArray[] = [
+			"TaskID" => $rowAllTask["TaskID"],
+			"TaskName" => $rowAllTask["TaskName"],
+			"TaskDescription" => $rowAllTask["TaskDescription"],
+			"TaskColour" => $rowAllTask["TaskColour"],
+			"TaskGroup" => $rowAllTask["TaskGroup"],
+			"InCourse" => in_array($rowAllTask["TaskID"], $taskIDs),
+		];
+	}
 }
 
 $connection->close();
 
 // Get the page details for this page from the array
-$pageName = $_SESSION['pagesOnSite'][$thisPageID]['PageName'] ?? "Edit Course Tasks";
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "Edit Course Tasks";
 
 // Print out the page:
 insertPageHeader($pageID);
-insertPageLocalMenu($thisPageID); 
+insertPageLocalMenu($thisPageID);
 
 // Add the form formatting CSS
-print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
+print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
 
 // Add color manipulation JavaScript functions
-print(generateColorManipulationJS());
+print generateColorManipulationJS();
 
 // Sanitize values for display
-$courseNameSafe = htmlspecialchars($courseName, ENT_QUOTES, 'UTF-8');
-$courseDescriptionSafe = htmlspecialchars($courseDescription, ENT_QUOTES, 'UTF-8');
-$courseColourSafe = htmlspecialchars($courseColour, ENT_QUOTES, 'UTF-8');
+$courseNameSafe = htmlspecialchars($courseName, ENT_QUOTES, "UTF-8");
+$courseDescriptionSafe = htmlspecialchars($courseDescription, ENT_QUOTES, "UTF-8");
+$courseColourSafe = htmlspecialchars($courseColour, ENT_QUOTES, "UTF-8");
 
 // Set default colour to mid-grey if empty
 if (empty($courseColourSafe)) {
-  $courseColourSafe = "#808080";
+	$courseColourSafe = "#808080";
 }
 
 // Add custom styling for course title with colored background
 $courseColourForDisplay = $courseColourSafe;
-print("
+print "
 <style>
 .courseTitleBlock {
     margin: 20px 0;
@@ -374,19 +377,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-");
+";
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
+print "<div class=\"formPageWrapper\" style=\"max-width: 900px; margin: 0 auto;\">";
+
 // Display feedback message if exists
 if (!empty($feedbackMessage)) {
-  print("<div class=\"formFeedback\">$feedbackMessage</div>");
+	print "<div class=\"formBlueInfoBox\">$feedbackMessage</div>";
 }
 
-print("<div class=\"formPageWrapper\" style=\"max-width: 900px; margin: 0 auto;\">");
-
 // Custom course title block
-print("
+print "
 <div class=\"courseTitleBlock\">
     <div class=\"courseTitleContent\">
         <div class=\"courseTitleAccent\"></div>
@@ -396,30 +399,31 @@ print("
         </div>
     </div>
 </div>
-");
+";
 
 // Build tasks list with drag-and-drop
 $tasksListHTML = "";
 
 if (count($tasksArray) > 0) {
-  $tasksListHTML .= "<div class=\"formContainer\">";
-  $tasksListHTML .= "<h3>Tasks in this Course (" . count($tasksArray) . ")</h3>";
-  $tasksListHTML .= "<p style=\"color: #666; font-size: 14px; margin-bottom: 15px;\"><em>Drag and drop tasks to reorder them. Changes are saved automatically.</em></p>";
-  $tasksListHTML .= "<div id=\"tasksList\" style=\"margin-top: 20px;\">";
-  
-  foreach ($tasksArray as $task) {
-    $taskID = $task['TaskID'];
-    $taskName = htmlspecialchars($task['TaskName'], ENT_QUOTES, 'UTF-8');
-    $taskDescription = htmlspecialchars($task['TaskDescription'], ENT_QUOTES, 'UTF-8');
-    $taskColour = htmlspecialchars($task['TaskColour'], ENT_QUOTES, 'UTF-8');
-    $taskOrder = $task['TaskOrder'];
-    
-    // Set default task colour to mid-grey if empty
-    if (empty($taskColour)) {
-      $taskColour = "#808080";
-    }
-    
-    $tasksListHTML .= "
+	$tasksListHTML .= "<div class=\"formContainer\">";
+	$tasksListHTML .= "<h3>Tasks in this Course (" . count($tasksArray) . ")</h3>";
+	$tasksListHTML .=
+		"<p style=\"color: #666; font-size: 14px; margin-bottom: 15px;\"><em>Drag and drop tasks to reorder them. Changes are saved automatically.</em></p>";
+	$tasksListHTML .= "<div id=\"tasksList\" style=\"margin-top: 20px;\">";
+
+	foreach ($tasksArray as $task) {
+		$taskID = $task["TaskID"];
+		$taskName = htmlspecialchars($task["TaskName"], ENT_QUOTES, "UTF-8");
+		$taskDescription = htmlspecialchars($task["TaskDescription"], ENT_QUOTES, "UTF-8");
+		$taskColour = htmlspecialchars($task["TaskColour"], ENT_QUOTES, "UTF-8");
+		$taskOrder = $task["TaskOrder"];
+
+		// Set default task colour to mid-grey if empty
+		if (empty($taskColour)) {
+			$taskColour = "#808080";
+		}
+
+		$tasksListHTML .= "
     <div class=\"task-item\" data-task-id=\"$taskID\" data-task-color=\"$taskColour\" style=\"background-color: white; border: 2px solid #ddd; border-radius: 4px; margin-bottom: 10px; cursor: move; padding: 4px;\">
       <div class=\"task-item-inner\" style=\"display: flex; align-items: stretch; border-radius: 2px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05);\">
         <div class=\"task-accent\" style=\"width: 4px; flex-shrink: 0; background-color: $taskColour;\"></div>
@@ -435,16 +439,18 @@ if (count($tasksArray) > 0) {
         </div>
       </div>
     </div>";
-  }
-  
-  $tasksListHTML .= "</div>";
-  $tasksListHTML .= "<div id=\"saveStatus\" style=\"margin-top: 15px; padding: 10px; display: none; border-radius: 4px;\"></div>";
-  $tasksListHTML .= "</div>"; // Close formContainer
+	}
+
+	$tasksListHTML .= "</div>";
+	$tasksListHTML .=
+		"<div id=\"saveStatus\" style=\"margin-top: 15px; padding: 10px; display: none; border-radius: 4px;\"></div>";
+	$tasksListHTML .= "</div>"; // Close formContainer
 } else {
-  $tasksListHTML .= "<div class=\"formContainer\">";
-  $tasksListHTML .= "<h3>Tasks in this Course (0)</h3>";
-  $tasksListHTML .= "<p style=\"padding: 20px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px;\">No tasks are currently assigned to this course.</p>";
-  $tasksListHTML .= "</div>";
+	$tasksListHTML .= "<div class=\"formContainer\">";
+	$tasksListHTML .= "<h3>Tasks in this Course (0)</h3>";
+	$tasksListHTML .=
+		"<p style=\"padding: 20px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px;\">No tasks are currently assigned to this course.</p>";
+	$tasksListHTML .= "</div>";
 }
 
 // Build available tasks section with checkboxes
@@ -460,42 +466,43 @@ $availableTasksHTML = "
     <div style=\"max-height: 500px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: white; border-radius: 4px;\">";
 
 if (count($allTasksArray) > 0) {
-  foreach ($allTasksArray as $task) {
-    $taskID = $task['TaskID'];
-    $taskName = htmlspecialchars($task['TaskName'], ENT_QUOTES, 'UTF-8');
-    $taskColour = htmlspecialchars($task['TaskColour'], ENT_QUOTES, 'UTF-8');
-    $taskGroup = htmlspecialchars($task['TaskGroup'], ENT_QUOTES, 'UTF-8');
-    $inCourse = $task['InCourse'];
-    
-    // Set default task colour to light grey if empty
-    if (empty($taskColour)) {
-      $taskColour = "#F5F5F5";
-    }
-    
-    $lightTaskBg = "style=\"background-color: " . $taskColour . ";\"";
-    
-    $checked = $inCourse ? 'checked' : '';
-    $statusText = $inCourse ? '✓ In course' : '';
-    $statusColor = $inCourse ? 'color: #28a745;' : 'color: #666;';
-    
-    $availableTasksHTML .= "
+	foreach ($allTasksArray as $task) {
+		$taskID = $task["TaskID"];
+		$taskName = htmlspecialchars($task["TaskName"], ENT_QUOTES, "UTF-8");
+		$taskColour = htmlspecialchars($task["TaskColour"], ENT_QUOTES, "UTF-8");
+		$taskGroup = htmlspecialchars($task["TaskGroup"], ENT_QUOTES, "UTF-8");
+		$inCourse = $task["InCourse"];
+
+		// Set default task colour to light grey if empty
+		if (empty($taskColour)) {
+			$taskColour = "#F5F5F5";
+		}
+
+		$lightTaskBg = "style=\"background-color: " . $taskColour . ";\"";
+
+		$checked = $inCourse ? "checked" : "";
+		$statusText = $inCourse ? "✓ In course" : "";
+		$statusColor = $inCourse ? "color: #28a745;" : "color: #666;";
+
+		$availableTasksHTML .= "
       <div $lightTaskBg style=\"padding: 8px 10px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 8px;\">
         <label style=\"display: flex; align-items: center; cursor: pointer;\">
           <input type=\"checkbox\" name=\"selectedTasks[]\" value=\"$taskID\" $checked style=\"margin-right: 10px; flex-shrink: 0;\">
           <strong style=\"color: #333; margin-right: 8px;\">$taskName</strong>
           <span style=\"color: #666; font-size: 12px; margin-right: 8px;\">(ID: $taskID)</span>
           <span style=\"color: #555; font-size: 13px; margin-right: 8px;\">- $taskGroup</span>";
-    
-    if ($inCourse) {
-      $availableTasksHTML .= " <span style=\"$statusColor font-size: 12px; font-weight: bold;\">$statusText</span>";
-    }
-    
-    $availableTasksHTML .= "
+
+		if ($inCourse) {
+			$availableTasksHTML .= " <span style=\"$statusColor font-size: 12px; font-weight: bold;\">$statusText</span>";
+		}
+
+		$availableTasksHTML .= "
         </label>
       </div>";
-  }
+	}
 } else {
-  $availableTasksHTML .= "<p style=\"padding: 20px; text-align: center; color: #666;\">No tasks available. <a href=\"addNewTaskPage.php\">Create a new task</a>.</p>";
+	$availableTasksHTML .=
+		"<p style=\"padding: 20px; text-align: center; color: #666;\">No tasks available. <a href=\"addNewTaskPage.php\">Create a new task</a>.</p>";
 }
 
 $availableTasksHTML .= "
@@ -632,8 +639,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 $pageContent = $tasksListHTML . $availableTasksHTML . $navigationHTML . $dragDropScript;
 
-print($pageContent);
-print("</div>"); // Close formPageWrapper
+print $pageContent;
+print "</div>"; // Close formPageWrapper
 
 insertPageFooter($thisPageID);
 ?>

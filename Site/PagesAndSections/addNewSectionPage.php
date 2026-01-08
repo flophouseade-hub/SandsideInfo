@@ -1,7 +1,7 @@
 <?php
 $thisPageID = 26;
-include('../phpCode/pageStarterPHP.php');
-include('../phpCode/includeFunctions.php');
+include "../phpCode/pageStarterPHP.php";
+include "../phpCode/includeFunctions.php";
 
 // Initialize variables
 $feedbackMessage = "";
@@ -12,152 +12,167 @@ $newSectionColour = "";
 $newSectionGroup = "";
 
 //------------------------------------------------------------------------------------------------------
-// Run this section if the form has been submitted  
+// Run this section if the form has been submitted
 //------------------------------------------------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insertSectionDetailsButton'])) {
-  // Get the form data
-  $newSectionTitle = $_POST['fvSectionTitle'] ?? "";
-  $newSectionContent = $_POST['fvSectionContent'] ?? "";
-  $newSectionColour = $_POST['fvSectionColour'] ?? "";
-  
-  // Handle section group - check if using existing or creating new
-  $sectionGroupExisting = $_POST['fvSectionGroupExisting'] ?? "";
-  $sectionGroupNew = $_POST['fvSectionGroupNew'] ?? "";
-  
-  // Determine which group to use
-  if ($sectionGroupExisting === '_new_' && !empty($sectionGroupNew)) {
-    $newSectionGroup = trim($sectionGroupNew);
-  } elseif (!empty($sectionGroupExisting) && $sectionGroupExisting !== '_new_') {
-    $newSectionGroup = $sectionGroupExisting;
-  } else {
-    $newSectionGroup = "";
-  }
-  
-  // Clear POST data
-  $_POST = array();
-  
-  // Validate Section Title
-  $testSectionTitle = validateBasicTextInput($newSectionTitle);
-  if ($testSectionTitle !== true) {
-    $inputError = true;
-    $feedbackMessage .= "<p style=\"color:red;\">Section Title: " . $testSectionTitle . "</p>";
-  }
-  
-  // Validate Section Content
-  $testSectionContent = validateBasicTextInput($newSectionContent);
-  if ($testSectionContent !== true) {
-    $inputError = true;
-    $feedbackMessage .= "<p style=\"color:red;\">Section Content: " . $testSectionContent . "</p>";
-  }
-  
-  // Validate colour code using the flexible validator (only if provided)
-  if (!empty($newSectionColour)) {
-    $testColour = validateColourCode($newSectionColour);
-    if ($testColour !== true) {
-      $inputError = true;
-      $feedbackMessage .= "<p style=\"color:red;\">" . $testColour . "</p>";
-    }
-  }
-  
-  // Validate Section Group (only if provided)
-  if (!empty($newSectionGroup)) {
-    $testSectionGroup = validateBasicTextInput($newSectionGroup);
-    if ($testSectionGroup !== true) {
-      $inputError = true;
-      $feedbackMessage .= "<p style=\"color:red;\">Section Group: " . $testSectionGroup . "</p>";
-    }
-  }
-  
-  // If validation passes, insert into database
-  if ($inputError === false) {
-    $connection = connectToDatabase();
-    
-    if (!$connection) {
-      die("ERROR: Could not connect to the database: " . mysqli_connect_error());
-    }
-    
-    $currentUserID = $_SESSION['currentUserID'];
-    $query = "INSERT INTO section_tb (SectionTitle, SectionContent, SectionColour, SectionGroup, SectionMakerID, SectionMakerEditOnly) VALUES (?, ?, ?, ?, ?, 1)";
-    $stmt = $connection->prepare($query);
-    $stmt->bind_param("ssssi", $newSectionTitle, $newSectionContent, $newSectionColour, $newSectionGroup, $currentUserID);
-    
-    if ($stmt->execute()) {
-      $newSectionID = $connection->insert_id;
-      $feedbackMessage = "<p style=\"color:green;\">New section created successfully with ID: $newSectionID</p>";
-      
-      // Clear form values on success
-      $newSectionTitle = "";
-      $newSectionContent = "";
-      $newSectionColour = "";
-      $newSectionGroup = "";
-      
-      // Redirect to edit page to allow further modifications
-      header("Location: editSectionDetailsPage.php?editSectionID=$newSectionID&success=1");
-      exit();
-    } else {
-      $inputError = true;
-      $feedbackMessage .= "<p style=\"color:red;\">Database error: " . $stmt->error . "</p>";
-    }
-    
-    $stmt->close();
-    $connection->close();
-  }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["insertSectionDetailsButton"])) {
+	// Get the form data
+	$newSectionTitle = $_POST["fvSectionTitle"] ?? "";
+	$newSectionContent = $_POST["fvSectionContent"] ?? "";
+	$newSectionColour = $_POST["fvSectionColour"] ?? "";
+
+	// Handle section group - check if using existing or creating new
+	$sectionGroupExisting = $_POST["fvSectionGroupExisting"] ?? "";
+	$sectionGroupNew = $_POST["fvSectionGroupNew"] ?? "";
+
+	// Determine which group to use
+	if ($sectionGroupExisting === "_new_" && !empty($sectionGroupNew)) {
+		$newSectionGroup = trim($sectionGroupNew);
+	} elseif (!empty($sectionGroupExisting) && $sectionGroupExisting !== "_new_") {
+		$newSectionGroup = $sectionGroupExisting;
+	} else {
+		$newSectionGroup = "";
+	}
+
+	// Clear POST data
+	$_POST = [];
+
+	// Validate Section Title
+	$testSectionTitle = validateBasicTextInput($newSectionTitle);
+	if ($testSectionTitle !== true) {
+		$inputError = true;
+		$feedbackMessage .= "<p style=\"color:red;\">Section Title: " . $testSectionTitle . "</p>";
+	}
+
+	// Validate Section Content
+	$testSectionContent = validateBasicTextInput($newSectionContent);
+	if ($testSectionContent !== true) {
+		$inputError = true;
+		$feedbackMessage .= "<p style=\"color:red;\">Section Content: " . $testSectionContent . "</p>";
+	}
+
+	// Validate colour code using the flexible validator (only if provided)
+	if (!empty($newSectionColour)) {
+		$testColour = validateColourCode($newSectionColour);
+		if ($testColour !== true) {
+			$inputError = true;
+			$feedbackMessage .= "<p style=\"color:red;\">" . $testColour . "</p>";
+		}
+	}
+
+	// Validate Section Group (only if provided)
+	if (!empty($newSectionGroup)) {
+		$testSectionGroup = validateBasicTextInput($newSectionGroup);
+		if ($testSectionGroup !== true) {
+			$inputError = true;
+			$feedbackMessage .= "<p style=\"color:red;\">Section Group: " . $testSectionGroup . "</p>";
+		}
+	}
+
+	// If validation passes, insert into database
+	if ($inputError === false) {
+		$connection = connectToDatabase();
+
+		if (!$connection) {
+			die("ERROR: Could not connect to the database: " . mysqli_connect_error());
+		}
+
+		$currentUserID = $_SESSION["currentUserID"];
+		$query =
+			"INSERT INTO section_tb (SectionTitle, SectionContent, SectionColour, SectionGroup, SectionMakerID, SectionMakerEditOnly) VALUES (?, ?, ?, ?, ?, 1)";
+		$stmt = $connection->prepare($query);
+		$stmt->bind_param(
+			"ssssi",
+			$newSectionTitle,
+			$newSectionContent,
+			$newSectionColour,
+			$newSectionGroup,
+			$currentUserID,
+		);
+
+		if ($stmt->execute()) {
+			$newSectionID = $connection->insert_id;
+			$feedbackMessage = "<p style=\"color:green;\">New section created successfully with ID: $newSectionID</p>";
+
+			// Clear form values on success
+			$newSectionTitle = "";
+			$newSectionContent = "";
+			$newSectionColour = "";
+			$newSectionGroup = "";
+
+			// Redirect to edit page to allow further modifications
+			header("Location: editSectionDetailsPage.php?editSectionID=$newSectionID&success=1");
+			exit();
+		} else {
+			$inputError = true;
+			$feedbackMessage .= "<p style=\"color:red;\">Database error: " . $stmt->error . "</p>";
+		}
+
+		$stmt->close();
+		$connection->close();
+	}
 }
 
 // Get page details from session
-include('../phpCode/pagesAndImagesArrays.php');
-$pageName = $_SESSION['pagesOnSite'][$thisPageID]['PageName'] ?? "Add New Section";
-$pageAccess = $_SESSION['pagesOnSite'][$thisPageID]['PageAccess'] ?? "staff";
+include "../phpCode/pagesAndImagesArrays.php";
+$pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "Add New Section";
+$pageAccess = $_SESSION["pagesOnSite"][$thisPageID]["PageAccess"] ?? "staff";
 
 // Fetch existing section groups
 $connection = connectToDatabase();
-$groupQuery = "SELECT DISTINCT SectionGroup FROM section_tb WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
+$groupQuery =
+	"SELECT DISTINCT SectionGroup FROM section_tb WHERE SectionGroup IS NOT NULL AND SectionGroup != '' ORDER BY SectionGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 
 if (!$groupResult) {
-    die("ERROR: Failed to load section groups: " . mysqli_error($connection));
+	die("ERROR: Failed to load section groups: " . mysqli_error($connection));
 }
 
-$existingSectionGroups = array();
+$existingSectionGroups = [];
 while ($groupRow = mysqli_fetch_assoc($groupResult)) {
-    $existingSectionGroups[] = $groupRow['SectionGroup'];
+	$existingSectionGroups[] = $groupRow["SectionGroup"];
 }
 
 $connection->close();
 
 if (accessLevelCheck($pageAccess) == false) {
-  die("Access denied");
+	die("Access denied");
 }
 
 // Prepare safe values for display
-$newSectionTitleSafe = htmlspecialchars($newSectionTitle, ENT_QUOTES, 'UTF-8');
-$newSectionContentSafe = htmlspecialchars($newSectionContent, ENT_QUOTES, 'UTF-8');
-$newSectionColourSafe = htmlspecialchars($newSectionColour, ENT_QUOTES, 'UTF-8');
-$newSectionGroupSafe = htmlspecialchars($newSectionGroup, ENT_QUOTES, 'UTF-8');
+$newSectionTitleSafe = htmlspecialchars($newSectionTitle, ENT_QUOTES, "UTF-8");
+$newSectionContentSafe = htmlspecialchars($newSectionContent, ENT_QUOTES, "UTF-8");
+$newSectionColourSafe = htmlspecialchars($newSectionColour, ENT_QUOTES, "UTF-8");
+$newSectionGroupSafe = htmlspecialchars($newSectionGroup, ENT_QUOTES, "UTF-8");
 
 // Build existing section groups dropdown
 $groupOptionsHTML = "";
 foreach ($existingSectionGroups as $group) {
-    $selected = ($newSectionGroup == $group) ? 'selected' : '';
-    $groupOptionsHTML .= "<option value=\"" . htmlspecialchars($group, ENT_QUOTES, 'UTF-8') . "\" $selected>" . htmlspecialchars($group, ENT_QUOTES, 'UTF-8') . "</option>";
+	$selected = $newSectionGroup == $group ? "selected" : "";
+	$groupOptionsHTML .=
+		"<option value=\"" .
+		htmlspecialchars($group, ENT_QUOTES, "UTF-8") .
+		"\" $selected>" .
+		htmlspecialchars($group, ENT_QUOTES, "UTF-8") .
+		"</option>";
 }
 
 // Print out the page:
 insertPageHeader($pageID);
-insertPageLocalMenu($thisPageID); 
+insertPageLocalMenu($thisPageID);
 
 // Add the form formatting CSS
-print('<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">');
+print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
 
 insertPageTitleAndClass($pageName, "blockMenuPageTitle", $thisPageID);
 
 // Build feedback display
 if ($inputError === true) {
-  $displayFeedback = "<p><strong style='color: red;'>There were problems with your submission:</strong></p>" . $feedbackMessage;
+	$displayFeedback =
+		"<p><strong style='color: red;'>There were problems with your submission:</strong></p>" . $feedbackMessage;
 } elseif (!empty($feedbackMessage)) {
-  $displayFeedback = $feedbackMessage;
+	$displayFeedback = $feedbackMessage;
 } else {
-  $displayFeedback = "<p>You need to fill out the form using HTML tags in the Section Content field.</p>";
+	$displayFeedback = "<p>You need to fill out the form using HTML tags in the Section Content field.</p>";
 }
 
 $formAndContentString = "
@@ -216,7 +231,7 @@ $formAndContentString = "
       </div>
     </div>
   </form>
-</div>
+<!--</div>-->
 
 <script>
 function handleSectionGroupSelection() {
@@ -235,7 +250,7 @@ function handleSectionGroupSelection() {
 }
 </script>";
 
-print($formAndContentString);
+print $formAndContentString;
 
 // HTML Tags Reference Section
 $htmlReferenceString = "
@@ -338,10 +353,9 @@ $htmlReferenceString = "
 <h4>Comments</h4>
 <div class=\"htmlReference\">&lt;!-- comment text --&gt;</div>";
 
-insertPageSectionOneColumn($htmlReferenceString, "HTML Tags Reference", 0);
+print "$htmlReferenceString</div>"; //end of formPageWrapper
 
-//------------------------------------------------------------------------------------------------------
 // End of page
-//------------------------------------------------------------------------------------------------------
+
 insertPageFooter($thisPageID);
 ?>
