@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addStudent"])) {
 
 				if ($stmt->execute()) {
 					$newStudentID = $stmt->insert_id;
-					header("Location: managestudents_tbPage.php");
+					header("Location: listAllStudentsPage.php");
 					exit();
 				} else {
 					$feedbackMessage =
@@ -168,7 +168,7 @@ print '<link rel="stylesheet" href="../styleSheets/formPageFormatting.css">';
             
             <div class="formButtonContainer">
                 <button type="submit" name="addStudent" class="formButtonPrimary">Add Student</button>
-                <a href="managestudents_tbPage.php" class="formButtonSecondary">Cancel</a>
+                <a href="listAllStudentsPage.php" class="formButtonSecondary">Cancel</a>
             </div>
             
         </form>

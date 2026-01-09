@@ -32,25 +32,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 	// Reset POST variables
 	$_POST = [];
 
-	// Connect to database
-	$connection = connectToDatabase();
-	if (!$connection) {
+	// Connect to database - use different variable name
+	$postConnection = connectToDatabase();
+	if (!$postConnection) {
 		die("ERROR: Could not connect to database: " . mysqli_connect_error());
 	}
 
-	mysqli_begin_transaction($connection);
+	mysqli_begin_transaction($postConnection);
 
 	try {
-		// Get all tasks for this course
-		$tasksQuery = "SELECT CTTaskID FROM course_tasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder";
-		$stmtTasks = $connection->prepare($tasksQuery);
+		// Get all tasks for this course WITH their order
+		$tasksQuery = "SELECT CTTaskID, CTTaskOrder FROM course_tasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder";
+		$stmtTasks = $postConnection->prepare($tasksQuery);
 		$stmtTasks->bind_param("i", $courseForThisPageID);
 		$stmtTasks->execute();
 		$resultTasks = $stmtTasks->get_result();
 
 		$taskIDs = [];
+		$taskOrders = [];
 		while ($rowTask = $resultTasks->fetch_assoc()) {
 			$taskIDs[] = $rowTask["CTTaskID"];
+			$taskOrders[$rowTask["CTTaskID"]] = $rowTask["CTTaskOrder"];
 		}
 		$stmtTasks->close();
 
@@ -61,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 		// Get all users who currently have this course
 		$placeholders = implode(",", array_fill(0, count($taskIDs), "?"));
 		$queryCurrentUsers = "SELECT DISTINCT UTUsersID FROM user_tasks_tb WHERE UserSetTaskID IN ($placeholders) AND UserSetCourseID = ?";
-		$stmtCurrentUsers = $connection->prepare($queryCurrentUsers);
+		$stmtCurrentUsers = $postConnection->prepare($queryCurrentUsers);
 		$types = str_repeat("i", count($taskIDs)) . "i";
 		$params = array_merge($taskIDs, [$courseForThisPageID]);
 		$stmtCurrentUsers->bind_param($types, ...$params);
@@ -88,11 +90,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 		// ASSIGN: Add tasks for newly selected users
 		if (count($usersToAssign) > 0) {
 			$insertQuery =
-				"INSERT INTO user_tasks_tb (UTUsersID, UserSetTaskID, UserSetCourseID, UserSetCourseDate, UserSetTaskComplete) VALUES (?, ?, ?, ?, 0)";
-			$stmtInsert = $connection->prepare($insertQuery);
+				"INSERT INTO user_tasks_tb (UTUsersID, UserSetTaskID, UserSetCourseID, UserSetCourseDate, UserSetTaskStartDate, UserSetTaskFinishDate, UserSetTaskOrder, UserSetTaskComplete) VALUES (?, ?, ?, ?, ?, NULL, ?, 0)";
+			$stmtInsert = $postConnection->prepare($insertQuery);
 
 			if (!$stmtInsert) {
-				throw new Exception("Failed to prepare insert statement: " . $connection->error);
+				throw new Exception("Failed to prepare insert statement: " . $postConnection->error);
 			}
 
 			foreach ($usersToAssign as $userId) {
@@ -101,10 +103,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 				}
 
 				foreach ($taskIDs as $taskId) {
+					// Get the task order from the array we built above
+					$taskOrder = $taskOrders[$taskId] ?? 0;
+
 					// Check if this user-task combination already exists
 					$checkQuery =
 						"SELECT COUNT(*) as RecordCount FROM user_tasks_tb WHERE UTUsersID = ? AND UserSetTaskID = ?";
-					$stmtCheck = $connection->prepare($checkQuery);
+					$stmtCheck = $postConnection->prepare($checkQuery);
 					$stmtCheck->bind_param("ii", $userId, $taskId);
 					$stmtCheck->execute();
 					$resultCheck = $stmtCheck->get_result();
@@ -112,7 +117,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 					$stmtCheck->close();
 
 					if ($rowCheck["RecordCount"] == 0) {
-						$stmtInsert->bind_param("iiis", $userId, $taskId, $courseForThisPageID, $currentTimestamp);
+						// Bind parameters: userId, taskId, courseId, courseDate, taskStartDate, taskOrder
+						// Note: UserSetTaskFinishDate is set to NULL (inserted directly in query)
+						$stmtInsert->bind_param(
+							"iiissi",
+							$userId,
+							$taskId,
+							$courseForThisPageID,
+							$currentTimestamp,
+							$currentTimestamp,
+							$taskOrder,
+						);
 						if ($stmtInsert->execute()) {
 							$assignedCount++;
 						}
@@ -128,10 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 		// UNASSIGN: Remove tasks for unchecked users
 		if (count($usersToUnassign) > 0) {
 			$deleteQuery = "DELETE FROM user_tasks_tb WHERE UTUsersID = ? AND UserSetCourseID = ? AND UserSetTaskID IN ($placeholders)";
-			$stmtDelete = $connection->prepare($deleteQuery);
+			$stmtDelete = $postConnection->prepare($deleteQuery);
 
 			if (!$stmtDelete) {
-				throw new Exception("Failed to prepare delete statement: " . $connection->error);
+				throw new Exception("Failed to prepare delete statement: " . $postConnection->error);
 			}
 
 			foreach ($usersToUnassign as $userId) {
@@ -152,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 			$stmtDelete->close();
 		}
 
-		mysqli_commit($connection);
+		mysqli_commit($postConnection);
 
 		// Build feedback message
 		$feedbackParts = [];
@@ -177,171 +192,224 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assignCourseButton"]))
 			$feedbackMessage = "<p style=\"color: #666; font-weight: bold;\">No changes were made.</p>";
 		}
 	} catch (Exception $e) {
-		mysqli_rollback($connection);
+		mysqli_rollback($postConnection);
+
+		// Log the error
+		logError(
+			"DATABASE",
+			sprintf("Course assignment failed - CourseID: %d, Error: %s", $courseForThisPageID, $e->getMessage()),
+			__FILE__,
+			__LINE__,
+			$_SESSION["UsersID"] ?? null,
+		);
+
 		$feedbackMessage =
 			"<p style=\"color: red; font-weight: bold;\">Error: " .
 			htmlspecialchars($e->getMessage(), ENT_QUOTES, "UTF-8") .
 			"</p>";
 		$inputError = true;
+	} finally {
+		// Close POST handler connection
+		if (isset($postConnection) && $postConnection instanceof mysqli) {
+			@$postConnection->close();
+		}
 	}
-
-	$connection->close();
 }
 
 // -----------------------------------------------
 // Retrieve course and task data
 // -----------------------------------------------
-// Connect to database and get course details
-$connection = connectToDatabase();
-if (!$connection) {
-	die("ERROR: Could not connect to database: " . mysqli_connect_error());
-}
+try {
+	$connection = connectToDatabase();
 
-// Get course details
-$queryCourse = "SELECT CourseName, CourseDescription, CourseColour FROM courses_tb WHERE CourseID = ?";
-$stmtCourse = $connection->prepare($queryCourse);
-$stmtCourse->bind_param("i", $courseForThisPageID);
-$stmtCourse->execute();
-$resultCourse = $stmtCourse->get_result();
+	// Get course details
+	$queryCourse = "SELECT CourseName, CourseDescription, CourseColour FROM courses_tb WHERE CourseID = ?";
+	$stmtCourse = $connection->prepare($queryCourse);
 
-if ($resultCourse->num_rows === 0) {
+	if (!$stmtCourse) {
+		throw new Exception("Failed to prepare course query: " . $connection->error);
+	}
+
+	$stmtCourse->bind_param("i", $courseForThisPageID);
+
+	if (!$stmtCourse->execute()) {
+		throw new Exception("Failed to execute course query: " . $stmtCourse->error);
+	}
+
+	$resultCourse = $stmtCourse->get_result();
+
+	if ($resultCourse->num_rows === 0) {
+		throw new Exception("Course not found (ID: $courseForThisPageID)");
+	}
+
+	$rowCourse = $resultCourse->fetch_assoc();
+	$courseName = $rowCourse["CourseName"];
+	$courseDescription = $rowCourse["CourseDescription"];
+	$courseColour = $rowCourse["CourseColour"];
+
 	$stmtCourse->close();
+
+	// Get all tasks associated with this course
+	$queryTasks =
+		"SELECT CTTaskID, CTTaskOrder FROM course_tasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
+	$stmtTasks = $connection->prepare($queryTasks);
+
+	if (!$stmtTasks) {
+		throw new Exception("Failed to prepare tasks query: " . $connection->error);
+	}
+
+	$stmtTasks->bind_param("i", $courseForThisPageID);
+
+	if (!$stmtTasks->execute()) {
+		throw new Exception("Failed to execute tasks query: " . $stmtTasks->error);
+	}
+
+	$resultTasks = $stmtTasks->get_result();
+
+	// Collect task IDs with their order
+	$taskIDs = [];
+	$taskOrders = [];
+	while ($rowTask = $resultTasks->fetch_assoc()) {
+		$taskIDs[] = $rowTask["CTTaskID"];
+		$taskOrders[$rowTask["CTTaskID"]] = $rowTask["CTTaskOrder"];
+	}
+
+	$stmtTasks->close();
+
+	// Get full task details for each task ID
+	$tasksArray = [];
+	if (count($taskIDs) > 0) {
+		$placeholders = implode(",", array_fill(0, count($taskIDs), "?"));
+		$queryTaskDetails = "SELECT TaskID, TaskName, TaskDescription, TaskColour FROM tasks_tb WHERE TaskID IN ($placeholders)";
+		$stmtTaskDetails = $connection->prepare($queryTaskDetails);
+
+		if (!$stmtTaskDetails) {
+			throw new Exception("Failed to prepare task details query: " . $connection->error);
+		}
+
+		$types = str_repeat("i", count($taskIDs));
+		$stmtTaskDetails->bind_param($types, ...$taskIDs);
+
+		if (!$stmtTaskDetails->execute()) {
+			throw new Exception("Failed to execute task details query: " . $stmtTaskDetails->error);
+		}
+
+		$resultTaskDetails = $stmtTaskDetails->get_result();
+
+		// Create associative array for easy lookup
+		$taskDetailsMap = [];
+		while ($rowTaskDetails = $resultTaskDetails->fetch_assoc()) {
+			$taskDetailsMap[$rowTaskDetails["TaskID"]] = $rowTaskDetails;
+		}
+
+		// Build tasks array in the correct order
+		foreach ($taskIDs as $taskID) {
+			if (isset($taskDetailsMap[$taskID])) {
+				$tasksArray[] = [
+					"TaskID" => $taskID,
+					"TaskName" => $taskDetailsMap[$taskID]["TaskName"],
+					"TaskDescription" => $taskDetailsMap[$taskID]["TaskDescription"],
+					"TaskColour" => $taskDetailsMap[$taskID]["TaskColour"],
+					"TaskOrder" => $taskOrders[$taskID],
+				];
+			}
+		}
+
+		$stmtTaskDetails->close();
+	}
+
+	// Get all users from the database
+	$queryUsers =
+		"SELECT UsersID, FirstName, LastName, Email, SchoolStatus FROM users_tb ORDER BY SchoolStatus, FirstName, LastName";
+	$resultUsers = mysqli_query($connection, $queryUsers);
+
+	if (!$resultUsers) {
+		throw new Exception("Failed to retrieve users: " . $connection->error);
+	}
+
+	$usersArray = [];
+	if ($resultUsers) {
+		while ($rowUser = mysqli_fetch_assoc($resultUsers)) {
+			$usersArray[] = [
+				"UserID" => $rowUser["UsersID"],
+				"UserFirstName" => $rowUser["FirstName"],
+				"UserLastName" => $rowUser["LastName"],
+				"UserEmail" => $rowUser["Email"],
+				"UserSchoolStatus" => $rowUser["SchoolStatus"],
+			];
+		}
+	}
+
+	// Check which users already have tasks from this course assigned
+	$usersWithCourse = [];
+	$userTaskCompletionStatus = []; // Track completion status per user
+
+	if (count($taskIDs) > 0 && count($usersArray) > 0) {
+		// First, get all users who have ANY task from this course
+		$placeholders = implode(",", array_fill(0, count($taskIDs), "?"));
+		$queryAssigned = "SELECT DISTINCT UTUsersID FROM user_tasks_tb WHERE UserSetTaskID IN ($placeholders) AND UserSetCourseID = ?";
+		$stmtAssigned = $connection->prepare($queryAssigned);
+
+		// Bind task IDs and course ID
+		$types = str_repeat("i", count($taskIDs)) . "i";
+		$params = array_merge($taskIDs, [$courseForThisPageID]);
+		$stmtAssigned->bind_param($types, ...$params);
+		$stmtAssigned->execute();
+		$resultAssigned = $stmtAssigned->get_result();
+
+		while ($rowAssigned = $resultAssigned->fetch_assoc()) {
+			$usersWithCourse[] = $rowAssigned["UTUsersID"];
+		}
+
+		$stmtAssigned->close();
+
+		// For each user with the course, get completion details
+		if (count($usersWithCourse) > 0) {
+			foreach ($usersWithCourse as $userId) {
+				$queryCompletion = "SELECT 
+                                COUNT(*) as TotalTasks, 
+                                SUM(CASE WHEN UserSetTaskComplete = 1 THEN 1 ELSE 0 END) as CompletedTasks 
+                              FROM user_tasks_tb 
+                              WHERE UTUsersID = ? 
+                                AND UserSetCourseID = ? 
+                                AND UserSetTaskID IN ($placeholders)";
+				$stmtCompletion = $connection->prepare($queryCompletion);
+
+				// Build parameters: userId, courseId, then all taskIds
+				$completionParams = array_merge([$userId, $courseForThisPageID], $taskIDs);
+				$completionTypes = "ii" . str_repeat("i", count($taskIDs));
+				$stmtCompletion->bind_param($completionTypes, ...$completionParams);
+				$stmtCompletion->execute();
+				$resultCompletion = $stmtCompletion->get_result();
+				$rowCompletion = $resultCompletion->fetch_assoc();
+
+				$userTaskCompletionStatus[$userId] = [
+					"total" => intval($rowCompletion["TotalTasks"]),
+					"completed" => intval($rowCompletion["CompletedTasks"]),
+				];
+
+				$stmtCompletion->close();
+			}
+		}
+	}
+
 	$connection->close();
-	die("Course not found. Please contact the administrator.");
+} catch (Exception $e) {
+	// Log to your existing error system
+	logError("DATABASE", $e->getMessage(), __FILE__, __LINE__, $_SESSION["UsersID"] ?? null);
+
+	// Redirect to your error landing page
+	$errorMsg = urlencode("Failed to load course assignment page: " . $e->getMessage());
+	header(
+		"Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg&returnPage=listAllCoursesPage.php",
+	);
+	exit();
+} finally {
+	// Close retrieval connection - this is the one that was failing
+	/* if (isset($connection) && $connection instanceof mysqli) {
+		@$connection->close();
+	} */
 }
-
-$rowCourse = $resultCourse->fetch_assoc();
-$courseName = $rowCourse["CourseName"];
-$courseDescription = $rowCourse["CourseDescription"];
-$courseColour = $rowCourse["CourseColour"];
-
-$stmtCourse->close();
-
-// Get all tasks associated with this course from course_tasks_tb, ordered by CTTaskOrder
-$queryTasks = "SELECT CTTaskID, CTTaskOrder FROM course_tasks_tb WHERE CTCourseID = ? ORDER BY CTTaskOrder, CTTaskID";
-$stmtTasks = $connection->prepare($queryTasks);
-$stmtTasks->bind_param("i", $courseForThisPageID);
-$stmtTasks->execute();
-$resultTasks = $stmtTasks->get_result();
-
-// Collect task IDs with their order
-$taskIDs = [];
-$taskOrders = [];
-while ($rowTask = $resultTasks->fetch_assoc()) {
-	$taskIDs[] = $rowTask["CTTaskID"];
-	$taskOrders[$rowTask["CTTaskID"]] = $rowTask["CTTaskOrder"];
-}
-
-$stmtTasks->close();
-
-// Get full task details for each task ID
-$tasksArray = [];
-if (count($taskIDs) > 0) {
-	// Build IN clause for query
-	$placeholders = implode(",", array_fill(0, count($taskIDs), "?"));
-	$queryTaskDetails = "SELECT TaskID, TaskName, TaskDescription, TaskColour FROM tasks_tb WHERE TaskID IN ($placeholders)";
-	$stmtTaskDetails = $connection->prepare($queryTaskDetails);
-
-	// Bind parameters dynamically
-	$types = str_repeat("i", count($taskIDs));
-	$stmtTaskDetails->bind_param($types, ...$taskIDs);
-	$stmtTaskDetails->execute();
-	$resultTaskDetails = $stmtTaskDetails->get_result();
-
-	// Create associative array for easy lookup
-	$taskDetailsMap = [];
-	while ($rowTaskDetails = $resultTaskDetails->fetch_assoc()) {
-		$taskDetailsMap[$rowTaskDetails["TaskID"]] = $rowTaskDetails;
-	}
-
-	// Build tasks array in the correct order
-	foreach ($taskIDs as $taskID) {
-		if (isset($taskDetailsMap[$taskID])) {
-			$tasksArray[] = [
-				"TaskID" => $taskID,
-				"TaskName" => $taskDetailsMap[$taskID]["TaskName"],
-				"TaskDescription" => $taskDetailsMap[$taskID]["TaskDescription"],
-				"TaskColour" => $taskDetailsMap[$taskID]["TaskColour"],
-				"TaskOrder" => $taskOrders[$taskID],
-			];
-		}
-	}
-
-	$stmtTaskDetails->close();
-}
-
-// Get all users from the database
-$queryUsers =
-	"SELECT UsersID, FirstName, LastName, Email, SchoolStatus FROM users_tb ORDER BY SchoolStatus, FirstName, LastName";
-$resultUsers = mysqli_query($connection, $queryUsers);
-
-$usersArray = [];
-if ($resultUsers) {
-	while ($rowUser = mysqli_fetch_assoc($resultUsers)) {
-		$usersArray[] = [
-			"UserID" => $rowUser["UsersID"],
-			"UserFirstName" => $rowUser["FirstName"],
-			"UserLastName" => $rowUser["LastName"],
-			"UserEmail" => $rowUser["Email"],
-			"UserSchoolStatus" => $rowUser["SchoolStatus"],
-		];
-	}
-}
-
-// Check which users already have tasks from this course assigned
-$usersWithCourse = [];
-$userTaskCompletionStatus = []; // Track completion status per user
-
-if (count($taskIDs) > 0 && count($usersArray) > 0) {
-	// First, get all users who have ANY task from this course
-	$placeholders = implode(",", array_fill(0, count($taskIDs), "?"));
-	$queryAssigned = "SELECT DISTINCT UTUsersID FROM user_tasks_tb WHERE UserSetTaskID IN ($placeholders) AND UserSetCourseID = ?";
-	$stmtAssigned = $connection->prepare($queryAssigned);
-
-	// Bind task IDs and course ID
-	$types = str_repeat("i", count($taskIDs)) . "i";
-	$params = array_merge($taskIDs, [$courseForThisPageID]);
-	$stmtAssigned->bind_param($types, ...$params);
-	$stmtAssigned->execute();
-	$resultAssigned = $stmtAssigned->get_result();
-
-	while ($rowAssigned = $resultAssigned->fetch_assoc()) {
-		$usersWithCourse[] = $rowAssigned["UTUsersID"];
-	}
-
-	$stmtAssigned->close();
-
-	// For each user with the course, get completion details
-	if (count($usersWithCourse) > 0) {
-		foreach ($usersWithCourse as $userId) {
-			$queryCompletion = "SELECT 
-                            COUNT(*) as TotalTasks, 
-                            SUM(CASE WHEN UserSetTaskComplete = 1 THEN 1 ELSE 0 END) as CompletedTasks 
-                          FROM user_tasks_tb 
-                          WHERE UTUsersID = ? 
-                            AND UserSetCourseID = ? 
-                            AND UserSetTaskID IN ($placeholders)";
-			$stmtCompletion = $connection->prepare($queryCompletion);
-
-			// Build parameters: userId, courseId, then all taskIds
-			$completionParams = array_merge([$userId, $courseForThisPageID], $taskIDs);
-			$completionTypes = "ii" . str_repeat("i", count($taskIDs));
-			$stmtCompletion->bind_param($completionTypes, ...$completionParams);
-			$stmtCompletion->execute();
-			$resultCompletion = $stmtCompletion->get_result();
-			$rowCompletion = $resultCompletion->fetch_assoc();
-
-			$userTaskCompletionStatus[$userId] = [
-				"total" => intval($rowCompletion["TotalTasks"]),
-				"completed" => intval($rowCompletion["CompletedTasks"]),
-			];
-
-			$stmtCompletion->close();
-		}
-	}
-}
-
-$connection->close();
 
 // Get the page details for this page from the array
 $pageName = $_SESSION["pagesOnSite"][$thisPageID]["PageName"] ?? "Update Users on this Course";

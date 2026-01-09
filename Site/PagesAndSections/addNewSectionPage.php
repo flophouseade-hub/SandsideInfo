@@ -182,7 +182,7 @@ $formAndContentString = "
     <p>Enter the details for a new section and click the button to insert it into the database.</p>
   </div>
   
-  <div class=\"formMessageBox\">
+  <div class=\"formBlueInfoBox\">
     $displayFeedback
   </div>
   

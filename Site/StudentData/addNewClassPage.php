@@ -401,7 +401,7 @@ $formClassColourDisplay = ltrim($formClassColour, '#');
 
 print("<div class='addClassForm'>");
 print("<h3>$formTitle</h3>");
-print("<form method='POST' action='manageClassesPage.php'>");
+print("<form method='POST' action='listAllClassesPage.php'>");
 if ($editMode) {
     print("<input type='hidden' name='classID' value='$formClassID'>");
 }
@@ -431,9 +431,9 @@ print("</div>");
 print("<div class='formButtonContainer'>");
 print("<button type='submit' name='saveClass' class='formButtonPrimary'>" . ($editMode ? "Update Class" : "Add Class") . "</button>");
 if ($editMode) {
-    print("<a href='manageClassesPage.php' class='formButtonSecondary'>Cancel Edit</a>");
+    print("<a href='listAllClassesPage.php' class='formButtonSecondary'>Cancel Edit</a>");
 }
-print("<a href='managestudents_tbPage.php' class='formButtonSecondary'>Manage students_tb</a>");
+print("<a href='listAllStudentsPage.php' class='formButtonSecondary'>Manage students_tb</a>");
 print("</div>");
 
 print("</div>");
@@ -483,8 +483,8 @@ if (count($classes) > 0) {
         print("<td>$studentCount</td>");
         print("<td>");
         print("<div class='actionLinks'>");
-        print("<a href='manageClassesPage.php?editClassID=$classID' class='editLink'>Edit</a>");
-        $deleteUrl = "manageClassesPage.php?deleteClassID=$classID";
+        print("<a href='listAllClassesPage.php?editClassID=$classID' class='editLink'>Edit</a>");
+        $deleteUrl = "listAllClassesPage.php?deleteClassID=$classID";
         print("<a href='$deleteUrl' class='deleteLink' onclick=\"return confirm('Are you sure you want to delete this class? This action cannot be undone.');\">Delete</a>");
         print("</div>");
         print("</td>");

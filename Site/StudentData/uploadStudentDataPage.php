@@ -239,8 +239,8 @@ if ($uploadStats) {
     
     print("<div style='display: flex; gap: 10px; margin-top: 15px;'>");
     print("<a href='classListPage.php' class='formButtonPrimary'>View Class Lists</a>");
-    print("<a href='managestudents_tbPage.php' class='formButtonSecondary'>Manage students_tb</a>");
-    print("<a href='manageClassesPage.php' class='formButtonSecondary'>Manage Classes</a>");
+    print("<a href='listAllStudentsPage.php' class='formButtonSecondary'>Manage students_tb</a>");
+    print("<a href='listAllClassesPage.php' class='formButtonSecondary'>Manage Classes</a>");
     print("</div>");
     print("</div>");
 }
@@ -334,8 +334,8 @@ if ($previewData) {
     
     print("<div class='formButtonContainer'>");
     print("<button type='submit' class='formButtonPrimary'>Upload and Preview</button>");
-    print("<a href='managestudents_tbPage.php' class='formButtonSecondary'>Manage students_tb</a>");
-    print("<a href='manageClassesPage.php' class='formButtonSecondary'>Manage Classes</a>");
+    print("<a href='listAllStudentsPage.php' class='formButtonSecondary'>Manage students_tb</a>");
+    print("<a href='listAllClassesPage.php' class='formButtonSecondary'>Manage Classes</a>");
     print("</div>");
     print("</div>");
     print("</form>");
