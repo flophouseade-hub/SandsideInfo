@@ -16,12 +16,12 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
 		$colourCombo = generateColorVariations($sectionColour, 95);
 		print "<style>\n
     .$divClass {
-    --chosen-color: $sectionColour;
-    --chosen-color-lighter: {$colourCombo["lighter"]};
-    --chosen-color-Comp1: {$colourCombo["splitComp1"]};
-    --chosen-color-Comp2: {$colourCombo["splitComp2"]};
-    --chosen-color-Comp2-lighter: {$colourCombo["splitComp2Lighter"]};
-    --chosen-color-Comp1-lighter: {$colourCombo["splitComp1Lighter"]};
+      --chosen-color: $sectionColour;
+      --chosen-color-lighter: {$colourCombo["lighter"]};
+      --chosen-color-Comp1: {$colourCombo["splitComp1"]};
+      --chosen-color-Comp2: {$colourCombo["splitComp2"]};
+      --chosen-color-Comp2-lighter: {$colourCombo["splitComp2Lighter"]};
+      --chosen-color-Comp1-lighter: {$colourCombo["splitComp1Lighter"]};
     }
   </style>\n";
 	}
@@ -29,11 +29,11 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
 	// Always print structural CSS regardless of color settings
 	print "<style>\n
   .$divClass .columnFramesCardGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
 
   /* Limit to 3 columns for medium screens */
   @media (min-width: 900px) {
@@ -50,22 +50,22 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
   }
 
   .$divClass .columnFramesCard {
-  background-color: var(--chosen-color-lighter);
-  border-top: 2px solid var(--chosen-color);
-  border-bottom: 1px solid var(--chosen-color) ;
-  border-radius: 0px;
-  padding: 0;
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+    background-color: var(--chosen-color-lighter);
+    border-top: 2px solid var(--chosen-color);
+    border-bottom: 1px solid var(--chosen-color) ;
+    border-radius: 0px;
+    padding: 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   .$divClass .columnFramesCard .columnFramesCardHeader {
-  padding: 15px;
-  background-color: var(--chosen-color-Comp1-lighter);
-  color: var(--chosen-color) ;
-  border-bottom: 2px solid var(--chosen-color);
+    padding: 15px;
+    background-color: var(--chosen-color-Comp1-lighter);
+    color: var(--chosen-color) ;
+    border-bottom: 2px solid var(--chosen-color);
   }
   .$divClass .columnFramesCard .columnFramesCardHeader h1 {
     text-align: center;
@@ -75,21 +75,21 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
   }
 
   .$divClass .columnFramesTitleBar h1.sectionTitle {
-  font-family: Roboto, sans-serif;
-  font-weight: 400;
-  font-size: 22px;
-  margin: 6px 0px;
-  color: var(--chosen-color);
-  text-transform: uppercase;
-  text-align: center;
-  border-top: 2px solid var(--chosen-color);
-  padding-top: 15px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 6px 0px;
+    color: var(--chosen-color);
+    text-transform: uppercase;
+    text-align: center;
+    border-top: 2px solid var(--chosen-color);
+    padding-top: 15px;
   }
   .$divClass .columnFramesTitleBar h1.sectionTitle a{
   text-decoration: none;
   }
 
-  .columnFramesCard .columnFramesCardBody h3 {
+  .$divClass .columnFramesCard .columnFramesCardBody h3 {
     margin: 0;
     font-size: 20px;
     font-weight: 400;
@@ -104,8 +104,6 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
     font-size: 18px;
     font-weight: 400;
     text-align: center;
-  /*  border-top: 1px solid var(--chosen-color-Comp1);
-    padding-top: 6px; */
     border-bottom: 1px solid var(--chosen-color-Comp1);
     padding-bottom: 6px;
   }
@@ -119,32 +117,15 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
     flex-grow: 1;
     background-color: var(--chosen-color-lighter);
   }
-  .columnFramesCardBody p {
-  font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: var(--chosen-color-lighter);
-  }
-  .columnFramesCardBody p {
-  font-size: 14px;
+  .$divClass .columnFramesCardBody p {
+    font-size: 14px;
     font-family: 'Open Sans', sans-serif;
-  }
-
-  .$divClass .columnFramesCardBody figure.insertedImage{
-    margin-right: 0px;
-  }
-
-  .$divClass .columnFramesCardBody img{
-    margin: auto;
-    max-width: 100%;
+    padding: 0 0 0 10px;
+    background-color: var(--chosen-color-lighter);
   }
   .$divClass .columnFramesCardBody figure.insertedImage{
     margin-right: 0px;
   }
-
   .$divClass .columnFramesCardBody img{
     margin: auto;
     max-width: 100%;
@@ -160,12 +141,12 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
 	$editButton = "";
 	if (accessLevelCheck("pageEditor") === true) {
 		print "<style>\n  
-        .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    left: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
+        .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    right: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
         .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  
         .$divClass .columnFramesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  
         .$divClass .columnFramesWrapper {\n    position: relative;\n  }\n</style>\n";
 
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
 	}
 
 	// Add CSS to hide title if SectionShowTitle is false
@@ -179,9 +160,9 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
 		print "<style>\n  
     .$divClass .sectionEditButton 
       {\n    position: absolute;\n    
-      top: 5px;\n    left: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
+      top: 5px;\n    right: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
       .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .columnFramesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .columnFramesWrapper {\n    position: relative;\n  }\n</style>\n";
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
 	}
 
 	// Parse content for h1 and h2 headings to create cards

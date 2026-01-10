@@ -1,31 +1,31 @@
 <?php
 function printAlternateBoxesSection($sectionContent, $errorMessage, $title, $sectionID)
 {
-  // Get some data from the session variables:
-  $sectionColour = $_SESSION['sectionDB'][$sectionID]['SectionColour'] ?? '#b3b3b3';
-  $sectionColourSameAsPage = $_SESSION['sectionDB'][$sectionID]['SectionColourSameAsPage'] ?? 0;
-  $sectionShowTitle = $_SESSION['sectionDB'][$sectionID]['SectionShowTitle'] ?? 1;
-  // Alternating boxes layout with h1/h2 headings creating new boxes
-  $divClass = "sectionID" . $sectionID . "ColourDiv";
+	// Get some data from the session variables:
+	$sectionColour = $_SESSION["sectionDB"][$sectionID]["SectionColour"] ?? "#b3b3b3";
+	$sectionColourSameAsPage = $_SESSION["sectionDB"][$sectionID]["SectionColourSameAsPage"] ?? 0;
+	$sectionShowTitle = $_SESSION["sectionDB"][$sectionID]["SectionShowTitle"] ?? 1;
+	// Alternating boxes layout with h1/h2 headings creating new boxes
+	$divClass = "sectionID" . $sectionID . "ColourDiv";
 
-  // Have separate div for each section to apply colour variables
-  print("<div class=\"$divClass\">");
+	// Have separate div for each section to apply colour variables
+	print "<div class=\"$divClass\">";
 
-  // Only generate local color variations if not using page colors
-  if (!$sectionColourSameAsPage) {
-    $colourCombo = generateColorVariations($sectionColour, 95);
-    print("<style>\n
+	// Only generate local color variations if not using page colors
+	if (!$sectionColourSameAsPage) {
+		$colourCombo = generateColorVariations($sectionColour, 95);
+		print "<style>\n
   .$divClass {
     --chosen-color: $sectionColour;
-    --chosen-color-lighter: {$colourCombo['lighter']};
-    --chosen-color-Comp1: {$colourCombo['splitComp1']};
-    --chosen-color-Comp2: {$colourCombo['splitComp2']};
-    --chosen-color-Comp2-lighter: {$colourCombo['splitComp2Lighter']};
-    --chosen-color-Comp1-lighter: {$colourCombo['splitComp1Lighter']};
+    --chosen-color-lighter: {$colourCombo["lighter"]};
+    --chosen-color-Comp1: {$colourCombo["splitComp1"]};
+    --chosen-color-Comp2: {$colourCombo["splitComp2"]};
+    --chosen-color-Comp2-lighter: {$colourCombo["splitComp2Lighter"]};
+    --chosen-color-Comp1-lighter: {$colourCombo["splitComp1Lighter"]};
   }
-  </style>\n");
-  
-     print("<style>\n
+  </style>\n";
+
+		print "<style>\n
      /* -------------------------------------------------- */
 /* Alternate Boxes Section Styles */
 /* --------------------------------------------------- */
@@ -173,104 +173,108 @@ function printAlternateBoxesSection($sectionContent, $errorMessage, $title, $sec
     }
 }
 
-  </style>\n");
-  }
+  </style>\n";
+	}
 
-  // Add CSS to hide title if SectionShowTitle is false
-  if (!$sectionShowTitle) {
-    print("<style>\n  .$divClass .alternateBoxesTitleBar { display: none; }\n</style>\n");
-  }
+	// Add CSS to hide title if SectionShowTitle is false
+	if (!$sectionShowTitle) {
+		print "<style>\n  .$divClass .alternateBoxesTitleBar { display: none; }\n</style>\n";
+	}
 
-  // Add floating edit button for editors/admins
-  $editButton = '';
-  if (accessLevelCheck("pageEditor") === true) {
-    print("<style>\n  .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    left: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .alternateBoxesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .alternateBoxesWrapper {\n    position: relative;\n  }\n</style>\n");
-    $editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
-  }
+	// Add floating edit button for editors/admins
+	$editButton = "";
+	if (accessLevelCheck("pageEditor") === true) {
+		print "<style>\n  .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    right: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .alternateBoxesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .alternateBoxesWrapper {\n    position: relative;\n  }\n</style>\n";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
+	}
 
-  // Parse content for h1 and h2 headings to create boxes
-  $boxes = array();
-  $allContent = $errorMessage . $sectionContent;
+	// Parse content for h1 and h2 headings to create boxes
+	$boxes = [];
+	$allContent = $errorMessage . $sectionContent;
 
-  // Split content by h1 and h2 tags
-  $parts = preg_split('/(<h[12]>.*?<\/h[12]>)/is', $allContent, -1, PREG_SPLIT_DELIM_CAPTURE);
+	// Split content by h1 and h2 tags
+	$parts = preg_split("/(<h[12]>.*?<\/h[12]>)/is", $allContent, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-  // Process the parts
-  $beforeFirstHeading = '';
-  for ($i = 0; $i < count($parts); $i++) {
-    if (preg_match('/<h[12]>(.*?)<\/h[12]>/is', $parts[$i], $matches)) {
-      // This is an h1 or h2 tag
-      $headingContent = $matches[1];
-      // Get content after this heading (if exists)
-      $afterHeadingContent = isset($parts[$i + 1]) ? $parts[$i + 1] : '';
-      $i++; // Skip the next part as we've already used it
+	// Process the parts
+	$beforeFirstHeading = "";
+	for ($i = 0; $i < count($parts); $i++) {
+		if (preg_match("/<h[12]>(.*?)<\/h[12]>/is", $parts[$i], $matches)) {
+			// This is an h1 or h2 tag
+			$headingContent = $matches[1];
+			// Get content after this heading (if exists)
+			$afterHeadingContent = isset($parts[$i + 1]) ? $parts[$i + 1] : "";
+			$i++; // Skip the next part as we've already used it
 
-      $boxes[] = array(
-        'type' => 'heading',
-        'heading_content' => $headingContent,
-        'content' => $afterHeadingContent
-      );
-    } else if ($i == 0) {
-      // Content before first heading
-      $beforeFirstHeading = $parts[$i];
-    }
-  }
+			$boxes[] = [
+				"type" => "heading",
+				"heading_content" => $headingContent,
+				"content" => $afterHeadingContent,
+			];
+		} elseif ($i == 0) {
+			// Content before first heading
+			$beforeFirstHeading = $parts[$i];
+		}
+	}
 
-  // Display section title
-  printf("
+	// Display section title
+	printf(
+		"
   <section class=\"mainContent\">
     <section class=\"alternateBoxesWrapper\">
       %s
       <div class=\"alternateBoxesTitleBar\">
         <h1 class=\"sectionTitle\">%s</h1>
-      </div>", $editButton, $title);
+      </div>",
+		$editButton,
+		$title,
+	);
 
-  // If no headings found, display content in single box
-  if (empty($boxes)) {
-    print("<div class=\"alternateBoxesContainer\">
+	// If no headings found, display content in single box
+	if (empty($boxes)) {
+		print "<div class=\"alternateBoxesContainer\">
           <div class=\"alternateBox left\">
             $beforeFirstHeading
           </div>
-        </div>");
-  } else {
-    // Display alternating boxes
-    print("<div class=\"alternateBoxesContainer\">");
+        </div>";
+	} else {
+		// Display alternating boxes
+		print "<div class=\"alternateBoxesContainer\">";
 
-    // Display content before first heading if any
-    if (!empty(trim($beforeFirstHeading))) {
-      print("<div class=\"alternateBox left\">
+		// Display content before first heading if any
+		if (!empty(trim($beforeFirstHeading))) {
+			print "<div class=\"alternateBox left\">
               $beforeFirstHeading
-            </div>");
-    }
+            </div>";
+		}
 
-    // Alternate left/right for each box
-    $position = 0; // Start with left if we had content before first heading
-    if (empty(trim($beforeFirstHeading))) {
-      $position = -1; // Start with left (will be incremented to 0)
-    }
+		// Alternate left/right for each box
+		$position = 0; // Start with left if we had content before first heading
+		if (empty(trim($beforeFirstHeading))) {
+			$position = -1; // Start with left (will be incremented to 0)
+		}
 
-    foreach ($boxes as $box) {
-      $position++;
-      $side = ($position % 2 == 0) ? 'left' : 'right';
-      $headingText = $box['heading_content'];
-      $boxContent = $box['content'];
+		foreach ($boxes as $box) {
+			$position++;
+			$side = $position % 2 == 0 ? "left" : "right";
+			$headingText = $box["heading_content"];
+			$boxContent = $box["content"];
 
-      print("<div class=\"alternateBox $side\">
+			print "<div class=\"alternateBox $side\">
               <h1>$headingText</h1>
               <div class=\"alternateBoxContent\">
                 $boxContent
               </div>
-            </div>");
-    }
+            </div>";
+		}
 
-    print("</div>");
-  }
+		print "</div>";
+	}
 
-  print("
+	print "
     </section>
   </section>
-  <div style=\"clear: both;\"></div>");
-  print("</div>");
-  return;
+  <div style=\"clear: both;\"></div>";
+	print "</div>";
+	return;
 }
 ?>

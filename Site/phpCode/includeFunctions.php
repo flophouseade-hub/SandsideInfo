@@ -248,7 +248,6 @@ function replaceImageRefInContentString($sectionString, $editSectionID)
 			$imageWidth = $imageRefArray[1];
 			$imageHeight = $imageRefArray[2];
 			$imageRounded = $imageRefArray[3];
-			//echo("ImageIDRef: $imageIDRef Width: $imageWidth Height: $imageHeight Rounded: $imageRounded<br>");
 		}
 		if (isset($imageRounded) && $imageRounded > 0) {
 			//$styleString = $styleString . " border-radius: $imageRounded%; ";
@@ -257,7 +256,6 @@ function replaceImageRefInContentString($sectionString, $editSectionID)
 			$imageClassCircular = "";
 		}
 		if (isset($_SESSION["imageLibrary"][$imageIDRef]) == false) {
-			//die("Image ID $imageIDRef not found in image library");
 			$caption = "Required Image Not Found";
 			$locationLink = "../uploadedImages/Question Marks.jpg";
 			$description = "Required Image not found";
@@ -268,12 +266,15 @@ function replaceImageRefInContentString($sectionString, $editSectionID)
 		}
 
 		$imageString = "
-    <figure class=\"insertedImage$imageClassCircular\" />
-        <img  src=\"../$locationLink\"  alt=\"$description\" width=\"$imageWidth\" height=\"$imageHeight\"/>
-    <figcaption>$caption</figcaption>
-</figure>";
+    	<figure class=\"insertedImage$imageClassCircular\" />
+			<img  src=\"../$locationLink\"  alt=\"$description\" width=\"$imageWidth\" height=\"$imageHeight\"/>
+			<figcaption>$caption</figcaption>
+		</figure>";
 		$sectionString = substr_replace($sectionString, $imageString, $imageCodeStartPos, $imageCodeLength);
 	}
+	/* 	if (str_contains($sectionString, "<p></p>")) {
+		die("unexpected p tags found");
+	} */
 	$returnArray[0] = $sectionString;
 	$returnArray[1] = $errorMessage;
 

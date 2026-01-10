@@ -181,6 +181,10 @@ function insertPageSectionOneColumn($contentString, $title, $sectionID)
 	// Get section style and route to appropriate display function
 	$sectionStyle = $_SESSION["sectionDB"][$sectionID]["SectionStyle"] ?? "SpaceOnLeft";
 
+	/* if (str_contains($displayString, "<p></p>")) {
+		die("unexpected p tags found");
+	} */
+
 	switch ($sectionStyle) {
 		case "ColumnFrames":
 			printColumnFramesSection($displayString, $errorMessage, $title, $sectionID);
@@ -270,7 +274,7 @@ function printRawAndBasicSection($sectionContent, $errorMessage, $title, $sectio
     .$divClass .sectionEditButton {    
       position: absolute;    
       top: 5px;    
-      left: 5px;   
+      right: 5px;   
       background-color: rgba(25, 118, 210, 0.7);\n    
       color: white;   
       border: none;    
@@ -290,8 +294,18 @@ function printRawAndBasicSection($sectionContent, $errorMessage, $title, $sectio
     position: relative;\n  }\n
     </style>\n";
 
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
 	}
+	if (str_contains($sectionContent, "<p> </p>")) {
+		die("unexpected p tags found in printRawAndBasicSection");
+	}
+	if (str_contains($sectionContent, "<p></p>")) {
+		die("unexpected p tags found in printRawAndBasicSection");
+	}
+	if (str_contains($sectionContent, "<p> <fig")) {
+		die("unexpected p tags found in printRawAndBasicSection");
+	}
+
 	printf(
 		"
   <section class=\"mainContent\">

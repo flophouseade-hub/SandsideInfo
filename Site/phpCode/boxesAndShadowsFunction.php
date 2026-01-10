@@ -14,11 +14,11 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
 		print "<style>\n
   .$divClass {
     --chosen-color: $sectionColour;
-    --chosen-color-lighter: {$colourCombo['lighter']};
-    --chosen-color-Comp1: {$colourCombo['splitComp1']};
-    --chosen-color-Comp2: {$colourCombo['splitComp2']};
-    --chosen-color-Comp2-lighter: {$colourCombo['splitComp2Lighter']};
-    --chosen-color-Comp1-lighter: {$colourCombo['splitComp1Lighter']};
+    --chosen-color-lighter: {$colourCombo["lighter"]};
+    --chosen-color-Comp1: {$colourCombo["splitComp1"]};
+    --chosen-color-Comp2: {$colourCombo["splitComp2"]};
+    --chosen-color-Comp2-lighter: {$colourCombo["splitComp2Lighter"]};
+    --chosen-color-Comp1-lighter: {$colourCombo["splitComp1Lighter"]};
     }
     </style>\n ";
 	}
@@ -52,10 +52,10 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
     .$divClass .headerBox h6{
     color: var(--chosen-color-Comp2);
   }
-.$divClass .contentBox .insertedImage {
+.$divClass .contentBox figure.insertedImage {
     max-width: 100%;
     height: auto;
-    margin: 0px 0px 15px 20px;
+    margin: 0px 24px 15px 0px;
     padding: 12px;
     background: var(--chosen-color-lighter);
     border-radius: 8px;
@@ -174,7 +174,7 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
     .$divClass .boxesAndShadowsSection:hover .sectionEditButton {\n    opacity: 1;\n  }\n  
     .$divClass .boxesAndShadowsSection {\n    position: relative;\n  }\n</style>\n";
 
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">âœï¸ Edit</a>";
+		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
 	}
 
 	// Parse content for h1 and h2 headings to create boxes
