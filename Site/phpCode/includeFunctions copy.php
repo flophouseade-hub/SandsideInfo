@@ -217,7 +217,7 @@ function accessLevelCheck($requiredAccessLevel)
 	return $accessOK;
 }
 
-function replaceImageRefInContentString($sectionString)
+function replaceImageRefInContentString($sectionString, $editSectionID)
 {
 	$contentString = $sectionString;
 	$refArray = findRefStringPositionsInContentString($contentString, "<imageL", "/>");
@@ -235,11 +235,11 @@ function replaceImageRefInContentString($sectionString)
 	$errorMessage = "";
 	$imageRefArray = decodeImageCodeString($imageRefString);
 	if (mb_strlen($imageRefString) < 6) {
-		$errorMessage = "<p><strong style=\"color: red;\">There is a problem with your image reference: $imageCodeString</strong></p>";
+		$errorMessage = "<p style=\"color: red;\"><strong>There is a problem with your image reference: $imageCodeString</strong></p>";
 	} elseif (!isset($imageRefArray[2]) || mb_strlen($imageRefArray[2]) == 0 || !is_numeric($imageRefArray[2])) {
-		$errorMessage = "<p><strong style=\"color: red;\">There is a problem with your image reference - not enough parameters: $imageCodeString</strong></p>";
-	} elseif ($imageRefArray[3] < 0 || $imageRefArray[3] > 1) {
-		$errorMessage = "<p><strong style=\"color: red;\">Rounded corners value should be between 0 and 1: $imageCodeString</strong></p>";
+		$errorMessage = "<p style=\"color: red;\"><strong>There is a problem with your image reference - not enough parameters: $imageCodeString</strong></p>";
+	} elseif (!isset($imageRefArray[3]) || mb_strlen($imageRefArray[3]) == 0 || !is_numeric($imageRefArray[3])) {
+		$errorMessage = "<p style=\"color: red;\"><strong>There is no rounded corners value in your image reference: $imageCodeString</strong></p>";
 	} else {
 		// When there are no errors:
 		$imageRefArray = decodeImageCodeString($imageRefString);
@@ -247,14 +247,14 @@ function replaceImageRefInContentString($sectionString)
 			$imageIDRef = $imageRefArray[0];
 			$imageWidth = $imageRefArray[1];
 			$imageHeight = $imageRefArray[2];
-			$imageRounded = $imageRefArray[3] ?? 0;
-			$imageCaptionShow = $imageRefArray[4] ?? 1;
+			$imageRounded = $imageRefArray[3];
+			//echo("ImageIDRef: $imageIDRef Width: $imageWidth Height: $imageHeight Rounded: $imageRounded<br>");
 		}
 		if (isset($imageRounded) && $imageRounded > 0) {
-			$borderRadius = $imageRounded * 50;
-			$styleString = "style=\"border-radius: {$borderRadius}%;\"";
+			//$styleString = $styleString . " border-radius: $imageRounded%; ";
+			$imageClassCircular = "Circular";
 		} else {
-			$styleString = "";
+			$imageClassCircular = "";
 		}
 		if (isset($_SESSION["imageLibrary"][$imageIDRef]) == false) {
 			//die("Image ID $imageIDRef not found in image library");
@@ -268,12 +268,10 @@ function replaceImageRefInContentString($sectionString)
 		}
 
 		$imageString = "
-			<figure class=\"insertedImage\" />
-			<img  src=\"../$locationLink\"  alt=\"$description\" width=\"$imageWidth\" height=\"$imageHeight\" $styleString/>";
-		if ($imageCaptionShow == 1) {
-			$imageString .= "<figcaption>$caption</figcaption>";
-		}
-		$imageString .= "</figure>";
+    <figure class=\"insertedImage$imageClassCircular\" />
+        <img  src=\"../$locationLink\"  alt=\"$description\" width=\"$imageWidth\" height=\"$imageHeight\"/>
+    <figcaption>$caption</figcaption>
+</figure>";
 		$sectionString = substr_replace($sectionString, $imageString, $imageCodeStartPos, $imageCodeLength);
 	}
 	$returnArray[0] = $sectionString;
@@ -284,9 +282,66 @@ function replaceImageRefInContentString($sectionString)
 
 function decodeImageCodeString($imageRefString)
 {
-	$imageRefString = preg_replace("/\s+/", "", $imageRefString);
-	$imageCodeArray = explode(",", $imageRefString);
-	return $imageCodeArray;
+	// Extract the content between <imageL and />
+	// Format: <imageLID,width,height,rounded,showCaption/>
+	$imageCodeString = substr($imageRefString, 7, strlen($imageRefString) - 9);
+	$imageCodeArray = explode(",", $imageCodeString);
+
+	$imageID = trim($imageCodeArray[0]);
+	$imageWidth = isset($imageCodeArray[1]) ? trim($imageCodeArray[1]) : 300;
+	$imageHeight = isset($imageCodeArray[2]) ? trim($imageCodeArray[2]) : 200;
+	$imageRounded = isset($imageCodeArray[3]) ? trim($imageCodeArray[3]) : 0;
+	$showCaption = isset($imageCodeArray[4]) ? (int) trim($imageCodeArray[4]) : 1; // Default to showing caption
+
+	// Validate imageID is numeric
+	if (!validatePositiveInteger($imageID)) {
+		return "<p style='color:red;'>Error: Invalid image ID: $imageID</p>";
+	}
+
+	// Get image data from database
+	$connection = connectToDatabase();
+	if (!$connection) {
+		return "<p style='color:red;'>Error: Could not connect to database</p>";
+	}
+
+	$query = "SELECT ImageFileName, ImageCaption, ImageAltText FROM image_library_tb WHERE ImageID = ?";
+	$stmt = $connection->prepare($query);
+	$stmt->bind_param("i", $imageID);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	if ($result->num_rows === 0) {
+		$stmt->close();
+		$connection->close();
+		return "<p style='color:red;'>Error: Image not found (ID: $imageID)</p>";
+	}
+
+	$row = $result->fetch_assoc();
+	$imageFileName = $row["ImageFileName"];
+	$imageCaption = $row["ImageCaption"];
+	$imageAltText = $row["ImageAltText"];
+
+	$stmt->close();
+	$connection->close();
+
+	// Determine figure class based on rounded parameter
+	$figureClass = $imageRounded == 1 ? "insertedImageCircular" : "insertedImage";
+
+	// Build the HTML
+	$imageHTML = "<figure class=\"$figureClass\">";
+	$imageHTML .=
+		"<img src=\"../images/$imageFileName\" alt=\"" .
+		htmlspecialchars($imageAltText, ENT_QUOTES, "UTF-8") .
+		"\" width=\"$imageWidth\" height=\"$imageHeight\">";
+
+	// Only add caption if showCaption is 1 (or not specified - defaults to 1)
+	if ($showCaption == 1 && !empty($imageCaption)) {
+		$imageHTML .= "<figcaption>" . htmlspecialchars($imageCaption, ENT_QUOTES, "UTF-8") . "</figcaption>";
+	}
+
+	$imageHTML .= "</figure>";
+
+	return $imageHTML;
 }
 
 /**

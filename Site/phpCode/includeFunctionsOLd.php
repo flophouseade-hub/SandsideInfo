@@ -217,7 +217,101 @@ function accessLevelCheck($requiredAccessLevel)
 	return $accessOK;
 }
 
-function replaceImageRefInContentString($sectionString)
+/* function insertImageIntoPageSection($locationLink, $imageHeight, $imageWidth, $caption, $roundedCorners)
+{
+  $styleString = "width: $imageWidth; height: $imageHeight; object-fit: cover;  margin-top: 10px  ";
+  if ($roundedCorners == true) {
+    $styleString = $styleString . "; border-radius: 50%;";
+  }
+  print("
+    <div class=\"insertedImage\">
+        <img src=\"$locationLink\"  alt=\"$caption\" style=\"$styleString\"/>
+    <p>$caption</p>
+</div>
+    ");
+  return;
+} */
+/* 
+function insertImagefromDBIntoPageSection($libraryImageID, $imageHeight, $imageWidth, $roundedCorners)
+{
+  try {
+    $con = connectToDatabase();
+    $libraryImageID = -3; //errror checking
+    
+    // Validate image ID
+    if (!is_numeric($libraryImageID) || $libraryImageID <= 0) {
+      throw new Exception("Invalid image ID: $libraryImageID");
+    }
+
+    // Use prepared statement to prevent SQL injection
+    $stmt = $con->prepare("SELECT ImageLink, ImageCaption, ImageAltText FROM ImageLibrary WHERE ImageID = ?");
+    if (!$stmt) {
+      throw new Exception("Prepare failed: " . $con->error);
+    }
+    
+    $stmt->bind_param("i", $libraryImageID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows === 0) {
+      throw new Exception("Image not found: ID $libraryImageID");
+    }
+    
+    $row = $result->fetch_assoc();
+    $locationLink = $row['ImageLink'];
+    $caption = $row['ImageCaption'];
+    $altText = $row['ImageAltText'];
+    
+    $stmt->close();
+    mysqli_close($con);
+
+    $styleString = "width: $imageWidth; height: $imageHeight; object-fit: cover;  margin-top: 10px  ";
+    if ($roundedCorners == true) {
+      $styleString = $styleString . "; border-radius: 50%;";
+    }
+    $returnString = "
+    <div class=\"insertedImage\">
+        <img src=\"$locationLink\"  alt=\"$altText\" style=\"$styleString\"/>
+    <p>$caption</p>
+</div>
+    ";
+    return $returnString;
+    
+  } catch (Exception $e) {
+    // Log the error with context
+    logError('DATABASE', $e->getMessage(), __FILE__, __LINE__, $_SESSION['userID'] ?? null);
+    
+    // Close connection if it exists
+    if (isset($con) && $con) {
+      mysqli_close($con);
+    }
+    
+    // Redirect to error page
+    $errorMsg = urlencode("Failed to load image: " . $e->getMessage());
+    header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
+    exit;
+  }
+}
+ */
+/* function insertImageStringByRefID($refID, $imageHeight, $imageWidth, $roundedCorners)
+{
+  $locationLink = $_SESSION['pagesOnSite'][$refID]['ImageLink'];
+  $caption = $_SESSION['pagesOnSite'][$refID]['ImageDescription'];
+  $altText = $_SESSION['pagesOnSite'][$refID]['ImageAltText'];
+
+  $styleString = "width: $imageWidth; height: $imageHeight; object-fit: cover;  margin-top: 10px  ";
+  if ($roundedCorners == true) {
+    $styleString = $styleString . "; border-radius: 50%;";
+  }
+  $returnString = "
+    <div class=\"insertedImage\">
+        <img src=\"$locationLink\"  alt=\"$altText\" style=\"$styleString\"/>
+    <p>$caption</p>
+</div>";
+  return $returnString;
+} */
+
+function replaceImageRefInContentString($sectionString, $editSectionID)
 {
 	$contentString = $sectionString;
 	$refArray = findRefStringPositionsInContentString($contentString, "<imageL", "/>");
@@ -235,11 +329,11 @@ function replaceImageRefInContentString($sectionString)
 	$errorMessage = "";
 	$imageRefArray = decodeImageCodeString($imageRefString);
 	if (mb_strlen($imageRefString) < 6) {
-		$errorMessage = "<p><strong style=\"color: red;\">There is a problem with your image reference: $imageCodeString</strong></p>";
+		$errorMessage = "<p style=\"color: red;\"><strong>There is a problem with your image reference: $imageCodeString</strong></p>";
 	} elseif (!isset($imageRefArray[2]) || mb_strlen($imageRefArray[2]) == 0 || !is_numeric($imageRefArray[2])) {
-		$errorMessage = "<p><strong style=\"color: red;\">There is a problem with your image reference - not enough parameters: $imageCodeString</strong></p>";
-	} elseif ($imageRefArray[3] < 0 || $imageRefArray[3] > 1) {
-		$errorMessage = "<p><strong style=\"color: red;\">Rounded corners value should be between 0 and 1: $imageCodeString</strong></p>";
+		$errorMessage = "<p style=\"color: red;\"><strong>There is a problem with your image reference - not enough parameters: $imageCodeString</strong></p>";
+	} elseif (!isset($imageRefArray[3]) || mb_strlen($imageRefArray[3]) == 0 || !is_numeric($imageRefArray[3])) {
+		$errorMessage = "<p style=\"color: red;\"><strong>There is no rounded corners value in your image reference: $imageCodeString</strong></p>";
 	} else {
 		// When there are no errors:
 		$imageRefArray = decodeImageCodeString($imageRefString);
@@ -247,14 +341,14 @@ function replaceImageRefInContentString($sectionString)
 			$imageIDRef = $imageRefArray[0];
 			$imageWidth = $imageRefArray[1];
 			$imageHeight = $imageRefArray[2];
-			$imageRounded = $imageRefArray[3] ?? 0;
-			$imageCaptionShow = $imageRefArray[4] ?? 1;
+			$imageRounded = $imageRefArray[3];
+			//echo("ImageIDRef: $imageIDRef Width: $imageWidth Height: $imageHeight Rounded: $imageRounded<br>");
 		}
 		if (isset($imageRounded) && $imageRounded > 0) {
-			$borderRadius = $imageRounded * 50;
-			$styleString = "style=\"border-radius: {$borderRadius}%;\"";
+			//$styleString = $styleString . " border-radius: $imageRounded%; ";
+			$imageClassCircular = "Circular";
 		} else {
-			$styleString = "";
+			$imageClassCircular = "";
 		}
 		if (isset($_SESSION["imageLibrary"][$imageIDRef]) == false) {
 			//die("Image ID $imageIDRef not found in image library");
@@ -268,12 +362,10 @@ function replaceImageRefInContentString($sectionString)
 		}
 
 		$imageString = "
-			<figure class=\"insertedImage\" />
-			<img  src=\"../$locationLink\"  alt=\"$description\" width=\"$imageWidth\" height=\"$imageHeight\" $styleString/>";
-		if ($imageCaptionShow == 1) {
-			$imageString .= "<figcaption>$caption</figcaption>";
-		}
-		$imageString .= "</figure>";
+    <figure class=\"insertedImage$imageClassCircular\" />
+        <img  src=\"../$locationLink\"  alt=\"$description\" width=\"$imageWidth\" height=\"$imageHeight\"/>
+    <figcaption>$caption</figcaption>
+</figure>";
 		$sectionString = substr_replace($sectionString, $imageString, $imageCodeStartPos, $imageCodeLength);
 	}
 	$returnArray[0] = $sectionString;

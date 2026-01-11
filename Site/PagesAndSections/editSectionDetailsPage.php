@@ -660,9 +660,14 @@ $customTagsString = "
   
   <div class=\"referenceColumn\">
     <h4>Image Insertion</h4>
-    <code class=\"htmlReference\">&lt;imageL12,150,100,0/&gt;</code>
-    <p>Inserts image with ID 12 from the Image Library with width 150, height 100, and no roundedness</p>
+    <code class=\"htmlReference\">&lt;imageL12,150,100,0,1/&gt;</code>
+    <p>Inserts image with ID 12, width 150px, height 100px, not rounded, with caption displayed</p>
     
+    <code class=\"htmlReference\">&lt;imageL12,150,100,1,0/&gt;</code>
+    <p>Inserts image with ID 12, width 150px, height 100px, rounded, with no caption</p>
+    
+    <p><strong>Parameters:</strong> ID, width, height, rounded (0 or 1), showCaption (0 or 1). Caption defaults to showing if not specified.</p>
+
     <h4>Side-by-Side Layout</h4>
     <code class=\"htmlReference\">&lt;sideL&gt;<br/>
 &lt;imageL12,150,100,0/&gt;<br/>

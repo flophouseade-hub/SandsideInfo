@@ -13,7 +13,7 @@ function insertPageSectionOneColumn($contentString, $title, $sectionID, $showEdi
 	//-------------------------------------------------------------------
 	while (strpos($displayString, "<imageL") !== false) {
 		$count++;
-		$returnArray = replaceImageRefInContentString($displayString, $sectionID);
+		$returnArray = replaceImageRefInContentString($displayString);
 		$displayString = $returnArray[0];
 		$errorMessage = $returnArray[1];
 		if ($count > 10) {
@@ -215,10 +215,6 @@ function insertPageSectionOneColumn($contentString, $title, $sectionID, $showEdi
 
 	// Get section style and route to appropriate display function
 	$sectionStyle = $_SESSION["sectionDB"][$sectionID]["SectionStyle"] ?? "SpaceOnLeft";
-
-	/* if (str_contains($displayString, "<p></p>")) {
-		die("unexpected p tags found");
-	} */
 
 	switch ($sectionStyle) {
 		case "ColumnFrames":
