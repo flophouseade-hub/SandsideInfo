@@ -1,5 +1,5 @@
 <?php
-function printColumnFramesSection($sectionContent, $errorMessage, $title, $sectionID)
+function printColumnFramesSection($sectionContent, $errorMessage, $title, $sectionID, $showEditButton = 1)
 {
 	// Card grid layout with h1/h2 headings creating new cards
 	// Get some data from the session variables:
@@ -85,12 +85,35 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
     border-top: 2px solid var(--chosen-color);
     padding-top: 15px;
   }
+
   .$divClass .columnFramesTitleBar h1.sectionTitle a{
   text-decoration: none;
   }
 
+  .$divClass .columnFramesCard .columnFramesCardBody aside,
+  .$divClass .columnFramesCard .columnFramesCardBody aside.leftAside {
+    width: 80%;
+    margin: auto;
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    }
+
+  .$divClass .columnFramesCard .columnFramesCardBody aside h3,
+  .$divClass .columnFramesCard .columnFramesCardBody aside h4,
+  .$divClass .columnFramesCard .columnFramesCardBody aside.leftAside h3,
+  .$divClass .columnFramesCard .columnFramesCardBody aside.leftAside h4 {
+    font-size: 16px;
+  }
+
+  .$divClass .columnFramesCard .columnFramesCardBody aside ul li,
+  .$divClass .columnFramesCard .columnFramesCardBody aside ol li,
+  .$divClass .columnFramesCard .columnFramesCardBody aside.leftAside ul li,
+  .$divClass .columnFramesCard .columnFramesCardBody aside.leftAside ol li{
+    font-size: 14px;
+  }
+
   .$divClass .columnFramesCard .columnFramesCardBody h3 {
-    margin: 0;
+    margin: 0 0 10px 0;
     font-size: 20px;
     font-weight: 400;
     text-align: center;
@@ -100,7 +123,7 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
     padding-bottom: 6px;
   }
   .$divClass .columnFramesCard .columnFramesCardBody h4 {
-    margin: 0;
+    margin: 0 0 10px 0;
     font-size: 18px;
     font-weight: 400;
     text-align: center;
@@ -138,31 +161,15 @@ function printColumnFramesSection($sectionContent, $errorMessage, $title, $secti
 	}
 
 	// Add floating edit button for editors/admins
-	$editButton = "";
-	if (accessLevelCheck("pageEditor") === true) {
-		print "<style>\n  
-        .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    right: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
-        .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  
-        .$divClass .columnFramesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  
-        .$divClass .columnFramesWrapper {\n    position: relative;\n  }\n</style>\n";
-
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
+	if (accessLevelCheck("pageEditor") === true && $showEditButton) {
+		$editButton = insertFloatingEditButton($sectionID);
+	} else {
+		$editButton = "";
 	}
 
 	// Add CSS to hide title if SectionShowTitle is false
 	if (!$sectionShowTitle) {
 		print "<style>\n  .$divClass .columnFramesTitleBar { display: none; }\n</style>\n";
-	}
-
-	// Add floating edit button for editors/admins
-	$editButton = "";
-	if (accessLevelCheck("pageEditor") === true) {
-		print "<style>\n  
-    .$divClass .sectionEditButton 
-      {\n    position: absolute;\n    
-      top: 5px;\n    right: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
-      .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .columnFramesWrapper:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .columnFramesWrapper {\n    position: relative;\n  }\n</style>\n";
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
 	}
 
 	// Parse content for h1 and h2 headings to create cards

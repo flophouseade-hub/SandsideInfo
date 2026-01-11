@@ -530,7 +530,7 @@ $_SESSION["sectionDB"][$editSectionID]["SectionColourSameAsPage"] = false; // Al
 $_SESSION["sectionDB"][$editSectionID]["SectionShowTitle"] = $sectionShowTitle;
 
 // Display the current section content as a preview
-insertPageSectionOneColumn($sectionContent, $sectionTitle, $editSectionID);
+insertPageSectionOneColumn($sectionContent, $sectionTitle, $editSectionID, 0);
 
 // HTML Tags Reference Section with improved styling
 $htmlReferenceString = "
@@ -662,6 +662,14 @@ $customTagsString = "
     <h4>Image Insertion</h4>
     <code class=\"htmlReference\">&lt;imageL12,150,100,0/&gt;</code>
     <p>Inserts image with ID 12 from the Image Library with width 150, height 100, and no roundedness</p>
+    
+    <h4>Side-by-Side Layout</h4>
+    <code class=\"htmlReference\">&lt;sideL&gt;<br/>
+&lt;imageL12,150,100,0/&gt;<br/>
+&lt;imageL13,150,100,0/&gt;<br/>
+&lt;p&gt;Text here&lt;/p&gt;<br/>
+&lt;/sideL&gt;</code>
+    <p>Arranges images and text side-by-side. Content wraps to new lines on smaller screens.</p>
     
     <h4>Videos</h4>
     <code class=\"htmlReference\">&lt;videoL youTube reference /video&gt;</code>

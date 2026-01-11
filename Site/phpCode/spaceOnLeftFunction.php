@@ -1,5 +1,5 @@
 <?php
-function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectionID)
+function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectionID, $showEditButton = 1)
 {
 	// Get some data from the session variables:
 	$sectionColour = $_SESSION["sectionDB"][$sectionID]["SectionColour"] ?? "#b3b3b3";
@@ -29,7 +29,7 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	}
 	print "<style>\n
   /* -------------------------------------------------- */
-/* SpaceLeft Styles */
+/* SpaceOnLeft Styles */
 /* --------------------------------------------------- */
 
 .$divClass  section.section1 {
@@ -107,9 +107,6 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	font-weight: 400;
 	line-height: 1.5;
 }
-
-
-
 
 .$divClass  .section1 .section1Content button {
 	font-size: 14px;
@@ -226,10 +223,10 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
 	}
 
 	// Add floating edit button for editors/admins
-	$editButton = "";
-	if (accessLevelCheck("pageEditor") === true) {
-		print "<style>\n  .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    right: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .section1:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .section1 {\n    position: relative;\n  }\n</style>\n";
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
+	if (accessLevelCheck("pageEditor") === true && $showEditButton) {
+		$editButton = insertFloatingEditButton($sectionID);
+	} else {
+		$editButton = "";
 	}
 
 	printf(
@@ -238,8 +235,7 @@ function printSpaceOnLeftSection($sectionContent, $errorMessage, $title, $sectio
     <section class=\"section1\" >
       %s
       <h1 class=\"sectionTitle\" style=\"color: var(--chosen-color)\">%s</h1>
-      <hr class=\"sectionTitleRule\" style=\"background-color: var(--chosen-color)\">
-      <hr class=\"sectionTitleRule2\" style=\"background-color: var(--chosen-color)\">
+      <hr>
       <div class=\"section1Content\">%s%s</div>
     </section>
   </section>

@@ -1,5 +1,5 @@
 <?php
-function printCentredSideAccentSection($sectionContent, $errorMessage, $title, $sectionID)
+function printCentredSideAccentSection($sectionContent, $errorMessage, $title, $sectionID, $showEditButton = 1)
 {
 	// Get some data from the session variables:
 	$sectionColour = $_SESSION["sectionDB"][$sectionID]["SectionColour"] ?? "#b3b3b3";
@@ -183,10 +183,10 @@ function printCentredSideAccentSection($sectionContent, $errorMessage, $title, $
 	}
 
 	// Add floating edit button for editors/admins
-	$editButton = "";
-	if (accessLevelCheck("pageEditor") === true) {
-		print "<style>\n  .$divClass .sectionEditButton {\n    position: absolute;\n    top: 5px;\n    right: 5px;\n    background-color: rgba(25, 118, 210, 0.7);\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    text-decoration: none;\n    display: inline-block;\n    z-index: 100;\n    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  .$divClass .centredAccentContainer:hover .sectionEditButton {\n    opacity: 1;\n  }\n  .$divClass .centredAccentContainer {\n    position: relative;\n  }\n</style>\n";
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
+	if (accessLevelCheck("pageEditor") === true && $showEditButton) {
+		$editButton = insertFloatingEditButton($sectionID);
+	} else {
+		$editButton = "";
 	}
 
 	printf(

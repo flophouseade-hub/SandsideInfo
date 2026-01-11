@@ -221,12 +221,12 @@ $libraryResourceTypeArray = [
 ];
 
 $sectionStyleOptionArray = [
-	"SpaceOnLeft" => "The section title is on the left with content on the right",
-	"ColumnFrames" => "Content is split into columns",
-	"CentredSideAccent" => "The content is centered on the page with coloured accents on the sides",
-	"AlternateBoxes" => "Content boxes alternate left and right across the page",
-	"BoxesAndShadows" => "Headings and content are in boxes with shadows and coloured accents",
-	"RawAndBasic" => "Only the most basic styling is applied (for admin use only)",
+	"SpaceOnLeft" => "Space is created on the left with content on the right",
+	"ColumnFrames" => "Columns stack across the page with each h1 or h2 heading starting a new column",
+	"CentredSideAccent" => "Centered content with coloured accents on the sides",
+	"AlternateBoxes" => "Alternate left and right boxes across the page",
+	"BoxesAndShadows" => "Boxes with shadows and coloured accents",
+	"RawAndBasic" => "Only the most basic styling is applied to the content",
 ];
 
 // Get the page details for this page from the array:

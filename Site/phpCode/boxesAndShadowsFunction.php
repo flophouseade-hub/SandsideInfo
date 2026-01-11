@@ -1,5 +1,5 @@
 <?php
-function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $sectionID)
+function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $sectionID, $showEditButton = 1)
 {
 	// Modern box layout with colored left borders on headings, similar to course cards
 	$sectionColour = $_SESSION["sectionDB"][$sectionID]["SectionColour"] ?? "#808080";
@@ -157,24 +157,10 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
 	}
 
 	// Add floating edit button for editors/admins
-	$editButton = "";
-	if (accessLevelCheck("pageEditor") === true) {
-		print "<style>\n  
-    .$divClass .sectionEditButton {\n    
-    position: absolute;\n    
-    top: 10px;\n    right: 10px;\n    
-    background-color: rgba(25, 118, 210, 0.7);\n    
-    color: white;\n    border: none;\n    border-radius: 4px;\n    
-    padding: 6px 10px;\n    font-size: 12px;\n    cursor: pointer;\n    
-    text-decoration: none;\n    
-    display: inline-block;\n    
-    z-index: 100;\n    
-    opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
-    .$divClass .sectionEditButton:hover {\n    background-color: rgba(25, 118, 210, 1);\n    opacity: 1;\n  }\n  
-    .$divClass .boxesAndShadowsSection:hover .sectionEditButton {\n    opacity: 1;\n  }\n  
-    .$divClass .boxesAndShadowsSection {\n    position: relative;\n  }\n</style>\n";
-
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
+	if (accessLevelCheck("pageEditor") === true && $showEditButton) {
+		$editButton = insertFloatingEditButton($sectionID);
+	} else {
+		$editButton = "";
 	}
 
 	// Parse content for h1 and h2 headings to create boxes

@@ -5,6 +5,7 @@
 	display: block;
 	margin: 0 auto;
 	max-width: 1200px;
+	position: relative;
 	/* 	flex: 1;
 	gap: 30px; */
 }
@@ -22,6 +23,7 @@
 	margin-bottom: 15px;
 	object-fit: cover;
 	float: left;
+	clear: left;
 	margin-right: 15px;
 	margin-left: 0px;
 }
@@ -246,17 +248,17 @@
 	height: 2px;
 	background-color: var(--chosen-color);
 	margin: 20px 0px;
+	clear: both;
 }
 .mainContent li::marker {
 	color: var(--chosen-color-Comp1);
 }
 
 .mainContent aside {
-	width: 50%;
-	padding-left: 0.5rem;
-	margin-left: 0.5rem;
+	width: 40%;
+	margin-left: 20px;
 	float: right;
-	padding: 20px;
+	padding: 5px 20px 5px 20px;
 	border-radius: 8px;
 	background-color: var(--chosen-color-Comp1-lighter);
 	color: var(--chosen-color);
@@ -266,9 +268,57 @@
 	margin: 0.5rem;
 }
 
-/* .mainContent .section1 {
-    margin-top: 40px;
-    margin-bottom: 10px;
-    margin-right: 40px;
-    margin-left: 40px;
-} */
+.mainContent aside.leftAside {
+	width: 40%;
+	margin: 0 20px 20px 0;
+	float: left;
+	padding: 12px 20px 5px 20px;
+	border-radius: 8px;
+	background-color: var(--chosen-color-Comp1-lighter);
+	color: var(--chosen-color);
+}
+
+.mainContent aside.leftAside > p {
+	margin: 0.5rem;
+}
+
+/* Side-by-side layout container */
+.mainContent .sideByLayout {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+	align-items: flex-start;
+	margin-bottom: 20px;
+	clear: both;
+}
+
+/* Images take their natural width */
+.mainContent .sideByLayout figure.insertedImage,
+.mainContent .sideByLayout figure.insertedImageCircular {
+	float: none;
+	margin-right: 0;
+	flex: 0 0 auto; /* Don't grow or shrink, use natural size */
+}
+
+/* Text elements fill remaining space */
+.mainContent .sideByLayout p,
+.mainContent .sideByLayout div,
+.mainContent .sideByLayout ul,
+.mainContent .sideByLayout ol {
+	flex: 1 1 0; /* Grow to fill space, shrink if needed, start from 0 basis */
+	min-width: 200px; /* Ensure text doesn't get too narrow */
+	margin: 0;
+}
+
+/* For very narrow screens, stack everything */
+@media (max-width: 768px) {
+	.mainContent .sideByLayout {
+		flex-direction: column;
+	}
+
+	.mainContent .sideByLayout figure.insertedImage,
+	.mainContent .sideByLayout figure.insertedImageCircular {
+		width: 100%;
+		max-width: 100%;
+	}
+}

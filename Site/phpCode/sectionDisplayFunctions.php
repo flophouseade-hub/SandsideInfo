@@ -1,5 +1,5 @@
 <?php
-function insertPageSectionOneColumn($contentString, $title, $sectionID)
+function insertPageSectionOneColumn($contentString, $title, $sectionID, $showEditButton = 1)
 {
 	//content string is stored with html entties converted so convert them back if we need to
 	$contentString = decodeSectionContent($contentString);
@@ -151,6 +151,41 @@ function insertPageSectionOneColumn($contentString, $title, $sectionID)
 		} // Prevent infinite loop in case of error
 	}
 	//-------------------------------------------------------------------
+	// Find all the side-by-side layout tags and replace them with flex containers
+	//-------------------------------------------------------------------
+	$count = 0;
+	while (strpos($displayString, "<sideL>") !== false && $count < 20) {
+		$startPos = strpos($displayString, "<sideL>");
+		$endPos = strpos($displayString, "</sideL>", $startPos);
+
+		if ($endPos === false) {
+			$errorMessage .= "<p style='color:red;'>Error: Missing closing &lt;/sideL&gt; tag</p>";
+			break;
+		}
+
+		$tagLength = $endPos - $startPos + 8; // 8 = length of "</sideL>"
+		$wrappedContent = substr($displayString, $startPos + 7, $endPos - $startPos - 7); // 7 = length of "<sideL>"
+
+		// Wrap the content in a flex container
+		$replacement = '<div class="sideByLayout">' . $wrappedContent . "</div>";
+
+		$displayString = substr_replace($displayString, $replacement, $startPos, $tagLength);
+		$count++;
+	}
+
+	//-------------------------------------------------------------------
+	// End of replacements
+	//-------------------------------------------------------------------
+
+	// Clean up invalid HTML: remove <p> tags wrapping block elements
+	$displayString = preg_replace("/<p>\s*(<figure[^>]*>)/i", '$1', $displayString);
+	$displayString = preg_replace("/<\/figure>\s*<\/p>/i", "</figure>", $displayString);
+
+	// Remove any resulting empty paragraph tags
+	$displayString = preg_replace("/<p>\s*<\/p>/i", "", $displayString);
+	$displayString = preg_replace("/<p><\/p>/i", "", $displayString);
+
+	//-------------------------------------------------------------------
 	// End of replacements
 	//-------------------------------------------------------------------
 	// Get section colour and check if it should use page colour
@@ -187,23 +222,23 @@ function insertPageSectionOneColumn($contentString, $title, $sectionID)
 
 	switch ($sectionStyle) {
 		case "ColumnFrames":
-			printColumnFramesSection($displayString, $errorMessage, $title, $sectionID);
+			printColumnFramesSection($displayString, $errorMessage, $title, $sectionID, $showEditButton);
 			break;
 		case "CentredSideAccent":
-			printCentredSideAccentSection($displayString, $errorMessage, $title, $sectionID);
+			printCentredSideAccentSection($displayString, $errorMessage, $title, $sectionID, $showEditButton);
 			break;
 		case "AlternateBoxes":
-			printAlternateBoxesSection($displayString, $errorMessage, $title, $sectionID);
+			printAlternateBoxesSection($displayString, $errorMessage, $title, $sectionID, $showEditButton);
 			break;
 		case "BoxesAndShadows":
-			printBoxesAndShadowsSection($displayString, $errorMessage, $title, $sectionID);
+			printBoxesAndShadowsSection($displayString, $errorMessage, $title, $sectionID, $showEditButton);
 			break;
 		case "RawAndBasic":
-			printRawAndBasicSection($displayString, $errorMessage, $title, $sectionID);
+			printRawAndBasicSection($displayString, $errorMessage, $title, $sectionID, $showEditButton);
 			break;
 		case "SpaceOnLeft":
 		default:
-			printSpaceOnLeftSection($displayString, $errorMessage, $title, $sectionID);
+			printSpaceOnLeftSection($displayString, $errorMessage, $title, $sectionID, $showEditButton);
 			break;
 	}
 
@@ -236,7 +271,7 @@ function decodeSectionContent($contentString)
 	//$newString = html_entity_decode($contentString, ENT_QUOTES, 'UTF-8');
 	return $newString;
 }
-function printRawAndBasicSection($sectionContent, $errorMessage, $title, $sectionID)
+function printRawAndBasicSection($sectionContent, $errorMessage, $title, $sectionID, $showEditButton = 1)
 {
 	// Get some data from the session variables:
 	$sectionColour = $_SESSION["sectionDB"][$sectionID]["SectionColour"] ?? "#b3b3b3";
@@ -267,43 +302,12 @@ function printRawAndBasicSection($sectionContent, $errorMessage, $title, $sectio
 	if (!$sectionShowTitle) {
 		print "<style>\n  .$divClass .sectionTitle,\n  .$divClass .sectionTitleRule,\n  .$divClass .sectionTitleRule2 { display: none; }\n</style>\n";
 	}
-	// Add floating edit button for editors/admins
-	$editButton = "";
-	if (accessLevelCheck("pageEditor") === true) {
-		print "<style>\n  
-    .$divClass .sectionEditButton {    
-      position: absolute;    
-      top: 5px;    
-      right: 5px;   
-      background-color: rgba(25, 118, 210, 0.7);\n    
-      color: white;   
-      border: none;    
-      border-radius: 4px;\n    
-      padding: 6px 10px;\n    
-      font-size: 12px;\n    
-      cursor: pointer;\n    
-      text-decoration: none;\n    
-      display: inline-block;\n    z-index: 100;\n    
-      opacity: 0;\n    transition: opacity 0.3s ease;\n  }\n  
-    .$divClass .sectionEditButton:hover {\n    
-      background-color: rgba(25, 118, 210, 1);\n    
-      opacity: 1;\n  }\n  
-    .$divClass:hover .sectionEditButton {\n    
-      opacity: 1;\n  }\n  
-    .$divClass {\n    
-    position: relative;\n  }\n
-    </style>\n";
 
-		$editButton = "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">E</a>";
-	}
-	if (str_contains($sectionContent, "<p> </p>")) {
-		die("unexpected p tags found in printRawAndBasicSection");
-	}
-	if (str_contains($sectionContent, "<p></p>")) {
-		die("unexpected p tags found in printRawAndBasicSection");
-	}
-	if (str_contains($sectionContent, "<p> <fig")) {
-		die("unexpected p tags found in printRawAndBasicSection");
+	// Add floating edit button for editors/admins
+	if (accessLevelCheck("pageEditor") === true && $showEditButton) {
+		$editButton = insertFloatingEditButton($sectionID);
+	} else {
+		$editButton = "";
 	}
 
 	printf(
@@ -323,4 +327,37 @@ function printRawAndBasicSection($sectionContent, $errorMessage, $title, $sectio
 	print "<div style=\"clear: both;\"></div>\n";
 	print "</div>";
 	return;
+}
+function insertFloatingEditButton($sectionID)
+{
+	// Position relative to the section.mainContent, not the inner div
+	$editButtonString = "<style>\n  
+        section.mainContent .sectionEditButton {    
+            position: absolute;    
+            top: 10px;    
+            right: 10px;   
+            background-color: rgba(25, 118, 210, 0.7);
+            color: white;   
+            border: none;    
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        section.mainContent .sectionEditButton:hover {
+            background-color: rgba(25, 118, 210, 1);
+            opacity: 1;
+        }
+        section.mainContent:hover .sectionEditButton {
+            opacity: 1;
+        }
+        </style>\n";
+
+	$editButtonString .= "<a href=\"../PagesAndSections/editSectionDetailsPage.php?editSectionID=$sectionID\" class=\"sectionEditButton\" title=\"Edit Section\">✏️</a>";
+	return $editButtonString;
 }
