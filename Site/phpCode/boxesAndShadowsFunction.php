@@ -42,6 +42,16 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
     font-size: 1.0em;
     letter-spacing: 1px;
   }  
+  
+/* Clear floats before all headings inside content boxes */
+  .$divClass .contentBox h2,
+  .$divClass .contentBox h3,
+  .$divClass .contentBox h4,
+  .$divClass .contentBox h5,
+  .$divClass .contentBox h6 {
+    clear: both;
+  }
+     
   .$divClass .headerBox h5, .$divClass .headerBox h6{
   font-size: 0.9em;
     font-weight: 400;
@@ -105,18 +115,19 @@ function printBoxesAndShadowsSection($sectionContent, $errorMessage, $title, $se
     border-radius: 0 0 8px 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-bottom: 20px;
+    overflow: auto; /* Forces container to wrap around floats */
   }
   
   .$divClass .contentBox p {
     line-height: 1.6;
-    margin: 15px 0;
+    margin: 0 15px 15px 0px;
     color: #333;
+    padding-top: 0;
   }
   
   .$divClass .contentBox p:first-child {
     margin-top: 0;
   }
-
   
   .$divClass .contentBox p:last-child {
     margin-bottom: 0;

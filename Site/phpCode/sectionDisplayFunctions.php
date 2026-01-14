@@ -328,7 +328,7 @@ function insertFloatingEditButton($sectionID)
 {
 	// Position relative to the section.mainContent, not the inner div
 	$editButtonString = "<style>\n  
-        section.mainContent .sectionEditButton {    
+        .mainContent .sectionEditButton {    
             position: absolute;    
             top: 10px;    
             right: 10px;   
@@ -345,11 +345,11 @@ function insertFloatingEditButton($sectionID)
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        section.mainContent .sectionEditButton:hover {
+        .mainContent .sectionEditButton:hover {
             background-color: rgba(25, 118, 210, 1);
             opacity: 1;
         }
-        section.mainContent:hover .sectionEditButton {
+        .mainContent:hover .sectionEditButton {
             opacity: 1;
         }
         </style>\n";

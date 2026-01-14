@@ -3,9 +3,9 @@
 -- Run this SQL script to create all necessary tables for the questionnaire/assessment system
 
 -- =====================================================
--- 1. QuestionsDB - Store all quiz questions
+-- 1. quiz_questions_tb - Store all quiz questions
 -- =====================================================
-CREATE TABLE IF NOT EXISTS QuestionsDB (
+CREATE TABLE IF NOT EXISTS quiz_questions_tb (
     QuestionID INT AUTO_INCREMENT PRIMARY KEY,
     QuestionText TEXT NOT NULL,
     QuestionType ENUM('multiple-choice', 'true-false', 'short-answer') NOT NULL DEFAULT 'multiple-choice',
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS QuestionOptionsDB (
     OptionText TEXT NOT NULL,
     IsCorrect TINYINT(1) NOT NULL DEFAULT 0 COMMENT '1=correct answer, 0=incorrect',
     OptionOrder INT DEFAULT 1 COMMENT 'Display order of options',
-    FOREIGN KEY (QuestionID) REFERENCES QuestionsDB(QuestionID) ON DELETE CASCADE,
+    FOREIGN KEY (QuestionID) REFERENCES quiz_questions_tb(QuestionID) ON DELETE CASCADE,
     INDEX idx_question (QuestionID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS quizzes_tb (
     QuizID INT AUTO_INCREMENT PRIMARY KEY,
     QuizName VARCHAR(255) NOT NULL,
     QuizDescription TEXT DEFAULT NULL,
-    CourseID INT DEFAULT NULL COMMENT 'Links to CoursesDB - NULL means standalone quiz',
+    CourseID INT DEFAULT NULL COMMENT 'Links to courses_tb - NULL means standalone quiz',
     PassingScore DECIMAL(5,2) NOT NULL DEFAULT 70.00 COMMENT 'Percentage needed to pass (0-100)',
     TimeLimit INT DEFAULT NULL COMMENT 'Time limit in minutes - NULL means no limit',
     AllowRetakes TINYINT(1) DEFAULT 1 COMMENT '1=allow retakes, 0=one attempt only',
@@ -58,15 +58,15 @@ CREATE TABLE IF NOT EXISTS quizzes_tb (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================
--- 4. QuizQuestionsDB - Links questions to specific quizzes
+-- 4. quiz_question_links_tb - Links questions to specific quizzes
 -- =====================================================
-CREATE TABLE IF NOT EXISTS QuizQuestionsDB (
+CREATE TABLE IF NOT EXISTS quiz_question_links_tb (
     QuizQuestionID INT AUTO_INCREMENT PRIMARY KEY,
     QuizID INT NOT NULL,
     QuestionID INT NOT NULL,
     QuestionOrder INT DEFAULT 1 COMMENT 'Display order in the quiz',
     FOREIGN KEY (QuizID) REFERENCES quizzes_tb(QuizID) ON DELETE CASCADE,
-    FOREIGN KEY (QuestionID) REFERENCES QuestionsDB(QuestionID) ON DELETE CASCADE,
+    FOREIGN KEY (QuestionID) REFERENCES quiz_questions_tb(QuestionID) ON DELETE CASCADE,
     UNIQUE KEY unique_quiz_question (QuizID, QuestionID),
     INDEX idx_quiz (QuizID),
     INDEX idx_order (QuizID, QuestionOrder)
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS QuizAnswersDB (
     PointsAwarded INT DEFAULT 0,
     AnswerTime DATETIME DEFAULT NULL COMMENT 'When this question was answered',
     FOREIGN KEY (AttemptID) REFERENCES quiz_attempts_tb(AttemptID) ON DELETE CASCADE,
-    FOREIGN KEY (QuestionID) REFERENCES QuestionsDB(QuestionID) ON DELETE CASCADE,
+    FOREIGN KEY (QuestionID) REFERENCES quiz_questions_tb(QuestionID) ON DELETE CASCADE,
     UNIQUE KEY unique_attempt_question (AttemptID, QuestionID),
     INDEX idx_attempt (AttemptID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS QuizFeedbackDB (
 -- =====================================================
 
 -- Sample Question 1: Multiple Choice
-INSERT INTO QuestionsDB (QuestionText, QuestionType, QuestionGroup, QuestionPoints, QuestionExplanation, QuestionMadeBy, QuestionMadeTime) 
+INSERT INTO quiz_questions_tb (QuestionText, QuestionType, QuestionGroup, QuestionPoints, QuestionExplanation, QuestionMadeBy, QuestionMadeTime) 
 VALUES (
     'What is the capital of France?',
     'multiple-choice',
@@ -173,7 +173,7 @@ INSERT INTO QuestionOptionsDB (QuestionID, OptionText, IsCorrect, OptionOrder) V
 (@q1_id, 'Madrid', 0, 4);
 
 -- Sample Question 2: True/False
-INSERT INTO QuestionsDB (QuestionText, QuestionType, QuestionGroup, QuestionPoints, QuestionExplanation, QuestionMadeBy, QuestionMadeTime) 
+INSERT INTO quiz_questions_tb (QuestionText, QuestionType, QuestionGroup, QuestionPoints, QuestionExplanation, QuestionMadeBy, QuestionMadeTime) 
 VALUES (
     'The Earth is flat.',
     'true-false',
@@ -206,7 +206,7 @@ VALUES (
 SET @quiz_id = LAST_INSERT_ID();
 
 -- Link questions to quiz
-INSERT INTO QuizQuestionsDB (QuizID, QuestionID, QuestionOrder) VALUES
+INSERT INTO quiz_questions_tb (QuizID, QuestionID, QuestionOrder) VALUES
 (@quiz_id, @q1_id, 1),
 (@quiz_id, @q2_id, 2);
 
@@ -228,8 +228,8 @@ SELECT
     COUNT(qq.QuestionID) as TotalQuestions,
     SUM(qst.QuestionPoints) as TotalPoints
 FROM quizzes_tb q
-LEFT JOIN QuizQuestionsDB qq ON q.QuizID = qq.QuizID
-LEFT JOIN QuestionsDB qst ON qq.QuestionID = qst.QuestionID
+LEFT JOIN quiz_question_links_tb qq ON q.QuizID = qq.QuizID
+LEFT JOIN quiz_questions_tb qst ON qq.QuestionID = qst.QuestionID
 GROUP BY q.QuizID;
 
 -- View: User quiz attempts summary

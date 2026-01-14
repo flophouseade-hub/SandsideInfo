@@ -68,7 +68,7 @@ if (!$connection) {
 }
 
 // Get available courses
-$courseQuery = "SELECT CourseID, CourseName FROM CoursesDB ORDER BY CourseName ASC";
+$courseQuery = "SELECT CourseID, CourseName FROM courses_tb ORDER BY CourseName ASC";
 $courseResult = mysqli_query($connection, $courseQuery);
 $availableCourses = [];
 if ($courseResult) {

@@ -49,8 +49,8 @@ $showCorrectAnswers = $attemptData["ShowCorrectAnswers"];
 // Get answers with question details
 $answersQuery = "SELECT qa.QuestionID, qa.UserAnswer, qa.IsCorrect,
                         q.QuestionText, q.QuestionType, q.QuestionPoints, q.QuestionExplanation
-                 FROM QuizAnswersDB qa
-                 JOIN QuestionsDB q ON qa.QuestionID = q.QuestionID
+                 FROM quiz_answers_tb qa
+                 JOIN questions_tb q ON qa.QuestionID = q.QuestionID
                  WHERE qa.AttemptID = ?
                  ORDER BY qa.AnswerID ASC";
 $stmtAnswers = $connection->prepare($answersQuery);
@@ -76,7 +76,7 @@ if ($showCorrectAnswers) {
 		if ($answer["QuestionType"] === "multiple-choice" || $answer["QuestionType"] === "true-false") {
 			// Get all options for the question
 			$optionsQuery =
-				"SELECT OptionID, OptionText, IsCorrect FROM QuestionOptionsDB WHERE QuestionID = ? ORDER BY OptionOrder ASC";
+				"SELECT OptionID, OptionText, IsCorrect FROM question_options_tb WHERE QuestionID = ? ORDER BY OptionOrder ASC";
 			$stmtOptions = $connection->prepare($optionsQuery);
 			$stmtOptions->bind_param("i", $answer["QuestionID"]);
 			$stmtOptions->execute();

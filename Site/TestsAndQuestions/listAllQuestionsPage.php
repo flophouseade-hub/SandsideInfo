@@ -25,7 +25,7 @@ if (isset($_GET["deleteQuestionID"]) && isset($_GET["confirm"]) && $_GET["confir
 		}
 
 		// Check if question is used in any quizzes
-		$checkQuery = "SELECT COUNT(*) as count FROM QuizQuestionsDB WHERE QuestionID = ?";
+		$checkQuery = "SELECT COUNT(*) as count FROM quiz_questions_tb WHERE QuestionID = ?";
 		$stmt = $connection->prepare($checkQuery);
 		$stmt->bind_param("i", $deleteQuestionID);
 		$stmt->execute();
@@ -40,7 +40,7 @@ if (isset($_GET["deleteQuestionID"]) && isset($_GET["confirm"]) && $_GET["confir
 				" quiz(zes). Please remove it from all quizzes first.</p>";
 		} else {
 			// Delete the question (options will be deleted automatically due to CASCADE)
-			$deleteQuery = "DELETE FROM QuestionsDB WHERE QuestionID = ?";
+			$deleteQuery = "DELETE FROM quiz_questions_tb WHERE QuestionID = ?";
 			$stmt = $connection->prepare($deleteQuery);
 			$stmt->bind_param("i", $deleteQuestionID);
 
@@ -70,7 +70,7 @@ if (!$connection) {
 
 // Get unique groups
 $groupQuery =
-	"SELECT DISTINCT QuestionGroup FROM QuestionsDB WHERE QuestionGroup IS NOT NULL AND QuestionGroup != '' ORDER BY QuestionGroup ASC";
+	"SELECT DISTINCT QuestionGroup FROM questions_tb WHERE QuestionGroup IS NOT NULL AND QuestionGroup != '' ORDER BY QuestionGroup ASC";
 $groupResult = mysqli_query($connection, $groupQuery);
 $availableGroups = [];
 if ($groupResult) {
@@ -179,7 +179,7 @@ print "</form>
 
 // Build query with optional filters
 $query =
-	"SELECT QuestionID, QuestionText, QuestionType, QuestionGroup, QuestionPoints, QuestionActive, QuestionMadeBy FROM QuestionsDB WHERE 1=1";
+	"SELECT QuestionID, QuestionText, QuestionType, QuestionGroup, QuestionPoints, QuestionActive, QuestionMadeBy FROM questions_tb WHERE 1=1";
 if (!empty($filterGroup)) {
 	$query .= " AND QuestionGroup = '" . mysqli_real_escape_string($connection, $filterGroup) . "'";
 }

@@ -530,7 +530,7 @@ $_SESSION["sectionDB"][$editSectionID]["SectionColourSameAsPage"] = false; // Al
 $_SESSION["sectionDB"][$editSectionID]["SectionShowTitle"] = $sectionShowTitle;
 
 // Display the current section content as a preview
-insertPageSectionOneColumn($sectionContent, $sectionTitle, $editSectionID, 0);
+insertPageSectionOneColumn($sectionContent, $sectionTitle, $editSectionID);
 
 // HTML Tags Reference Section with improved styling
 $htmlReferenceString = "
@@ -660,21 +660,8 @@ $customTagsString = "
   
   <div class=\"referenceColumn\">
     <h4>Image Insertion</h4>
-    <code class=\"htmlReference\">&lt;imageL12,150,100,0,1/&gt;</code>
-    <p>Inserts image with ID 12, width 150px, height 100px, not rounded, with caption displayed</p>
-    
-    <code class=\"htmlReference\">&lt;imageL12,150,100,1,0/&gt;</code>
-    <p>Inserts image with ID 12, width 150px, height 100px, rounded, with no caption</p>
-    
-    <p><strong>Parameters:</strong> ID, width, height, rounded (0 or 1), showCaption (0 or 1). Caption defaults to showing if not specified.</p>
-
-    <h4>Side-by-Side Layout</h4>
-    <code class=\"htmlReference\">&lt;sideL&gt;<br/>
-&lt;imageL12,150,100,0/&gt;<br/>
-&lt;imageL13,150,100,0/&gt;<br/>
-&lt;p&gt;Text here&lt;/p&gt;<br/>
-&lt;/sideL&gt;</code>
-    <p>Arranges images and text side-by-side. Content wraps to new lines on smaller screens.</p>
+    <code class=\"htmlReference\">&lt;imageL12,150,100,0/&gt;</code>
+    <p>Inserts image with ID 12 from the Image Library with width 150, height 100, and no roundedness</p>
     
     <h4>Videos</h4>
     <code class=\"htmlReference\">&lt;videoL youTube reference /video&gt;</code>

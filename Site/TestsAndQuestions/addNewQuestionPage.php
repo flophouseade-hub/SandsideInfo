@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuestion"])) {
 			$questionMadeTime = date("Y-m-d H:i:s");
 
 			$insertQuery =
-				"INSERT INTO QuestionsDB (QuestionText, QuestionType, QuestionGroup, QuestionPoints, QuestionExplanation, QuestionMadeBy, QuestionMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				"INSERT INTO questions_tb (QuestionText, QuestionType, QuestionGroup, QuestionPoints, QuestionExplanation, QuestionMadeBy, QuestionMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			$stmt = $connection->prepare($insertQuery);
 			$stmt->bind_param(
 				"sssssss",
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuestion"])) {
 				// Insert options if multiple-choice or true-false
 				if ($inputQuestionType === "multiple-choice" || $inputQuestionType === "true-false") {
 					$optionQuery =
-						"INSERT INTO QuestionOptionsDB (QuestionID, OptionText, IsCorrect, OptionOrder) VALUES (?, ?, ?, ?)";
+						"INSERT INTO question_options_tb (QuestionID, OptionText, IsCorrect, OptionOrder) VALUES (?, ?, ?, ?)";
 					$stmtOption = $connection->prepare($optionQuery);
 
 					foreach ($inputOptions as $index => $optionText) {

@@ -34,7 +34,7 @@ if (!$connection) {
 }
 
 // Fetch existing question data
-$query = "SELECT * FROM QuestionsDB WHERE QuestionID = ?";
+$query = "SELECT * FROM questions_tb WHERE QuestionID = ?";
 $stmt = $connection->prepare($query);
 $stmt->bind_param("i", $editQuestionID);
 $stmt->execute();
@@ -57,7 +57,7 @@ $questionActive = $questionData["QuestionActive"];
 
 // Fetch options if multiple-choice or true-false
 if ($questionType === "multiple-choice" || $questionType === "true-false") {
-	$optionsQuery = "SELECT * FROM QuestionOptionsDB WHERE QuestionID = ? ORDER BY OptionOrder ASC";
+	$optionsQuery = "SELECT * FROM question_options_tb WHERE QuestionID = ? ORDER BY OptionOrder ASC";
 	$stmtOptions = $connection->prepare($optionsQuery);
 	$stmtOptions->bind_param("i", $editQuestionID);
 	$stmtOptions->execute();
@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateQuestion"])) {
 		$questionModifiedTime = date("Y-m-d H:i:s");
 
 		$updateQuery =
-			"UPDATE QuestionsDB SET QuestionText = ?, QuestionType = ?, QuestionGroup = ?, QuestionPoints = ?, QuestionExplanation = ?, QuestionActive = ?, QuestionModifiedTime = ? WHERE QuestionID = ?";
+			"UPDATE questions_tb SET QuestionText = ?, QuestionType = ?, QuestionGroup = ?, QuestionPoints = ?, QuestionExplanation = ?, QuestionActive = ?, QuestionModifiedTime = ? WHERE QuestionID = ?";
 		$stmtUpdate = $connection->prepare($updateQuery);
 		$stmtUpdate->bind_param(
 			"sssisssi",
@@ -151,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateQuestion"])) {
 
 		if ($stmtUpdate->execute()) {
 			// Delete existing options
-			$deleteOptionsQuery = "DELETE FROM QuestionOptionsDB WHERE QuestionID = ?";
+			$deleteOptionsQuery = "DELETE FROM question_options_tb WHERE QuestionID = ?";
 			$stmtDelete = $connection->prepare($deleteOptionsQuery);
 			$stmtDelete->bind_param("i", $editQuestionID);
 			$stmtDelete->execute();
@@ -160,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateQuestion"])) {
 			// Insert new options if applicable
 			if ($inputQuestionType === "multiple-choice" || $inputQuestionType === "true-false") {
 				$optionQuery =
-					"INSERT INTO QuestionOptionsDB (QuestionID, OptionText, IsCorrect, OptionOrder) VALUES (?, ?, ?, ?)";
+					"INSERT INTO question_options_tb (QuestionID, OptionText, IsCorrect, OptionOrder) VALUES (?, ?, ?, ?)";
 				$stmtOption = $connection->prepare($optionQuery);
 
 				foreach ($inputOptions as $index => $optionText) {

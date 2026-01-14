@@ -1,0 +1,158 @@
+DESCRIBE quizzes_tb;
+DESCRIBE quiz_questions_tb;
+DESCRIBE quiz_attempts_tb;
+
+localhost:3306/sandsideinfo/		http://localhost/phpmyadmin6/public/index.php?route=/database/sql&db=sandsideinfo
+
+   Your SQL query has been executed successfully. (Query took 0.0009 seconds.)
+
+
+
+   Your SQL query has been executed successfully. (Query took 0.0007 seconds.)
+
+
+
+   Your SQL query has been executed successfully. (Query took 0.0007 seconds.)
+
+
+
+QuizID	int	NO	PRI	NULL	auto_increment	
+QuizName	varchar(255)	NO		NULL		
+QuizDescription	text	YES		NULL		
+CourseID	int	YES	MUL	NULL		
+PassingScore	decimal(5,2)	NO		70.00		
+TimeLimit	int	YES		NULL		
+AllowRetakes	tinyint(1)	YES		1		
+MaxAttempts	int	YES		NULL		
+ShowCorrectAnswers	tinyint(1)	YES		1		
+RandomizeQuestions	tinyint(1)	YES		0		
+RandomizeOptions	tinyint(1)	YES		0		
+QuizActive	tinyint(1)	YES	MUL	1		
+QuizMadeBy	varchar(255)	NO		NULL		
+QuizMadeTime	datetime	NO		NULL		
+QuizModifiedTime	datetime	YES		NULL		
+QuizQuestionID	int	NO	PRI	NULL	auto_increment	
+QuizID	int	NO	MUL	NULL		
+QuestionID	int	NO	MUL	NULL		
+QuestionOrder	int	YES		1		
+AttemptID	int	NO	PRI	NULL	auto_increment	
+QuizID	int	NO	MUL	NULL		
+UserEmail	varchar(255)	NO	MUL	NULL		
+AttemptStartTime	datetime	NO		NULL		
+AttemptEndTime	datetime	YES	MUL	NULL		
+TimeSpent	int	YES		NULL		
+Score	decimal(5,2)	YES		NULL		
+PointsEarned	int	YES		0		
+PointsTotal	int	YES		0		
+Passed	tinyint(1)	YES		0		
+AttemptStatus	enum('in-progress','completed','abandoned')	YES	MUL	in-progress		
+AttemptNumber	int	YES		1		
+
+localhost:3306/sandsideinfo/		http://localhost/phpmyadmin6/public/index.php?route=/database/sql&db=sandsideinfo
+
+   Your SQL query has been executed successfully. (Query took 0.0009 seconds.)
+
+
+
+   Your SQL query has been executed successfully. (Query took 0.0007 seconds.)
+
+
+
+   Your SQL query has been executed successfully. (Query took 0.0007 seconds.)
+
+
+
+QuizID	int	NO	PRI	NULL	auto_increment	
+QuizName	varchar(255)	NO		NULL		
+QuizDescription	text	YES		NULL		
+CourseID	int	YES	MUL	NULL		
+PassingScore	decimal(5,2)	NO		70.00		
+TimeLimit	int	YES		NULL		
+AllowRetakes	tinyint(1)	YES		1		
+MaxAttempts	int	YES		NULL		
+ShowCorrectAnswers	tinyint(1)	YES		1		
+RandomizeQuestions	tinyint(1)	YES		0		
+RandomizeOptions	tinyint(1)	YES		0		
+QuizActive	tinyint(1)	YES	MUL	1		
+QuizMadeBy	varchar(255)	NO		NULL		
+QuizMadeTime	datetime	NO		NULL		
+QuizModifiedTime	datetime	YES		NULL		
+QuizQuestionID	int	NO	PRI	NULL	auto_increment	
+QuizID	int	NO	MUL	NULL		
+QuestionID	int	NO	MUL	NULL		
+QuestionOrder	int	YES		1		
+AttemptID	int	NO	PRI	NULL	auto_increment	
+QuizID	int	NO	MUL	NULL		
+UserEmail	varchar(255)	NO	MUL	NULL		
+AttemptStartTime	datetime	NO		NULL		
+AttemptEndTime	datetime	YES	MUL	NULL		
+TimeSpent	int	YES		NULL		
+Score	decimal(5,2)	YES		NULL		
+PointsEarned	int	YES		0		
+PointsTotal	int	YES		0		
+Passed	tinyint(1)	YES		0		
+AttemptStatus	enum('in-progress','completed','abandoned')	YES	MUL	in-progress		
+AttemptNumber	int	YES		1		
+
+localhost:3306/sandsideinfo/		http://localhost/phpmyadmin6/public/index.php?route=/database/sql&db=sandsideinfo
+
+   Your SQL query has been executed successfully. (Query took 0.0009 seconds.)
+
+
+
+   Your SQL query has been executed successfully. (Query took 0.0007 seconds.)
+
+
+
+   Your SQL query has been executed successfully. (Query took 0.0007 seconds.)
+
+
+
+QuizID	int	NO	PRI	NULL	auto_increment	
+QuizName	varchar(255)	NO		NULL		
+QuizDescription	text	YES		NULL		
+CourseID	int	YES	MUL	NULL		
+PassingScore	decimal(5,2)	NO		70.00		
+TimeLimit	int	YES		NULL		
+AllowRetakes	tinyint(1)	YES		1		
+MaxAttempts	int	YES		NULL		
+ShowCorrectAnswers	tinyint(1)	YES		1		
+RandomizeQuestions	tinyint(1)	YES		0		
+RandomizeOptions	tinyint(1)	YES		0		
+QuizActive	tinyint(1)	YES	MUL	1		
+QuizMadeBy	varchar(255)	NO		NULL		
+QuizMadeTime	datetime	NO		NULL		
+QuizModifiedTime	datetime	YES		NULL		
+QuizQuestionID	int	NO	PRI	NULL	auto_increment	
+QuizID	int	NO	MUL	NULL		
+QuestionID	int	NO	MUL	NULL		
+QuestionOrder	int	YES		1		
+AttemptID	int	NO	PRI	NULL	auto_increment	
+QuizID	int	NO	MUL	NULL		
+UserEmail	varchar(255)	NO	MUL	NULL		
+AttemptStartTime	datetime	NO		NULL		
+AttemptEndTime	datetime	YES	MUL	NULL		
+TimeSpent	int	YES		NULL		
+Score	decimal(5,2)	YES		NULL		
+PointsEarned	int	YES		0		
+PointsTotal	int	YES		0		
+Passed	tinyint(1)	YES		0		
+AttemptStatus	enum('in-progress','completed','abandoned')	YES	MUL	in-progress		
+AttemptNumber	int	YES		1		
+
+localhost:3306/sandsideinfo/		http://localhost/phpmyadmin6/public/index.php?route=/database/sql&db=sandsideinfo
+
+   Your SQL query has been executed successfully. (Query took 0.0014 seconds.)
+
+
+
+QuestionID	int	NO	PRI	NULL	auto_increment	
+QuestionText	text	NO		NULL		
+QuestionType	enum('multiple-choice','true-false','short-answer')	NO	MUL	multiple-choice		
+QuestionGroup	varchar(100)	YES	MUL	NULL		
+QuestionPoints	int	YES		1		
+QuestionExplanation	text	YES		NULL		
+QuestionMadeBy	varchar(255)	NO		NULL		
+QuestionMadeTime	datetime	NO		NULL		
+QuestionModifiedTime	datetime	YES		NULL		
+QuestionActive	tinyint(1)	YES	MUL	1		

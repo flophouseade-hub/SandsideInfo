@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuiz"])) {
 
 // Get available courses for dropdown
 $connection = connectToDatabase();
-$courseQuery = "SELECT CourseID, CourseName FROM CoursesDB ORDER BY CourseName ASC";
+$courseQuery = "SELECT CourseID, CourseName FROM courses_tb ORDER BY CourseName ASC";
 $courseResult = mysqli_query($connection, $courseQuery);
 $availableCourses = [];
 if ($courseResult) {

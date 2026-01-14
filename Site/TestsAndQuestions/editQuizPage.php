@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addQuestion"])) {
 
 	if (validatePositiveInteger($questionID)) {
 		// Check if question already exists in quiz
-		$checkQuery = "SELECT * FROM QuizQuestionsDB WHERE QuizID = ? AND QuestionID = ?";
+		$checkQuery = "SELECT * FROM quiz_questions_tb WHERE QuizID = ? AND QuestionID = ?";
 		$stmtCheck = $connection->prepare($checkQuery);
 		$stmtCheck->bind_param("ii", $editQuizID, $questionID);
 		$stmtCheck->execute();
@@ -140,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addQuestion"])) {
 			$feedbackMessage = "<p style='color:orange;'>Question is already in this quiz.</p>";
 		} else {
 			// Get next order number
-			$orderQuery = "SELECT MAX(QuestionOrder) as maxOrder FROM QuizQuestionsDB WHERE QuizID = ?";
+			$orderQuery = "SELECT MAX(QuestionOrder) as maxOrder FROM quiz_questions_tb WHERE QuizID = ?";
 			$stmtOrder = $connection->prepare($orderQuery);
 			$stmtOrder->bind_param("i", $editQuizID);
 			$stmtOrder->execute();
@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addQuestion"])) {
 			$stmtOrder->close();
 
 			// Add question
-			$addQuery = "INSERT INTO QuizQuestionsDB (QuizID, QuestionID, QuestionOrder) VALUES (?, ?, ?)";
+			$addQuery = "INSERT INTO quiz_questions_tb (QuizID, QuestionID, QuestionOrder) VALUES (?, ?, ?)";
 			$stmtAdd = $connection->prepare($addQuery);
 			$stmtAdd->bind_param("iii", $editQuizID, $questionID, $nextOrder);
 
@@ -169,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addQuestion"])) {
 if (isset($_GET["removeQuestionID"])) {
 	$removeQuestionID = intval($_GET["removeQuestionID"]);
 
-	$removeQuery = "DELETE FROM QuizQuestionsDB WHERE QuizID = ? AND QuestionID = ?";
+	$removeQuery = "DELETE FROM quiz_questions_tb WHERE QuizID = ? AND QuestionID = ?";
 	$stmtRemove = $connection->prepare($removeQuery);
 	$stmtRemove->bind_param("ii", $editQuizID, $removeQuestionID);
 
@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateOrder"])) {
 	$questionOrders = $_POST["questionOrder"] ?? [];
 
 	foreach ($questionOrders as $questionID => $order) {
-		$updateOrderQuery = "UPDATE QuizQuestionsDB SET QuestionOrder = ? WHERE QuizID = ? AND QuestionID = ?";
+		$updateOrderQuery = "UPDATE quiz_questions_tb SET QuestionOrder = ? WHERE QuizID = ? AND QuestionID = ?";
 		$stmtOrder = $connection->prepare($updateOrderQuery);
 		$stmtOrder->bind_param("iii", $order, $editQuizID, $questionID);
 		$stmtOrder->execute();
@@ -198,8 +198,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["updateOrder"])) {
 
 // Get questions currently in quiz
 $quizQuestionsQuery = "SELECT qq.QuestionID, qq.QuestionOrder, q.QuestionText, q.QuestionType, q.QuestionPoints 
-                       FROM QuizQuestionsDB qq
-                       JOIN QuestionsDB q ON qq.QuestionID = q.QuestionID
+                       FROM quiz_questions_tb qq
+                       JOIN questions_tb q ON qq.QuestionID = q.QuestionID
                        WHERE qq.QuizID = ?
                        ORDER BY qq.QuestionOrder ASC";
 $stmtQuizQuestions = $connection->prepare($quizQuestionsQuery);
@@ -214,9 +214,9 @@ $stmtQuizQuestions->close();
 
 // Get available questions not in quiz
 $availableQuestionsQuery = "SELECT QuestionID, QuestionText, QuestionType, QuestionGroup, QuestionPoints 
-                            FROM QuestionsDB 
+                            FROM questions_tb 
                             WHERE QuestionActive = 1 
-                            AND QuestionID NOT IN (SELECT QuestionID FROM QuizQuestionsDB WHERE QuizID = ?)
+                            AND QuestionID NOT IN (SELECT QuestionID FROM quiz_questions_tb WHERE QuizID = ?)
                             ORDER BY QuestionGroup, QuestionText";
 $stmtAvailable = $connection->prepare($availableQuestionsQuery);
 $stmtAvailable->bind_param("i", $editQuizID);
@@ -229,7 +229,7 @@ while ($row = $availableQuestionsResult->fetch_assoc()) {
 $stmtAvailable->close();
 
 // Get available courses for dropdown
-$courseQuery = "SELECT CourseID, CourseName FROM CoursesDB ORDER BY CourseName ASC";
+$courseQuery = "SELECT CourseID, CourseName FROM courses_tb ORDER BY CourseName ASC";
 $courseResult = mysqli_query($connection, $courseQuery);
 $availableCourses = [];
 if ($courseResult) {

@@ -252,6 +252,11 @@ function handleSectionGroupSelection() {
 
 print $formAndContentString;
 
+$htmlReferenceString = $_SESSION["sectionDB"][43]["SectionContent"] ?? "";
+//$htmlReferenceString = decodeSectionContent($htmlReferenceString);
+print $htmlReferenceString;
+print "<hr><hr>";
+
 // HTML Tags Reference Section
 $htmlReferenceString = "
 <style>

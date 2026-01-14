@@ -87,8 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuiz"])) {
 
 		// Get all questions with correct answers
 		$questionsQuery = "SELECT qq.QuestionID, qq.QuestionOrder, q.QuestionText, q.QuestionType, q.QuestionPoints, q.QuestionExplanation
-                           FROM QuizQuestionsDB qq
-                           JOIN QuestionsDB q ON qq.QuestionID = q.QuestionID
+                           FROM quiz_questions_tb qq
+                           JOIN questions_tb q ON qq.QuestionID = q.QuestionID
                            WHERE qq.QuizID = ?
                            ORDER BY qq.QuestionOrder ASC";
 		$stmtQuestions = $connection->prepare($questionsQuery);
@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuiz"])) {
 			// Get correct answer(s)
 			if ($questionType === "multiple-choice" || $questionType === "true-false") {
 				$correctQuery =
-					"SELECT OptionID, OptionText FROM QuestionOptionsDB WHERE QuestionID = ? AND IsCorrect = 1";
+					"SELECT OptionID, OptionText FROM question_options_tb WHERE QuestionID = ? AND IsCorrect = 1";
 				$stmtCorrect = $connection->prepare($correctQuery);
 				$stmtCorrect->bind_param("i", $questionID);
 				$stmtCorrect->execute();
@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuiz"])) {
 			}
 
 			// Insert answer record
-			$insertAnswerQuery = "INSERT INTO QuizAnswersDB (AttemptID, QuestionID, UserAnswer, IsCorrect) 
+			$insertAnswerQuery = "INSERT INTO quiz_answers_tb (AttemptID, QuestionID, UserAnswer, IsCorrect) 
                                   VALUES (?, ?, ?, ?)";
 			$stmtInsertAnswer = $connection->prepare($insertAnswerQuery);
 			$stmtInsertAnswer->bind_param("iisi", $attemptID, $questionID, $userAnswer, $isCorrect);
@@ -163,8 +163,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitQuiz"])) {
 
 // Get questions for this quiz
 $questionsQuery = "SELECT qq.QuestionID, qq.QuestionOrder, q.QuestionText, q.QuestionType, q.QuestionPoints
-                   FROM QuizQuestionsDB qq
-                   JOIN QuestionsDB q ON qq.QuestionID = q.QuestionID
+                   FROM quiz_questions_tb qq
+                   JOIN questions_tb q ON qq.QuestionID = q.QuestionID
                    WHERE qq.QuizID = ?";
 
 if ($quizData["RandomizeQuestions"]) {
@@ -189,7 +189,7 @@ $stmtQuestions->close();
 // Get options for each question
 foreach ($questions as &$question) {
 	if ($question["QuestionType"] === "multiple-choice" || $question["QuestionType"] === "true-false") {
-		$optionsQuery = "SELECT OptionID, OptionText FROM QuestionOptionsDB WHERE QuestionID = ?";
+		$optionsQuery = "SELECT OptionID, OptionText FROM question_options_tb WHERE QuestionID = ?";
 
 		if ($quizData["RandomizeOptions"]) {
 			$optionsQuery .= " ORDER BY RAND()";
