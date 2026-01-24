@@ -83,10 +83,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				logUserLogin($ID, $inputEmail, "success");
 
 				// User is now logged in
-				$feedbackMessage = "<p class=\"formFeedbackSuccess\">✓ogin successful. Redirecting to Main Menu...</p>";
+				print "<style>
+					.feedback-wrapper {
+					position: fixed;
+					inset: 0;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					background: white;
+					}
+
+					.formBlueInfoBox {
+					padding: 15px 30px 15px 30px;
+					font-family: Open Sans, sans-serif;
+					background-color: #e3f2fd;
+					border-left: 4px solid #2196f3;
+					border-radius: 4px;
+					margin-bottom: 0;
+					clear: both;
+					}
+					</style>";
+				$feedbackMessage = "
+					<div class=\"feedback-wrapper\">
+					<img src=\"../images/Two Kids v9 Rounded Rainbow 2.jpg\" alt=\"Sandside Logo\" style=\"width:250px; height:auto; margin-bottom:20px;\">
+					<p class=\"formBlueInfoBox\">✓ Login successful. Redirecting to Main Menu...</p>
+					</div>";
 				$stmt->close();
 				$connection->close();
-				header("refresh:2;url=../Pages/blockMenuPage.php?pageID=1");
+				$url = "../Pages/blockMenuPage.php?pageID=1";
+				$url = json_encode($url);
+				//print $feedbackMessage;
+				print "$feedbackMessage 
+					<script>
+					setTimeout(() => location.href = $url, 2000);
+					</script>";
+				//header("refresh:2;url=../Pages/blockMenuPage.php?pageID=1");
 				exit();
 			} else {
 				$inputError = true;

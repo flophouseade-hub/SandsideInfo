@@ -1571,3 +1571,11 @@
 [2026-01-14 22:28:31] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\TestsAndQuestions\editQuestionPage.php:56 - Undefined array key "QuestionActive"
 [2026-01-14 22:28:31] [Not logged in] [UNKNOWN] in D:\Development\SandsideInfo\Site\TestsAndQuestions\editQuestionPage.php:225 - htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
 [2026-01-14 22:28:31] [Not logged in] [UNKNOWN] in D:\Development\SandsideInfo\Site\TestsAndQuestions\editQuestionPage.php:227 - htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
+[2026-01-21 18:04:10] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\CoursesAndTasks\addNewCoursePage.php:124 - Undefined variable $insertQuery
+[2026-01-21 18:04:10] [Not logged in] [UNKNOWN] in D:\Development\SandsideInfo\Site\CoursesAndTasks\addNewCoursePage.php:124 - mysqli::prepare(): Passing null to parameter #1 ($query) of type string is deprecated
+[2026-01-21 18:04:29] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\CoursesAndTasks\addNewCoursePage.php:124 - Undefined variable $insertQuery
+[2026-01-21 18:04:29] [Not logged in] [UNKNOWN] in D:\Development\SandsideInfo\Site\CoursesAndTasks\addNewCoursePage.php:124 - mysqli::prepare(): Passing null to parameter #1 ($query) of type string is deprecated
+[2026-01-21 18:05:32] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\CoursesAndTasks\addNewCoursePage.php:124 - Undefined variable $insertQuery
+[2026-01-21 18:05:32] [Not logged in] [UNKNOWN] in D:\Development\SandsideInfo\Site\CoursesAndTasks\addNewCoursePage.php:124 - mysqli::prepare(): Passing null to parameter #1 ($query) of type string is deprecated
+[2026-01-21 18:06:37] [Not logged in] [WARNING] in D:\Development\SandsideInfo\Site\CoursesAndTasks\addNewCoursePage.php:124 - Undefined variable $insertQuery
+[2026-01-21 18:06:37] [Not logged in] [UNKNOWN] in D:\Development\SandsideInfo\Site\CoursesAndTasks\addNewCoursePage.php:124 - mysqli::prepare(): Passing null to parameter #1 ($query) of type string is deprecated

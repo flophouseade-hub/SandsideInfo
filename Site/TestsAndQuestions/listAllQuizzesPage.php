@@ -165,7 +165,7 @@ print "</form>
 $query = "SELECT q.QuizID, q.QuizName, q.CourseID, q.PassingScore, q.TimeLimit, q.QuizActive, 
           COALESCE(qs.TotalQuestions, 0) as TotalQuestions, COALESCE(qs.TotalPoints, 0) as TotalPoints
           FROM quizzes_tb q
-          LEFT JOIN QuizSummaryView qs ON q.QuizID = qs.QuizID
+          LEFT JOIN quizsummaryview qs ON q.QuizID = qs.QuizID
           WHERE 1=1";
 
 if (!empty($filterCourse)) {

@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["insertNewUserButton"])
 		} else {
 			// Verify the class exists in the database
 			$connection = connectToDatabase();
-			$checkClassQuery = "SELECT ClassID FROM classes WHERE ClassID = ?";
+			$checkClassQuery = "SELECT ClassID FROM classes_tb WHERE ClassID = ?";
 			$stmtCheck = $connection->prepare($checkClassQuery);
 			$stmtCheck->bind_param("i", $inputClassID);
 			$stmtCheck->execute();
@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["insertNewUserButton"])
 				// Get class name if associated
 				$className = "None";
 				if (!empty($inputClassID)) {
-					$classQuery = "SELECT ClassName FROM classes WHERE ClassID = ?";
+					$classQuery = "SELECT ClassName FROM classes_tb WHERE ClassID = ?";
 					$stmtClass = $connection->prepare($classQuery);
 					$stmtClass->bind_param("i", $inputClassID);
 					$stmtClass->execute();
@@ -208,7 +208,7 @@ $classesQuery = "SELECT ClassID, ClassName FROM classes_tb ORDER BY ClassName AS
 $classesResult = mysqli_query($connection, $classesQuery);
 
 if (!$classesResult) {
-	$errorMsg = urlencode("Failed to load classes: " . mysqli_error($connection));
+	$errorMsg = urlencode("Failed to load classes_tb: " . mysqli_error($connection));
 	mysqli_close($connection);
 	header("Location: ../Pages/errorLandingPage.php?error=database&message=$errorMsg");
 	exit();

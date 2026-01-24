@@ -118,6 +118,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["insertNewCourseButton"
 				"<p style=\"color: red;\">A course with this name already exists. Please use a different name.</p>";
 		} else {
 			// Insert new course
+			//$courseEditBy = NULL;
+			//$courseEditTime = NULL;
 			$insertQuery =
 				"INSERT INTO courses_tb (CourseName, CourseContent, CourseDescription, CourseGroup, CourseColour, CourseMadeBy, CourseMadeTime) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			$stmtInsert = $connection->prepare($insertQuery);
@@ -136,14 +138,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["insertNewCourseButton"
 				$newCourseID = $connection->insert_id;
 				$courseAddedSuccess = true;
 				$feedbackMessage = "
-        <p style=\"color: green; font-weight: bold;\">Course successfully added!</p>
-        <p style=\"color: green;\">Course Name: $inputCourseName</p>
-        <p style=\"color: green;\">Created By: $courseMadeBy</p>
-        <p style=\"color: green;\">Created On: $courseMadeTime</p>
-        <p style=\"color: green;\">Course ID: $newCourseID</p>
-        <p style=\"margin-top: 20px;\"><a href=\"editCoursePage.php?editCourseID=$newCourseID\" style=\"background-color: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; margin-right: 10px;\">Edit This Course</a>
-        <a href=\"listAllCoursesPage.php\" style=\"background-color: #2196F3; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;\">View All Courses</a></p>
-        ";
+				<p style=\"color: green; font-weight: bold;\">Course successfully added!</p>
+				<p style=\"color: green;\">Course Name: $inputCourseName</p>
+				<p style=\"color: green;\">Created By: $courseMadeBy</p>
+				<p style=\"color: green;\">Created On: $courseMadeTime</p>
+				<p style=\"color: green;\">Course ID: $newCourseID</p>
+				<p style=\"margin-top: 20px;\"><a href=\"editCoursePage.php?editCourseID=$newCourseID\" style=\"background-color: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; margin-right: 10px;\">Edit This Course</a>
+				<a href=\"listAllCoursesPage.php\" style=\"background-color: #2196F3; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;\">View All Courses</a></p>
+				";
 				$inputError = false;
 
 				// Clear input values on success
@@ -194,8 +196,9 @@ if ($courseAddedSuccess === true) {
   <div style=\"padding: 40px 20px;\">
     $feedbackMessage
   </div>";
-
-	insertPageSectionOneColumn($displayContent, "Course Added Successfully", 0);
+	$displayContent = "<div class=\"formPageWrapper\"><div class=\"formInfoBox\">$displayContent</div></div>";
+	print $displayContent;
+	//insertPageSectionOneColumn($displayContent, "Course Added Successfully", 0);
 } else {
 	// Show the add course form
 
@@ -204,18 +207,16 @@ if ($courseAddedSuccess === true) {
 		$displayFeedback =
 			"<p><strong style='color: red;'>There were problems with your submission:</strong></p>" . $feedbackMessage;
 	} else {
-		$displayFeedback = "";
+		$displayFeedback = "The course will be automatically tagged with your name and the current date/time.";
 	}
 
 	$formAndContentString = "
   <div class=\"formPageWrapper\">
   <div class=\"formInfoBox\">
-    <p>Use the form below to add a new course to the system. You can fill in as much or as little information as you like - required fields are marked.</p>
+    <p>Use the form below to add a new course to the system. You can fill in as much or as little information as you like - optional fields are marked.</p>
  
   </div>
-    <div class=\"formMessageBox\">
-    
-  <p>Create a new course by entering the details below. The course will be automatically tagged with your name and the current date/time.</p>
+    <div class=\"formBlueInfoBox\">
   $displayFeedback
   </div>
   
